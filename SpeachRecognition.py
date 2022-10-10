@@ -6,5 +6,9 @@ audio = "video.avi"
 #iniciamos reconocimiento de voz
 re = sr.Recognizer();
 
-#
+#conversion audio-texto
+with sr.AudioFile(audio) as source:
+    info_audio = re.record(source)
+    texto = re.recognize_google(info_audio, language="es-ES")
+    print (texto)
 
