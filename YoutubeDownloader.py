@@ -1,27 +1,30 @@
 #pip install pytube
 
 from pytube import YouTube
+import os
+from ffmpy import FFmpeg
+from pathlib import Path
 
-yt = YouTube('https://www.youtube.com/watch?v=BKrOHIMltW4')
-print('Titulo: ',yt.title)
+url='https://www.youtube.com/watch?v=THsNkkN75f8'
+pathVideos=Path().absolute() / 'videos'
+pathAudios=Path().absolute() / 'audios'
 
-listado_streaming = yt.streams
+yt = YouTube(url)
+titulo=yt.title
+t=yt.streams.filter(only_audio=True).first()
+t.download(pathVideos)
+numeroRecetas = os.listdir(pathAudios)
 
-solo_progressive = listado_streaming.filter(resolution='360p', mime_type="video/mp4").desc()
+archivos = Path(pathVideos).glob('*.mp4')
 
-print("SOLO PROGRESIVO: ")
-for streaming in solo_progressive:
-    print(streaming)
-
-bajar_video = solo_progressive.last()
-print("Bajar ultimo video: ")
-print(bajar_video)
-
-file_size = bajar_video.filesize
-print("VIDEO SELECT: ", bajar_video)
-print("filesize: ", file_size)
-
-print("iniciando descarga...")
-bajar_video.download()
-
-print("Fin descarga")
+for a in archivos:
+    os.rename(a,'videos/video1.mp4')
+    numeroRecetas = os.listdir(pathAudios)
+    rutaSalida='audios/'+str(len(numeroRecetas))+'.wav'
+    print(rutaSalida)
+    ff = FFmpeg(executable='C:\\ffmpeg\\bin\\ffmpeg.exe',
+        inputs={'videos/video1.mp4': None},
+        outputs={rutaSalida: None}
+    )
+    ff.run()
+    os.remove('videos/video1.mp4')
