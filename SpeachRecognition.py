@@ -2,15 +2,24 @@
 
 # Importar libreria
 import speech_recognition as sr
-print( f'La version de speech recognition es: {sr.__version__}')
-audio = "./audios/1.wav"
+import os
+from pathlib import Path
 
-#iniciamos reconocimiento de voz
-re = sr.Recognizer();
+pathTextos=Path().absolute() / 'textos'
+pathAudios=Path().absolute() / 'audios'
 
-#conversion audio-texto
-with sr.AudioFile(audio) as source:
-    info_audio = re.record(source)
-    texto = re.recognize_google(info_audio, language="es-ES")
-    print (texto)
+def transcribirAudio(titulo):
+    #iniciamos reconocimiento de voz
+    re = sr.Recognizer();
+    #conversion audio-texto
+    ruta='audios/'+titulo+'.wav'
+    with sr.AudioFile(ruta) as source:
+        info_audio = re.record(source)
+        texto = re.recognize_google(info_audio, language="es-ES")
+    guardarTexto(texto,titulo)
 
+def guardarTexto (texto,titulo):
+    rutaSalida='textos/'+titulo+'.txt'
+    with open(rutaSalida, 'w') as f:
+        f.write(texto)
+        f.close()
