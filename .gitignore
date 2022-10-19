@@ -1,0 +1,8 @@
+# Ignorar todos los videos
+*.mp4
+
+# Ignorar todos los audios
+*.wav
+
+# Ignorar compilados
+__pycache__
