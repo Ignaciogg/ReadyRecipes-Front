@@ -2,7 +2,6 @@
 
 # Importar libreria
 import speech_recognition as sr
-import os
 from pathlib import Path
 
 pathTextos=Path().absolute() / 'textos'
@@ -20,6 +19,6 @@ def transcribirAudio(titulo):
 
 def guardarTexto (texto,titulo):
     rutaSalida='textos/'+titulo+'.txt'
-    with open(rutaSalida, 'w') as f:
+    with open(rutaSalida, 'w', encoding="utf-8") as f:
         f.write(texto)
         f.close()

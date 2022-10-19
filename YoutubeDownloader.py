@@ -33,6 +33,5 @@ def descargarVideo(url):
             outputs={rutaSalida: None}
         )
         ff.run()
-        #os.remove('videos/video1.mp4')
         SpeachRecognition.transcribirAudio(titulo)
     
