@@ -1,16 +1,12 @@
 #pip install pytube
 
-import imp
 from pytube import YouTube
 import os
-from ffmpy import FFmpeg
 from pathlib import Path
 import SpeachRecognition
+import AudioConverter
 
-pathVideos=Path().absolute() / 'videos'
-pathAudios=Path().absolute() / 'audios'
 pathDescargas=Path().absolute() / 'descargas'
-
 
 def descargarVideo(url):
     yt = YouTube(url)
@@ -23,15 +19,7 @@ def descargarVideo(url):
     archivos = Path(pathDescargas).glob('*.mp4')
 
     for a in archivos:
-        rutaEntrada='videos/'+titulo+'.mp4'
-        os.rename(a,rutaEntrada)
-
-        rutaSalida='audios/'+titulo+'.wav'
-
-        ff = FFmpeg(executable='C:\\ffmpeg\\bin\\ffmpeg.exe',
-            inputs={rutaEntrada: None},
-            outputs={rutaSalida: None}
-        )
-        ff.run()
+        os.rename(a,'videos/'+titulo+'.mp4')
+        AudioConverter.convertirAudio(titulo)
         SpeachRecognition.transcribirAudio(titulo)
     
