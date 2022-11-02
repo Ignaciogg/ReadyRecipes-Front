@@ -2,10 +2,6 @@
 
 # Importar libreria
 import speech_recognition as sr
-from pathlib import Path
-
-pathTextos=Path().absolute() / 'textos'
-pathAudios=Path().absolute() / 'audios'
 
 def transcribirAudio(titulo):
     #iniciamos reconocimiento de voz
