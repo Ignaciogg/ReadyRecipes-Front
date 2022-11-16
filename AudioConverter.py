@@ -14,5 +14,10 @@ def convertirAudio(titulo):
         inputs={rutaEntrada: None},
         outputs={rutaSalida: None})
         ff.run()
+
+        try:
+            os.remove(rutaEntrada)
+        except:
+            print("No se puede borrar")
     
     
