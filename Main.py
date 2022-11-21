@@ -1,12 +1,12 @@
 import YoutubeDownloader
 import os
 
-with open('verduras.txt','r') as file:
+with open('apertivos.txt','r') as file:
     for linea in file:
         YoutubeDownloader.descargarVideo(linea)
 
 #YoutubeDownloader.descargarVideo('https://www.youtube.com/watch?v=U1JXE7o6Z8g')
-contenido = os.listdir('./textos/verdura')
+contenido = os.listdir('./textos/aperitivos')
 
 print(len(contenido))
 
