@@ -15,10 +15,7 @@ def transcribirAudio(titulo):
     ruta=str(yt.pathAudios)+ '\\'+titulo+'.wav'
     with sr.AudioFile(ruta) as source:
         info_audio = re.record(source)
-        try:
-            texto = re.recognize_google(info_audio, language="es-ES")
-        except:
-            print('Error')
+        texto = re.recognize_google(info_audio, language="es-ES")
     guardarTexto(texto,titulo)
 
     try:
