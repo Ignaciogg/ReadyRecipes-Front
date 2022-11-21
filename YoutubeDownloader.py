@@ -9,7 +9,7 @@ import AudioConverter
 pathDescargas=Path().absolute() / 'descargas'
 pathVideos=Path().absolute() / 'videos'
 pathAudios=Path().absolute() / 'audios'
-pathTextos=Path().absolute() / 'textos' / 'carne'
+pathTextos=Path().absolute() / 'textos' / 'verdura'
 
 #Comprobar que existen los directorios
 try:
