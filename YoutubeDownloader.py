@@ -9,7 +9,7 @@ import AudioConverter
 pathDescargas=Path().absolute() / 'descargas'
 pathVideos=Path().absolute() / 'videos'
 pathAudios=Path().absolute() / 'audios'
-pathTextos=Path().absolute() / 'textos' / 'pasta'
+pathTextos=Path().absolute() / 'textos' / 'otros'
 
 #Comprobar que existen los directorios
 try:
@@ -43,4 +43,4 @@ def descargarVideo(url):
         try:
             SpeachRecognition.transcribirAudio(titulo)
         except:
-            print('ERROR')
+            print('ERROR. Audio mayor 10MB')

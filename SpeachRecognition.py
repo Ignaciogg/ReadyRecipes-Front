@@ -17,11 +17,10 @@ def transcribirAudio(titulo):
         info_audio = re.record(source)
         texto = re.recognize_google(info_audio, language="es-ES")
     guardarTexto(texto,titulo)
-
     try:
         os.remove(ruta)
     except:
-        print("No se puede borrar")
+        print("No se puede borrar audio")
 
 def guardarTexto (texto,titulo):
     rutaSalida=str(yt.pathTextos)+'\\'+titulo+'.txt'

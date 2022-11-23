@@ -1,12 +1,12 @@
 import YoutubeDownloader
 import os
 
-with open('pasta.txt','r') as file:
+'''with open('otros.txt','r') as file:
     for linea in file:
-        YoutubeDownloader.descargarVideo(linea)
+        YoutubeDownloader.descargarVideo(linea)'''
 
 #YoutubeDownloader.descargarVideo('https://www.youtube.com/watch?v=U1JXE7o6Z8g')
-contenido = os.listdir('./textos/pasta')
+contenido = os.listdir('./textos/otros')
 
 print(len(contenido))
 

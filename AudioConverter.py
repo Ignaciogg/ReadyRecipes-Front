@@ -18,6 +18,6 @@ def convertirAudio(titulo):
         try:
             os.remove(rutaEntrada)
         except:
-            print("No se puede borrar")
+            print("No se puede borrar vídeo")
     
     
