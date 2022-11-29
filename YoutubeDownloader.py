@@ -25,10 +25,10 @@ except:
 
 def descargarVideo(url):
     yt = YouTube(url)
-    titulo=yt.title
+    titulo = yt.title
     titulo2 = titulo.replace(' ', '-')
     titulo = titulo2.replace('|','')
-    t=yt.streams.filter(only_audio=True).first()
+    t = yt.streams.filter(only_audio=True).first()
     t.download(pathDescargas)
     archivos = Path(pathDescargas).glob('*.mp4')
 
