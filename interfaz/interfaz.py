@@ -81,11 +81,11 @@ class Ventana(Frame):
 		Label(self.frame_uno, width=12, text='Textos Pesacado', bg='white', fg= 'black', font=('Imprint MT Shadow', 13)).grid(column=0, row=4, pady=12, padx=100)
 		Label(self.frame_uno, width=12, text='Textos Verdura', bg='white', fg= 'black', font=('Imprint MT Shadow', 13)).grid(column=0, row=5, pady=12, padx=100)
 
-		Entry(self.frame_uno, width=120, textvariable=self.ruta_aperitivos, font=('Imprint MT Shadow', 10), highlightbackground = "#061a2b", highlightthickness=3).grid(column=1,row=1, padx=180)
-		Entry(self.frame_uno, width=120, textvariable=self.ruta_carne, font=('Imprint MT Shadow', 10), highlightbackground = "#061a2b", highlightthickness=3).grid(column=1,row=2, padx=180)
-		Entry(self.frame_uno, width=120, textvariable=self.ruta_pasta, font=('Imprint MT Shadow', 10), highlightbackground = "#061a2b", highlightthickness=3).grid(column=1,row=3, padx=180)
-		Entry(self.frame_uno, width=120, textvariable=self.ruta_pescado, font=('Imprint MT Shadow', 10), highlightbackground = "#061a2b", highlightthickness=3).grid(column=1,row=4, padx=180)
-		Entry(self.frame_uno, width=120, textvariable=self.ruta_verdura, font=('Imprint MT Shadow', 10), highlightbackground = "#061a2b", highlightthickness=3).grid(column=1,row=5, padx=180)
+		Entry(self.frame_uno, width=80, textvariable=self.ruta_aperitivos, font=('Imprint MT Shadow', 10), highlightbackground = "#061a2b", highlightthickness=3).grid(column=1,row=1, padx=180)
+		Entry(self.frame_uno, width=80, textvariable=self.ruta_carne, font=('Imprint MT Shadow', 10), highlightbackground = "#061a2b", highlightthickness=3).grid(column=1,row=2, padx=180)
+		Entry(self.frame_uno, width=80, textvariable=self.ruta_pasta, font=('Imprint MT Shadow', 10), highlightbackground = "#061a2b", highlightthickness=3).grid(column=1,row=3, padx=180)
+		Entry(self.frame_uno, width=80, textvariable=self.ruta_pescado, font=('Imprint MT Shadow', 10), highlightbackground = "#061a2b", highlightthickness=3).grid(column=1,row=4, padx=180)
+		Entry(self.frame_uno, width=80, textvariable=self.ruta_verdura, font=('Imprint MT Shadow', 10), highlightbackground = "#061a2b", highlightthickness=3).grid(column=1,row=5, padx=180)
 
 		Button(self.frame_uno, anchor=CENTER, width=12, text='Abrir').grid(column=2, row=1, padx=50)
 		Button(self.frame_uno, anchor=CENTER, width=12, text='Abrir').grid(column=2, row=2, padx=50)
