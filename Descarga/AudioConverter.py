@@ -5,9 +5,9 @@ import Descarga.YoutubeDownloader as yt
 import os
 
 
-def convertirAudio(titulo):
-    rutaEntrada = str(yt.pathVideos) + '\\' +titulo+'.mp4'
-    rutaSalida = str(yt.pathAudios) + '\\'+titulo+'.wav'
+def convertirAudio(nombre):
+    rutaEntrada = str(yt.pathVideos) + '\\' +nombre+'.mp4'
+    rutaSalida = str(yt.pathAudios) + '\\'+nombre+'.wav'
 
     if not os.path.exists(rutaSalida):
         ff = FFmpeg(executable='C:\\ffmpeg\\bin\\ffmpeg.exe',
