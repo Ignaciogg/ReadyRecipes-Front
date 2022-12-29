@@ -9,7 +9,8 @@ import Descarga.AudioConverter as AudioConverter
 pathDescargas=Path().absolute() / 'descargas'
 pathVideos=Path().absolute() / 'videos'
 pathAudios=Path().absolute() / 'audios'
-pathTextos=Path().absolute() / 'textos' / 'otros'
+pathTextos=Path().absolute() / 'Textos'
+listaCategorías = ["Aperitivos","Carnes","Pastas","Pescados", "Verduras", "Otros"]
 
 #Comprobar que existen los directorios
 try:
@@ -23,11 +24,9 @@ except:
     os.mkdir(pathAudios)
     os.mkdir(pathTextos)
 
-def descargarVideo(url):
+def descargarVideo(url, categoria):
     yt = YouTube(url)
     titulo = yt.title
-    titulo2 = titulo.replace(' ', '-')
-    titulo = titulo2.replace('|','')
     t = yt.streams.filter(only_audio=True).first()
     t.download(pathDescargas)
     archivos = Path(pathDescargas).glob('*.mp4')
@@ -44,3 +43,7 @@ def descargarVideo(url):
             SpeachRecognition.transcribirAudio(titulo)
         except:
             print('ERROR. Audio mayor 10MB')
+
+def comprobarNuevo(url){
+    for
+}
