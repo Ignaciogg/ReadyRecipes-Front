@@ -93,11 +93,11 @@ class Ventana(Frame):
 		Label(self.frame_uno, width=15, text='Textos Pesacado', bg='white', fg= 'black', font=('Arial', 13)).grid(column=0, row=4, pady=12, padx=100)
 		Label(self.frame_uno, width=15, text='Textos Verdura', bg='white', fg= 'black', font=('Arial', 13)).grid(column=0, row=5, pady=12, padx=100)
 
-		Entry(self.frame_uno, state= "disabled", width=80, text=self.ruta_aperitivos, textvariable=self.ruta_aperitivos, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3).grid(column=1,row=1, padx=180)
-		Entry(self.frame_uno, state= "disabled", width=80, text=self.ruta_carne, textvariable=self.ruta_carne, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3).grid(column=1,row=2, padx=180)
-		Entry(self.frame_uno, state= "disabled", width=80, text=self.ruta_pasta, textvariable=self.ruta_pasta, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3).grid(column=1,row=3, padx=180)
-		Entry(self.frame_uno, state= "disabled", width=80, text=self.ruta_pescado, textvariable=self.ruta_pescado, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3).grid(column=1,row=4, padx=180)
-		Entry(self.frame_uno, state= "disabled", width=80, text=self.ruta_verdura, textvariable=self.ruta_verdura, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3).grid(column=1,row=5, padx=180)
+		Entry(self.frame_uno, state= "disabled", width=80, text=self.ruta_aperitivos, textvariable=self.ruta_aperitivos, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3).grid(column=1,row=1, padx=140)
+		Entry(self.frame_uno, state= "disabled", width=80, text=self.ruta_carne, textvariable=self.ruta_carne, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3).grid(column=1,row=2, padx=140)
+		Entry(self.frame_uno, state= "disabled", width=80, text=self.ruta_pasta, textvariable=self.ruta_pasta, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3).grid(column=1,row=3, padx=140)
+		Entry(self.frame_uno, state= "disabled", width=80, text=self.ruta_pescado, textvariable=self.ruta_pescado, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3).grid(column=1,row=4, padx=140)
+		Entry(self.frame_uno, state= "disabled", width=80, text=self.ruta_verdura, textvariable=self.ruta_verdura, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3).grid(column=1,row=5, padx=140)
 
 		Button(self.frame_uno, width=12, text='Abrir').grid(column=2, row=1, padx=50)
 		Button(self.frame_uno, width=12, text='Abrir').grid(column=2, row=2, padx=50)
@@ -129,10 +129,10 @@ class Ventana(Frame):
 		# Página 2 - Clasificación
 		Label(self.frame_dos, text= 'CLASIFICACIÓN', bg='white', fg= 'black', font= ('Arial', 15, 'bold')).grid(column=1, row=0, pady=12)
 		Label(self.frame_dos, width=15, text='Textos a clasificar:', bg='white', fg= 'black', font=('Arial', 13)).grid(column=0, row=1, pady=12, padx=100)
-		Entry(self.frame_dos, state= "disabled", width=80, text=self.ruta_otros, textvariable=self.ruta_otros, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3).grid(column=1,row=1, padx=180)
+		Entry(self.frame_dos, state= "disabled", width=80, text=self.ruta_otros, textvariable=self.ruta_otros, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3).grid(column=1,row=1, padx=140)
 		Button(self.frame_dos, width=12, text='Seleccionar').grid(column=2, row=1, padx=50)
 		Label(self.frame_dos, width=18, text='Modelo clasificador:', bg='white', fg= 'black', font=('Arial', 13)).grid(column=0, row=2, pady=12, padx=100)
-		Entry(self.frame_dos, state= "disabled", width=80, text=self.ruta_modelo, textvariable=self.ruta_modelo, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3).grid(column=1,row=2, padx=180)
+		Entry(self.frame_dos, state= "disabled", width=80, text=self.ruta_modelo, textvariable=self.ruta_modelo, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3).grid(column=1,row=2, padx=140)
 		Button(self.frame_dos, width=12, text='Seleccionar').grid(column=2, row=2, padx=50)
 
 		# Página 3 - Web Scraping
