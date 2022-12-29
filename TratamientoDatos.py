@@ -8,38 +8,21 @@ import os
 from pathlib import Path
 import numpy
 import ast
-import TransformTFIDF
 
 
 #Variables globales
-listaTextos = ["/textos/aperitivos/","/textos/carne/","/textos/pasta/","/textos/pescado/", "/textos/verdura/"]
-rutaListaParada = "/filtrado/ListaParada.txt"
+listaCategorías = ["verdura"]
+#listaCategorías = ["aperitivos","carne","pasta","pescado", "verdura"]
+rutaListaParada = "filtrado\ListaParada.txt"
 rutaDiccionario = "Diccionario.txt"
 rutaMatriz = "matriz.txt"
 rutaTextosTratados = "TextosLeidos.txt"
 
-
-#Metodo de lectura de receta
-def leerReceta(rutaFichero):
-    f = open (rutaFichero,'r')
-    receta = f.read()
-    return receta
-
 #Metodos para lectura de ficheros
 def leerFichero(rutaFichero):
-    if rutaFichero==rutaListaParada or rutaFichero==rutaDiccionario:
-        f = open (rutaFichero,'r')
-        texto = f.read() 
-    else:
-        texto = leerReceta(rutaFichero)
-    return texto
-
-def leerFicheros(rutaFichero):
-    f = open (rutaFichero,'r')
+    f = open (rutaFichero,'r', encoding="Latin-1")
     texto = f.read()
-    fichero = texto.splitlines()
-    return fichero
-
+    return texto
 
 #Metodos de Tratamiento de ficheros
 def tokenizacion(texto):
@@ -87,35 +70,32 @@ def generarDiccionario():
     ficherosTratados = []
     matriz = []
     if os.path.isfile(rutaDiccionario): #Compruebo si existe el fichero
-        diccionario = leerFicheros(rutaDiccionario)
-    if os.path.isfile(rutaFicherosTratados): #Compruebo si existe el fichero
-        ficherosTratados = leerFicheros(rutaFicherosTratados)
-    #Recorro todos los periodicos
-    for periodico in listaPeriodicos:
-        rutaPeriodico = os.getcwd() + periodico
-        listaTemas = os.listdir(rutaPeriodico)
-        #Recorro todos los temas de cada periodico
-        for tema in listaTemas:
-            rutaTema = rutaPeriodico + tema + "/"
-            noticias = os.listdir(rutaTema)
-            #Recorro todas las noticias de cada tema
-            for noticia in noticias:
-                #Compruebo si la noticia no la había tratado ya
-                noticiaActual = periodico + tema + "/" + noticia
-                if noticiaActual not in ficherosTratados:
-                    #Tratamiento de la noticia
-                    tokens = tokenizacion(leerFichero(rutaTema+noticia))
-                    tokens = tratamientoBasico(tokens)
-                    tokens = listaParada(tokens)
-                    tokens = lematizacion(tokens)
+        diccionario = leerFichero(rutaDiccionario).splitlines()
+    if os.path.isfile(rutaTextosTratados): #Compruebo si existe el fichero
+        ficherosTratados = leerFichero(rutaTextosTratados).splitlines()
+    #Recorro todas las categorías
+    for categoría in listaCategorías:
+        rutaCategoría = os.getcwd() + '/textos/'+categoría+'/'
+        listaRecetas= os.listdir(rutaCategoría)
+        #Recorro todas las recetas de cada categoría
+        for receta in listaRecetas:
+            #Compruebo si la receta no la había tratado ya
+            recetaActual = rutaCategoría + receta
+            if recetaActual not in ficherosTratados:
+                print(recetaActual)
+                #Tratamiento de la receta
+                tokens = tokenizacion(leerFichero(recetaActual))
+                tokens = tratamientoBasico(tokens)
+                tokens = listaParada(tokens)
+                tokens = lematizacion(tokens)
+                
+                #Compruebo si existe el token en la lista y sino lo añado al diccionario
+                for token in tokens:
+                    if token not in diccionario:
+                        diccionario.append(token)
                     
-                    #Compruebo si existe el token en la lista y sino lo añado al diccionario
-                    for token in tokens:
-                        if token not in diccionario:
-                            diccionario.append(token)
-                        
-                    #Guardo la noticia en los ficheros tratados para no volver a analizarlo           
-                    ficherosTratados.append(noticiaActual)
+                #Guardo la receta en los ficheros tratados para no volver a analizarla           
+                ficherosTratados.append(recetaActual)
     #Guardo en ficheros el diccionaro y las noticias tratadas
     #Diccionario
     f = open(rutaDiccionario, "w")
@@ -124,7 +104,7 @@ def generarDiccionario():
     f.close()
 
     #Noticias tratadas
-    f = open(rutaFicherosTratados, "w")
+    f = open(rutaTextosTratados, "w")
     for elemento in ficherosTratados:
         f.write(elemento+"\n")
     f.close()
@@ -184,7 +164,7 @@ def generarMatriz():
         return matriz
     
 #Main
-#generarDiccionario()
+generarDiccionario()
 #matriz = generarMatriz()
 #print( coseno(matriz[0], matriz[1]) )
 #matrizNueva = TransformTFIDF.matrixToTFIDF(matriz)
