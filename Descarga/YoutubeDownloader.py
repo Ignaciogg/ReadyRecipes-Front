@@ -45,5 +45,9 @@ def descargarVideo(url, categoria):
             print('ERROR. Audio mayor 10MB')
 
 def comprobarNuevo(url){
-    for
+    nuevo = True
+    i = 0
+    while (nuevo and ):
+    for categoria in listaCategorías:
+        for
 }
