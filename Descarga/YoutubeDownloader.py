@@ -3,8 +3,8 @@
 from pytube import YouTube
 import os
 from pathlib import Path
-import SpeachRecognition
-import AudioConverter
+import Descarga.SpeachRecognition as SpeachRecognition
+import Descarga.AudioConverter as AudioConverter
 
 pathDescargas=Path().absolute() / 'descargas'
 pathVideos=Path().absolute() / 'videos'

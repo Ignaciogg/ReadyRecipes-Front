@@ -2,7 +2,7 @@
 
 # Importar libreria
 import speech_recognition as sr
-import YoutubeDownloader as yt
+import Descarga.YoutubeDownloader as yt
 import os
 
 def transcribirAudio(titulo):

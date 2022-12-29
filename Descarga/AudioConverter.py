@@ -1,7 +1,7 @@
 from genericpath import exists
 from importlib.resources import path
 from ffmpy import FFmpeg
-import YoutubeDownloader as yt
+import Descarga.YoutubeDownloader as yt
 import os
 
 
