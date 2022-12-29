@@ -1,10 +1,6 @@
 import Descarga.YoutubeDownloader as YoutubeDownloader
 import os
 
-
-
-
-
 with open('otros.txt','r') as file:
     for linea in file:
         YoutubeDownloader.descargarVideo(linea)
