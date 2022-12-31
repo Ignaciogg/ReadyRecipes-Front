@@ -29,11 +29,6 @@ class Ventana(Frame):
 		self.seleccion = StringVar()
 
 		self.aperitivos, self.carnes, self.pastas, self.pescados, self.verduras, self.total = IntVar(), IntVar(), IntVar(), IntVar(), IntVar(), IntVar()
-		self.aperitivos.set(contarTextos(self.ruta_aperitivos.get()))
-		self.carnes.set(contarTextos(self.ruta_carne.get()))
-		self.pastas.set(contarTextos(self.ruta_pasta.get()))
-		self.pescados.set(contarTextos(self.ruta_pescado.get()))
-		self.verduras.set(contarTextos(self.ruta_verdura.get()))
 
 		# Settings frame principal
 		self.frame_top = Frame(self.master, bg='#061a2b', height = 50)
@@ -73,7 +68,21 @@ class Ventana(Frame):
 		ruta.set(filedialog.askdirectory())
 		print(self.ruta_aperitivos.get())
 
+	
+
 	def nav(self):
+
+		# Contar cuantos textos hay en una carpeta
+		def contarTextos(self, folder, count):
+			i = 0
+			for root, dirs, files in os.walk(folder):
+				for file in files:
+					if file.endswith(".txt"):
+						i += 1
+			count.set(i)
+
+		contarTextos(self, self.ruta_verdura.get(), self.verduras)
+
 		self.imagen_entrenamiento = PhotoImage(file ='./interfaz/entrenamiento.png')
 		self.imagen_clasificacion = PhotoImage(file ='./interfaz/clasifiacion.png')
 		self.imagen_webscraping = PhotoImage(file ='./interfaz/webscraping.png')
@@ -147,15 +156,6 @@ class Ventana(Frame):
 
 		# Página 3 - Web Scraping
 		Label(self.frame_tres, text= 'WEB SCRAPING', bg='white', fg= 'black', font= ('Arial', 15, 'bold')).pack(expand=1)
-
-# Contar cuantos textos hay en una carpeta
-def contarTextos(folder):
-    count = 0
-    for root, dirs, files in os.walk(folder):
-        for file in files:
-            if file.endswith(".txt"):
-                count += 1
-    return count
 
 # Settings ventana
 if __name__ == "__main__":
