@@ -11,7 +11,7 @@ listaCategorías = ["Aperitivos","Carne","Pasta","Pescado", "Verdura", "Otros"]
 #3 Pasta
 #4 Pescado
 #5 Verdura
-categoria = 1 
+categoria = 4 
 
 with open(listaLinks[categoria], 'r') as file:
     for linea in file:
