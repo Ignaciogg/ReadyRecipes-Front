@@ -11,7 +11,7 @@ class Receta():
         self.texto = text
 
     def __init__(self, ruta):
-        f = open(ruta, 'r', encoding="Latin-1")
+        f = open(ruta, 'r', encoding="utf-8")
         self.url = f.readline()
         self.titulo = f.readline()
         self.autor = f.readline()
