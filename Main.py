@@ -1,6 +1,11 @@
 import Descarga.YoutubeDownloader as YoutubeDownloader
 import os
 
+import ETL.TratamientoDatos as TratamientoDatos
+
+TratamientoDatos.generarDiccionario()
+
+
 listaLinks = ["aperitivos.txt","carnes.txt","pastas.txt","pescados.txt", "verduras.txt"]
 listaCategorías = ["Aperitivos","Carne","Pasta","Pescado", "Verdura", "Otros"]
 

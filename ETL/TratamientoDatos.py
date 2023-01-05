@@ -13,8 +13,7 @@ from Descarga.Receta import Receta
 
 
 #Variables globales
-listaCategorías = ["verdura"]
-#listaCategorías = ["aperitivos","carne","pasta","pescado", "verdura"]
+listaCategorías = ["aperitivos","carne","pasta","pescado", "verdura"]
 rutaListaParada = "ETL\ListaParada.txt"
 rutaDiccionario = "ETL\Diccionario.txt"
 rutaMatriz = "ETL\Matriz.txt"
