@@ -4,7 +4,7 @@ from pytube import YouTube
 import os
 from pathlib import Path
 from Descarga.Receta import Receta
-import Descarga.SpeachRecognition as SpeachRecognition
+import Descarga.SpeechRecognition as SpeechRecognition
 import Descarga.AudioConverter as AudioConverter
 
 pathVideos=Path().absolute() / 'Videos'
@@ -32,7 +32,7 @@ def descargarVideo(url, categoria):
         t.download(pathVideos, nombre+'.mp4')
         AudioConverter.convertirAudio(nombre)
         try:
-            texto = SpeachRecognition.transcribirAudio(nombre)
+            texto = SpeechRecognition.transcribirAudio(nombre)
             receta = Receta(titulo, url, autor, texto).guardarTexto(str(pathTextos)+'\\'+categoria+'\\'+nombre+'.txt')
         except:
             print('ERROR. Audio mayor 10MB')
@@ -47,13 +47,8 @@ def comprobarNuevo(url):
         j = 0
         while nuevo and j < len(listaTextos):
             enlaceReceta = ruta + '\\' + listaTextos[j]
-            if url == leerReceta(enlaceReceta):
+            if url == Receta(enlaceReceta).url:
                 nuevo = False
             j += 1
         i += 1
     return nuevo
-
-def leerReceta(ruta):
-    f = open(ruta, 'r', encoding="Latin-1")
-    url = f.readline()
-    return url

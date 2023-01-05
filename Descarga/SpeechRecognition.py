@@ -1,7 +1,7 @@
 #pip install SpeechRecognition
 
 # Importar libreria
-import speech_recognition as sr
+import SpeechRecognition as sr
 import Descarga.YoutubeDownloader as yt
 import os
 

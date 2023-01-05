@@ -9,20 +9,22 @@ from pathlib import Path
 import numpy
 import ast
 
+from Descarga.Receta import Receta
+
 
 #Variables globales
-listaCategorías = ["verdura"]
-#listaCategorías = ["aperitivos","carne","pasta","pescado", "verdura"]
-rutaListaParada = "filtrado\ListaParada.txt"
-rutaDiccionario = "Diccionario.txt"
-rutaMatriz = "matriz.txt"
-rutaTextosTratados = "TextosLeidos.txt"
+listaCategorías = ["aperitivos","carne","pasta","pescado", "verdura"]
+rutaListaParada = "ETL\ListaParada.txt"
+rutaDiccionario = "ETL\Diccionario.txt"
+rutaMatriz = "ETL\Matriz.txt"
+rutaTextosTratados = "ETL\TextosLeidos.txt"
 
 #Metodos para lectura de ficheros
 def leerFichero(rutaFichero):
-    f = open (rutaFichero,'r', encoding="Latin-1")
+    f = open(rutaFichero, 'r', encoding="utf-8")
     texto = f.read()
     return texto
+    
 
 #Metodos de Tratamiento de ficheros
 def tokenizacion(texto):
@@ -68,7 +70,7 @@ def lematizacion(tokens):
 def generarDiccionario():
     diccionario = []
     ficherosTratados = []
-    matriz = []
+    #matriz = []
     if os.path.isfile(rutaDiccionario): #Compruebo si existe el fichero
         diccionario = leerFichero(rutaDiccionario).splitlines()
     if os.path.isfile(rutaTextosTratados): #Compruebo si existe el fichero
@@ -84,7 +86,7 @@ def generarDiccionario():
             if recetaActual not in ficherosTratados:
                 print(recetaActual)
                 #Tratamiento de la receta
-                tokens = tokenizacion(leerFichero(recetaActual))
+                tokens = tokenizacion(Receta(recetaActual).texto)
                 tokens = tratamientoBasico(tokens)
                 tokens = listaParada(tokens)
                 tokens = lematizacion(tokens)
@@ -98,13 +100,13 @@ def generarDiccionario():
                 ficherosTratados.append(recetaActual)
     #Guardo en ficheros el diccionaro y las noticias tratadas
     #Diccionario
-    f = open(rutaDiccionario, "w")
+    f = open(rutaDiccionario, "w", encoding="utf-8")
     for elemento in diccionario:
         f.write(elemento+"\n")
     f.close()
 
     #Noticias tratadas
-    f = open(rutaTextosTratados, "w")
+    f = open(rutaTextosTratados, "w", encoding="utf-8")
     for elemento in ficherosTratados:
         f.write(elemento+"\n")
     f.close()

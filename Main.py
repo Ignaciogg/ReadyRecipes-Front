@@ -1,21 +1,23 @@
 import Descarga.YoutubeDownloader as YoutubeDownloader
 import os
 
+import ETL.TratamientoDatos as TratamientoDatos
+
 listaLinks = ["aperitivos.txt","carnes.txt","pastas.txt","pescados.txt", "verduras.txt"]
 listaCategorías = ["Aperitivos","Carne","Pasta","Pescado", "Verdura", "Otros"]
 
-with open(listaLinks[2],'r') as file:
+#1 Aperitivos
+#2 Carne
+#3 Pasta
+#4 Pescado
+#5 Verdura
+categoria = 4 
+
+with open(listaLinks[categoria], 'r') as file:
     for linea in file:
         print(linea)
-        YoutubeDownloader.descargarVideo(linea, listaCategorías[2])
+        YoutubeDownloader.descargarVideo(linea, listaCategorías[categoria])
 
 #YoutubeDownloader.descargarVideo('https://www.youtube.com/watch?v=U1JXE7o6Z8g')
-contenido = os.listdir('./Textos/Verdura')
 
-print(len(contenido))
-
-keywords_postres=['postres','postre','helado','tarta','galletas']
-keywords_verdura=['ensaladas','ensalada']
-keywords_pescado=['pescado']
-keywords_carne=['carne']
-keywords_pasta=['pasta','espaguetti','carbonara','fideos']
+TratamientoDatos.generarDiccionario()
