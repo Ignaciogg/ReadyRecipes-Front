@@ -1,7 +1,10 @@
 import Descarga.YoutubeDownloader as YoutubeDownloader
 import os
 
-#import ETL.TratamientoDatos as TratamientoDatos
+import ETL.TratamientoDatos as TratamientoDatos
+
+TratamientoDatos.generarDiccionario()
+TratamientoDatos.generarMatriz()
 
 listaLinks = ["aperitivos.txt","carnes.txt","pastas.txt","pescados.txt", "verduras.txt"]
 listaCategorías = ["Aperitivos","Carne","Pasta","Pescado", "Verdura"]
@@ -16,4 +19,4 @@ while contador<len(listaCategorías):
 
 #YoutubeDownloader.descargarVideo('https://www.youtube.com/watch?v=U1JXE7o6Z8g')
 
-#TratamientoDatos.generarDiccionario()
+TratamientoDatos.generarDiccionario()
