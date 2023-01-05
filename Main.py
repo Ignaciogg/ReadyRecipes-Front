@@ -3,9 +3,6 @@ import os
 
 import ETL.TratamientoDatos as TratamientoDatos
 
-TratamientoDatos.generarDiccionario()
-
-
 listaLinks = ["aperitivos.txt","carnes.txt","pastas.txt","pescados.txt", "verduras.txt"]
 listaCategorías = ["Aperitivos","Carne","Pasta","Pescado", "Verdura", "Otros"]
 
@@ -22,6 +19,5 @@ with open(listaLinks[categoria], 'r') as file:
         YoutubeDownloader.descargarVideo(linea, listaCategorías[categoria])
 
 #YoutubeDownloader.descargarVideo('https://www.youtube.com/watch?v=U1JXE7o6Z8g')
-contenido = os.listdir('./Textos/Verdura')
 
-print(len(contenido))
+TratamientoDatos.generarDiccionario()
