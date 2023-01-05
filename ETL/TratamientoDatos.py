@@ -23,6 +23,7 @@ def leerFichero(rutaFichero):
     f = open (rutaFichero,'r', encoding="Latin-1")
     texto = f.read()
     return texto
+    
 
 #Metodos de Tratamiento de ficheros
 def tokenizacion(texto):
