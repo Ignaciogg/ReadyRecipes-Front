@@ -107,6 +107,8 @@ class Ventana(Frame):
 		self.paginas.add(self.frame_tres, image = self.imagen_webscraping)
 
 		# Inicio
+		cl = Button(self.frame_top, text="Exit",width=5, height=2, bg='red2', fg='white', font= ('Arial', 8, 'bold'), command=self.quit)
+		cl.place(relx=0.965, rely=0.10)
 		Label(self.frame_top,text='Bienvenido a Ready Recipes', bg='#061a2b', fg='#4077a6', font=('Arial', 25, 'bold')).pack(expand=1, pady=12)
 		Label(self.frame_inicio, image= self.logo, bg='white').pack(expand=1, pady=0)
 		Label(self.frame_inicio, text= 'Para empezar, seleccione el segundo icono (entrenamiento) del navegador', bg='white', fg= 'black', font= ('Arial', 15)).pack(expand=1)
@@ -239,7 +241,7 @@ class Ventana(Frame):
 # Settings ventana
 if __name__ == "__main__":
     ventana = Tk()
-    ventana.title("Rady Recipes")
+    ventana.title("Ready Recipes")
     ventana.resizable(True, True)
     ventana.attributes('-fullscreen',True)
     
