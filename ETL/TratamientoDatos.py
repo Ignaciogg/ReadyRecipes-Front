@@ -77,7 +77,7 @@ def generarDiccionario():
         ficherosTratados = leerFichero(rutaTextosTratados).splitlines()
     #Recorro todas las categorías
     for categoría in listaCategorías:
-        rutaCategoría = os.getcwd() + '/textos/'+categoría+'/'
+        rutaCategoría = './textos/'+categoría+'/'
         listaRecetas= os.listdir(rutaCategoría)
         #Recorro todas las recetas de cada categoría
         for receta in listaRecetas:
@@ -97,7 +97,7 @@ def generarDiccionario():
                         diccionario.append(token)
                     
                 #Guardo la receta en los ficheros tratados para no volver a analizarla           
-                ficherosTratados.append(recetaActual)
+                ficherosTratados.append('/textos/'+categoría+'/'+receta)
     #Guardo en ficheros el diccionaro y las noticias tratadas
     #Diccionario
     f = open(rutaDiccionario, "w", encoding="utf-8")
@@ -116,13 +116,13 @@ def generarDiccionario():
 #Metodo para generar la matriz
 def generarMatriz():
     #leo el diccionario
-    diccionario = leerFicheros(rutaDiccionario)
-    #leo el fichero de las noticias tratadas
-    noticias = leerFicheros(rutaFicherosTratados)
-    print("Numero de noticias: " + str(len(noticias)))
+    diccionario = leerFichero(rutaDiccionario).splitlines()
+    #leo el fichero de las recetas tratadas
+    recetas = leerFichero(rutaTextosTratados).splitlines()
+    print("Numero de recetas: " + str(len(recetas)))
     if os.path.isfile(rutaMatriz): #Compruebo si existe el fichero
         matriz = numpy.loadtxt(rutaMatriz)
-        matrizNueva = numpy.zeros((len(noticias),len(diccionario)),dtype=int)
+        matrizNueva = numpy.zeros((len(recetas),len(diccionario)),dtype=int)
         print("Numero de filas en la matriz inicialmente: "+str(len(matriz)))
         print("Numero de palabras en el diccionario: "+str(len(diccionario)))
         print("Numero de palabras en la primera columna de la matriz antes de rellenar de ceros: "+str(len(matriz[0])))
@@ -138,11 +138,11 @@ def generarMatriz():
             nFila +=1
         #Guardamos las nuevas filas
         filasMatrizInicial = len(matriz)
-        filasMatrizFinal = len(noticias)
+        filasMatrizFinal = len(recetas)
         diferenciaFilas = filasMatrizFinal-filasMatrizInicial
         for i in range(diferenciaFilas):
             filaNueva = numpy.zeros(len(diccionario))
-            tokens = tokenizacion(leerFichero(os.getcwd()+noticias[filasMatrizInicial+i]) )
+            tokens = tokenizacion(Receta(os.getcwd()+recetas[filasMatrizInicial+i]).texto )
             tokens = tratamientoBasico(tokens)
             tokens = listaParada(tokens)
             tokens = lematizacion(tokens)
@@ -152,10 +152,10 @@ def generarMatriz():
         numpy.savetxt(rutaMatriz,matrizNueva,fmt='%i')
         return matrizNueva
     else:
-        matriz = numpy.zeros((len(noticias),len(diccionario)),dtype=int)
+        matriz = numpy.zeros( (len(recetas), len(diccionario) ) ,dtype=int)
         i=0
-        for noticia in noticias:
-            tokens = tokenizacion(leerFichero(os.getcwd()+noticia))
+        for receta in recetas:
+            tokens = tokenizacion(Receta(os.getcwd()+receta).texto)
             tokens = tratamientoBasico(tokens)
             tokens = listaParada(tokens)
             tokens = lematizacion(tokens)
@@ -166,7 +166,7 @@ def generarMatriz():
         return matriz
     
 #Main
-generarDiccionario()
+#generarDiccionario()
 #matriz = generarMatriz()
 #print( coseno(matriz[0], matriz[1]) )
 #matrizNueva = TransformTFIDF.matrixToTFIDF(matriz)
