@@ -126,18 +126,31 @@ class Ventana(Frame):
 		Button(self.frame_uno, width=12, text='Cambiar', command= lambda : self.abrirExplorador(self.ruta_verdura)).place(relx=0.75, rely=0.26)
 
 		#1.2 - Selección de algoritmos y vista previa
-		self.radio1 = Radiobutton(self.frame_uno, justify=LEFT, command=self.seleccionaAlgoritmo("KNN"), text="KNN", variable=self.seleccion, value="KNN").place(relx=0.2, rely=0.42)
-		self.radio2 = Radiobutton(self.frame_uno, justify=LEFT, command=self.seleccionaAlgoritmo("GBT"), text="Gradient Boosted Tree", variable=self.seleccion, value="GBT").place(relx=0.2, rely=0.46)
-		self.radio3 = Radiobutton(self.frame_uno, justify=LEFT, command=self.seleccionaAlgoritmo("Random Forest"), text="Random Forest", variable=self.seleccion, value="Random Forest").place(relx=0.2, rely=0.50)
+		self.radio1 = Radiobutton(self.frame_uno, justify=LEFT, command=self.seleccionaAlgoritmo("KNN"), text="KNN", variable=self.seleccion, value="KNN").place(relx=0.2, rely=0.45)
+		self.radio2 = Radiobutton(self.frame_uno, justify=LEFT, command=self.seleccionaAlgoritmo("GBT"), text="Gradient Boosted Tree", variable=self.seleccion, value="GBT").place(relx=0.2, rely=0.49)
+		self.radio3 = Radiobutton(self.frame_uno, justify=LEFT, command=self.seleccionaAlgoritmo("Random Forest"), text="Random Forest", variable=self.seleccion, value="Random Forest").place(relx=0.2, rely=0.52)
 
-		Label(self.frame_uno, justify=LEFT, text='VISTA PREVIA:', bg='white', fg= 'black', font= ('Arial', 13, 'bold')).place(relx=0.477, rely=0.35)
-		Label(self.frame_uno, justify=LEFT, text='Aperitivos encontrados - ' + str(len(os.listdir(self.pathAperitivos))), bg='white', fg= 'black', font= ('Arial', 13)).place(relx=0.35, rely=0.40)
-		Label(self.frame_uno, justify=LEFT, text='Carnes encontradas - ' + str(len(os.listdir(self.pathCarne))) + '              Modelo Seleccionado:', bg='white', fg= 'black', font= ('Arial', 13)).place(relx=0.35, rely=0.43)
-		Label(self.frame_uno, justify=LEFT, text='Pastas encontradas - ' + str(len(os.listdir(self.pathPasta))) + '                     ' + str(self.seleccion.get()), bg='white', fg= 'black', font= ('Arial', 13)).place(relx=0.35, rely=0.46)
-		Label(self.frame_uno, justify=LEFT, text='Pescados encontrados - ' + str(len(os.listdir(self.pathPescado))), bg='white', fg= 'black', font= ('Arial', 13)).place(relx=0.35, rely=0.49)
-		Label(self.frame_uno, justify=LEFT, text='Verduras encontrados - ' + str(len(os.listdir(self.pathVerduras))), bg='white', fg= 'black', font= ('Arial', 13)).place(relx=0.35, rely=0.52)
-		Label(self.frame_uno, justify=LEFT, text='Total: ' + str(len(os.listdir(self.pathAperitivos)) + len(os.listdir(self.pathCarne)) + len(os.listdir(self.pathPasta)) + len(os.listdir(self.pathPescado)) + len(os.listdir(self.pathVerduras))), bg='white', fg= 'black', font= ('Arial', 13)).place(relx=0.35, rely=0.57)
-		Button(self.frame_uno, width=12, text='ENTRENAR!', bg='red2', fg='white', font= ('Arial', 13, 'bold')).place(relx=0.7, rely=0.46)
+		Label(self.frame_uno, justify=LEFT, text='VISTA PREVIA:', bg='white', fg= 'black', font= ('Arial', 13, 'bold')).place(relx=0.477, rely=0.38)
+		Label(self.frame_uno, justify=LEFT, text='Aperitivos encontrados - ' + str(len(os.listdir(self.pathAperitivos))), bg='white', fg= 'black', font= ('Arial', 13)).place(relx=0.35, rely=0.43)
+		Label(self.frame_uno, justify=LEFT, text='Carnes encontradas - ' + str(len(os.listdir(self.pathCarne))) + '              Modelo Seleccionado:', bg='white', fg= 'black', font= ('Arial', 13)).place(relx=0.35, rely=0.46)
+		Label(self.frame_uno, justify=LEFT, text='Pastas encontradas - ' + str(len(os.listdir(self.pathPasta))) + '                     ' + str(self.seleccion.get()), bg='white', fg= 'black', font= ('Arial', 13)).place(relx=0.35, rely=0.49)
+		Label(self.frame_uno, justify=LEFT, text='Pescados encontrados - ' + str(len(os.listdir(self.pathPescado))), bg='white', fg= 'black', font= ('Arial', 13)).place(relx=0.35, rely=0.52)
+		Label(self.frame_uno, justify=LEFT, text='Verduras encontrados - ' + str(len(os.listdir(self.pathVerduras))), bg='white', fg= 'black', font= ('Arial', 13)).place(relx=0.35, rely=0.55)
+		Label(self.frame_uno, justify=LEFT, text='Total: ' + str(len(os.listdir(self.pathAperitivos)) + len(os.listdir(self.pathCarne)) + len(os.listdir(self.pathPasta)) + len(os.listdir(self.pathPescado)) + len(os.listdir(self.pathVerduras))), bg='white', fg= 'black', font= ('Arial', 13)).place(relx=0.35, rely=0.60)
+		
+		values = [len(os.listdir(self.pathAperitivos)), len(os.listdir(self.pathCarne)), len(os.listdir(self.pathPasta)), len(os.listdir(self.pathPescado)), len(os.listdir(self.pathVerduras))]
+		labels = ['Aperitivos', 'Carnes', 'Pastas', 'Pescados', 'Verduras']
+		colors = ['#66b3ff','#ff9999','#ffcc99','#333333','#99ff99']
+		plt.rcParams['font.size'] = 8
+		fig1 = Figure(figsize=(4,4))
+		ax1 = fig1.add_subplot(111)
+		ax1.pie(values, labels=labels, colors=colors, startangle=90)
+		def verEntreno():
+			canvas1 = FigureCanvasTkAgg(fig1, master=self.frame_uno)
+			canvas1.draw()
+			canvas1.get_tk_widget().grid(column=0, row=0, padx=1010, pady=250)
+		
+		Button(self.frame_uno, width=12, command=lambda : verEntreno(), text='ENTRENAR!', bg='red2', fg='white', font= ('Arial', 13, 'bold')).place(relx=0.38, rely=0.72)
 
 		#1.3 - Guardar modelo
 		Label(self.frame_uno, width=15, text='Guardar modelo:', bg='white', fg= 'black', font=('Arial', 13)).place(relx=0.20, rely=0.90)
@@ -193,12 +206,9 @@ class Ventana(Frame):
 		lb7 = Label(self.frame_dos, justify=LEFT, text='Total: ' + str(len(os.listdir(self.pathAperitivos)) + len(os.listdir(self.pathCarne)) + len(os.listdir(self.pathPasta)) + len(os.listdir(self.pathPescado)) + len(os.listdir(self.pathVerduras))), bg='white', fg= 'black', font= ('Arial', 13))
 		lb8 = Label(self.frame_dos, justify=LEFT, text='Tiempo: ', bg='white', fg= 'black', font= ('Arial', 13, 'bold'))
 		
-		values = [10, 20, 30, 40, 25]
-		labels = ['Aperitivos', 'Carnes', 'Pastas', 'Pescados', 'Verduras']
-		colors = ['#ff9999','#66b3ff','#99ff99','#ffcc99','#ffffff']
-		fig = Figure(figsize=(3,3))
-		ax = fig.add_subplot(111)
-		ax.pie(values, labels=labels, colors=colors, startangle=90)
+		fig2 = Figure(figsize=(4,4))
+		ax2 = fig2.add_subplot(111)
+		ax2.pie(values, labels=labels, colors=colors, startangle=90)
 
 		#2.5 - Guardar resultado
 		lb9 = Label(self.frame_dos, width=15, text='Guardar resultado:', bg='white', fg= 'black', font=('Arial', 13))
@@ -220,9 +230,9 @@ class Ventana(Frame):
 			lb9.place(relx=0.20, rely=0.90)
 			e10.place(relx=0.35, rely= 0.90)
 			b11.place(relx=0.75, rely=0.90)
-			canvas = FigureCanvasTkAgg(fig, master=self.frame_dos)
-			canvas.draw()
-			canvas.place(relx=0.75, rely= 0.52)
+			canvas2 = FigureCanvasTkAgg(fig2, master=self.frame_dos)
+			canvas2.draw()
+			canvas2.get_tk_widget().grid(column=0, row=0, padx=1070, pady=210)
 
 		Button(self.frame_dos, width=12, command=lambda : verResumen(), text='CLASIFICAR!', bg='red2', fg='white', font= ('Arial', 13, 'bold')).place(relx=0.465, rely=0.20)
 
