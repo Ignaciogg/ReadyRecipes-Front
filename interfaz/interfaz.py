@@ -21,12 +21,12 @@ class Ventana(Frame):
 		self.color = True
 
 		self.ruta_aperitivos, self.ruta_carne, self.ruta_pasta, self.ruta_pescado, self.ruta_verdura, self.ruta_otros, self.ruta_modelo, self.ruta_guardar_modelo = StringVar(), StringVar(), StringVar(), StringVar(), StringVar(), StringVar(), StringVar(), StringVar()
-		self.pathAperitivos=Path().absolute() / 'textos' / 'Aperitivos'
-		self.pathCarne=Path().absolute() / 'textos' / 'Carne'
-		self.pathVerduras=Path().absolute() / 'textos' / 'Verdura'
-		self.pathPasta=Path().absolute() / 'textos' / 'Pasta'
-		self.pathPescado=Path().absolute() / 'textos' / 'Pescado'
-		self.pathOtros=Path().absolute() / 'textos' / 'otro'
+		self.pathAperitivos=Path().absolute() / 'Textos' / 'Aperitivos'
+		self.pathCarne=Path().absolute() / 'Textos' / 'Carne'
+		self.pathVerduras=Path().absolute() / 'Textos' / 'Verdura'
+		self.pathPasta=Path().absolute() / 'Textos' / 'Pasta'
+		self.pathPescado=Path().absolute() / 'Textos' / 'Pescado'
+		self.pathOtros=Path().absolute() / 'Textos' / 'otro'
 		self.ruta_aperitivos.set(self.pathAperitivos)
 		self.ruta_carne.set(self.pathCarne)
 		self.ruta_pasta.set(self.pathPasta)
@@ -35,7 +35,6 @@ class Ventana(Frame):
 		self.ruta_otros.set(self.pathOtros)
 		self.ruta_modelo.set("./ReadyRecipes/Textos/modelo")
 		self.ruta_guardar_modelo.set("./ReadyRecipes/Textos/modelo/modelo1.txt")
-		
 
 		self.seleccion = StringVar()
 
@@ -81,8 +80,6 @@ class Ventana(Frame):
 
 	def nav(self):
 
-		#contarTextos(self, self.ruta_verdura.get(), self.verduras)
-
 		self.imagen_entrenamiento = PhotoImage(file ='./interfaz/entrenamiento.png')
 		self.imagen_clasificacion = PhotoImage(file ='./interfaz/clasifiacion.png')
 		self.imagen_webscraping = PhotoImage(file ='./interfaz/webscraping.png')
@@ -92,14 +89,9 @@ class Ventana(Frame):
 		self.paginas = ttk.Notebook(self.frame_principal, style= 'TNotebook')
 		self.paginas.grid(column=0, row=0, sticky='nsew')
 		self.frame_inicio = Frame(self.paginas, bg='white')
-		self.frame_uno = Canvas(self.paginas, bg='white')
-
-		sb1 = ttk.Scrollbar(self.frame_uno, orient=VERTICAL, command=self.frame_uno.yview)
-		sb1.place(relx=0.98, rely= 0.00, relheight=0.99, relwidth=0.02)
-		self.frame_uno.configure(yscrollcommand=sb1.set)
-
-		self.frame_dos = Canvas(self.paginas, bg='white')
-		self.frame_tres = Canvas(self.paginas, bg='white')
+		self.frame_uno = Frame(self.paginas, bg='white')
+		self.frame_dos = Frame(self.paginas, bg='white')
+		self.frame_tres = Frame(self.paginas, bg='white')
 		self.paginas.add(self.frame_inicio, image = self.imagen_home)
 		self.paginas.add(self.frame_uno, image = self.imagen_entrenamiento)
 		self.paginas.add(self.frame_dos, image = self.imagen_clasificacion)
@@ -114,53 +106,53 @@ class Ventana(Frame):
 
 		# Página 1 - Entrenamiento
 		#1.1 - Selección de textos
-		Label(self.frame_uno, text='ENTRENAMIENTO', bg='white', fg= 'black', font= ('Arial', 15, 'bold')).grid(column=1, row=0, pady=20)
-		Label(self.frame_uno, width=15, text='Textos Aperitivos', bg='white', fg= 'black', font=('Arial', 13)).grid(column=0, row=1, pady=12, padx=100)
-		Label(self.frame_uno, width=15, text='Textos Carne', bg='white', fg= 'black', font=('Arial', 13)).grid(column=0, row=2, pady=12, padx=100)
-		Label(self.frame_uno, width=15, text='Textos Pasta', bg='white', fg= 'black', font=('Arial', 13)).grid(column=0 ,row=3, pady=12, padx=100)
-		Label(self.frame_uno, width=15, text='Textos Pesacado', bg='white', fg= 'black', font=('Arial', 13)).grid(column=0, row=4, pady=12, padx=100)
-		Label(self.frame_uno, width=15, text='Textos Verdura', bg='white', fg= 'black', font=('Arial', 13)).grid(column=0, row=5, pady=12, padx=100)
+		Label(self.frame_uno, text='ENTRENAMIENTO', bg='white', fg= 'black', font= ('Arial', 15, 'bold')).place(relx=0.458, rely=0.03)
+		Label(self.frame_uno, width=15, text='Textos Aperitivos', bg='white', fg= 'black', font=('Arial', 13)).place(relx=0.2, rely=0.1)
+		Label(self.frame_uno, width=15, text='Textos Carne', bg='white', fg= 'black', font=('Arial', 13)).place(relx=0.2, rely=0.14)
+		Label(self.frame_uno, width=15, text='Textos Pasta', bg='white', fg= 'black', font=('Arial', 13)).place(relx=0.2, rely=0.18)
+		Label(self.frame_uno, width=15, text='Textos Pesacado', bg='white', fg= 'black', font=('Arial', 13)).place(relx=0.2, rely=0.22)
+		Label(self.frame_uno, width=15, text='Textos Verdura', bg='white', fg= 'black', font=('Arial', 13)).place(relx=0.2, rely=0.26)
 
-		Entry(self.frame_uno, state= "disabled", width=80, text=self.ruta_aperitivos, textvariable=self.ruta_aperitivos, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3).grid(column=1,row=1, padx=140)
-		Entry(self.frame_uno, state= "disabled", width=80, text=self.ruta_carne, textvariable=self.ruta_carne, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3).grid(column=1,row=2, padx=140)
-		Entry(self.frame_uno, state= "disabled", width=80, text=self.ruta_pasta, textvariable=self.ruta_pasta, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3).grid(column=1,row=3, padx=140)
-		Entry(self.frame_uno, state= "disabled", width=80, text=self.ruta_pescado, textvariable=self.ruta_pescado, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3).grid(column=1,row=4, padx=140)
-		Entry(self.frame_uno, state= "disabled", width=80, text=self.ruta_verdura, textvariable=self.ruta_verdura, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3).grid(column=1,row=5, padx=140)
+		Entry(self.frame_uno, state= "disabled", width=80, text=self.ruta_aperitivos, textvariable=self.ruta_aperitivos, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3).place(relx=0.35, rely=0.1)
+		Entry(self.frame_uno, state= "disabled", width=80, text=self.ruta_carne, textvariable=self.ruta_carne, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3).place(relx=0.35, rely=0.14)
+		Entry(self.frame_uno, state= "disabled", width=80, text=self.ruta_pasta, textvariable=self.ruta_pasta, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3).place(relx=0.35, rely=0.18)
+		Entry(self.frame_uno, state= "disabled", width=80, text=self.ruta_pescado, textvariable=self.ruta_pescado, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3).place(relx=0.35, rely=0.22)
+		Entry(self.frame_uno, state= "disabled", width=80, text=self.ruta_verdura, textvariable=self.ruta_verdura, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3).place(relx=0.35, rely=0.26)
 
-		Button(self.frame_uno, width=12, text='Cambiar', command= lambda : self.abrirExplorador(self.ruta_aperitivos)).grid(column=2, row=1, padx=50)
-		Button(self.frame_uno, width=12, text='Cambiar', command= lambda : self.abrirExplorador(self.ruta_carne)).grid(column=2, row=2, padx=50)
-		Button(self.frame_uno, width=12, text='Cambiar', command= lambda : self.abrirExplorador(self.ruta_pasta)).grid(column=2, row=3, padx=50)
-		Button(self.frame_uno, width=12, text='Cambiar', command= lambda : self.abrirExplorador(self.ruta_pescado)).grid(column=2, row=4, padx=50)
-		Button(self.frame_uno, width=12, text='Cambiar', command= lambda : self.abrirExplorador(self.ruta_verdura)).grid(column=2, row=5, padx=50)
+		Button(self.frame_uno, width=12, text='Cambiar', command= lambda : self.abrirExplorador(self.ruta_aperitivos)).place(relx=0.75, rely=0.10)
+		Button(self.frame_uno, width=12, text='Cambiar', command= lambda : self.abrirExplorador(self.ruta_carne)).place(relx=0.75, rely=0.14)
+		Button(self.frame_uno, width=12, text='Cambiar', command= lambda : self.abrirExplorador(self.ruta_pasta)).place(relx=0.75, rely=0.18)
+		Button(self.frame_uno, width=12, text='Cambiar', command= lambda : self.abrirExplorador(self.ruta_pescado)).place(relx=0.75, rely=0.22)
+		Button(self.frame_uno, width=12, text='Cambiar', command= lambda : self.abrirExplorador(self.ruta_verdura)).place(relx=0.75, rely=0.26)
 
 		#1.2 - Selección de algoritmos y vista previa
-		self.radio1 = Radiobutton(self.frame_uno, justify=LEFT, command=self.seleccionaAlgoritmo("KNN"), text="KNN", variable=self.seleccion, value="KNN").grid(column=0, row=8)
-		self.radio2 = Radiobutton(self.frame_uno, justify=LEFT, command=self.seleccionaAlgoritmo("GBT"), text="Gradient Boosted Tree", variable=self.seleccion, value="GBT").grid(column=0, row=9)
-		self.radio3 = Radiobutton(self.frame_uno, justify=LEFT, command=self.seleccionaAlgoritmo("Random Forest"), text="Random Forest", variable=self.seleccion, value="Random Forest").grid(column=0, row=10)
+		self.radio1 = Radiobutton(self.frame_uno, justify=LEFT, command=self.seleccionaAlgoritmo("KNN"), text="KNN", variable=self.seleccion, value="KNN").place(relx=0.2, rely=0.42)
+		self.radio2 = Radiobutton(self.frame_uno, justify=LEFT, command=self.seleccionaAlgoritmo("GBT"), text="Gradient Boosted Tree", variable=self.seleccion, value="GBT").place(relx=0.2, rely=0.46)
+		self.radio3 = Radiobutton(self.frame_uno, justify=LEFT, command=self.seleccionaAlgoritmo("Random Forest"), text="Random Forest", variable=self.seleccion, value="Random Forest").place(relx=0.2, rely=0.50)
 
-		Label(self.frame_uno, justify=LEFT, text='VISTA PREVIA:', bg='white', fg= 'black', font= ('Arial', 13, 'bold')).grid(column=1, row=6, pady=70)
-		Label(self.frame_uno, justify=LEFT, text='Aperitivos encontrados     - ' + str(len(os.listdir(self.pathAperitivos))), bg='white', fg= 'black', font= ('Arial', 13)).grid(sticky = W, column=1, row=7)
-		Label(self.frame_uno, justify=LEFT, text='Carnes encontradas         - ' +  str(len(os.listdir(self.pathCarne)))+ '                               Modelo Seleccionado:', bg='white', fg= 'black', font= ('Arial', 13)).grid(sticky = W, column=1, row=8)
-		Label(self.frame_uno, justify=LEFT, text='Pastas encontradas          - ' + str(len(os.listdir(self.pathPasta))) + '                                   ' + str(self.seleccion.get()), bg='white', fg= 'black', font= ('Arial', 13)).grid(sticky = W, column=1, row=9)
-		Label(self.frame_uno, justify=LEFT, text='Pescados encontrados     - ' + str(len(os.listdir(self.pathPescado))), bg='white', fg= 'black', font= ('Arial', 13)).grid(sticky = W, column=1, row=10)
-		Label(self.frame_uno, justify=LEFT, text='Verduras encontrados      - ' + str(len(os.listdir(self.pathVerduras))), bg='white', fg= 'black', font= ('Arial', 13)).grid(sticky = W, column=1, row=11)
-		Label(self.frame_uno, justify=LEFT, text='Total: ' + str(self.total.get()), bg='white', fg= 'black', font= ('Arial', 13)).grid(sticky = W, column=1, row=12, pady=10)
-		Button(self.frame_uno, width=12, text='ENTRENAR!', bg='red2', fg='white', font= ('Arial', 13, 'bold')).grid(column=2, row=9)
+		Label(self.frame_uno, justify=LEFT, text='VISTA PREVIA:', bg='white', fg= 'black', font= ('Arial', 13, 'bold')).place(relx=0.477, rely=0.35)
+		Label(self.frame_uno, justify=LEFT, text='Aperitivos encontrados - ' + str(len(os.listdir(self.pathAperitivos))), bg='white', fg= 'black', font= ('Arial', 13)).place(relx=0.35, rely=0.40)
+		Label(self.frame_uno, justify=LEFT, text='Carnes encontradas - ' + str(len(os.listdir(self.pathCarne))) + '              Modelo Seleccionado:', bg='white', fg= 'black', font= ('Arial', 13)).place(relx=0.35, rely=0.43)
+		Label(self.frame_uno, justify=LEFT, text='Pastas encontradas - ' + str(len(os.listdir(self.pathPasta))) + '                     ' + str(self.seleccion.get()), bg='white', fg= 'black', font= ('Arial', 13)).place(relx=0.35, rely=0.46)
+		Label(self.frame_uno, justify=LEFT, text='Pescados encontrados - ' + str(len(os.listdir(self.pathPescado))), bg='white', fg= 'black', font= ('Arial', 13)).place(relx=0.35, rely=0.49)
+		Label(self.frame_uno, justify=LEFT, text='Verduras encontrados - ' + str(len(os.listdir(self.pathVerduras))), bg='white', fg= 'black', font= ('Arial', 13)).place(relx=0.35, rely=0.52)
+		Label(self.frame_uno, justify=LEFT, text='Total: ' + str(len(os.listdir(self.pathAperitivos)) + len(os.listdir(self.pathCarne)) + len(os.listdir(self.pathPasta)) + len(os.listdir(self.pathPescado)) + len(os.listdir(self.pathVerduras))), bg='white', fg= 'black', font= ('Arial', 13)).place(relx=0.35, rely=0.57)
+		Button(self.frame_uno, width=12, text='ENTRENAR!', bg='red2', fg='white', font= ('Arial', 13, 'bold')).place(relx=0.7, rely=0.46)
 
 		#1.3 - Guardar modelo
-		Label(self.frame_uno, width=15, text='Guardar modelo:', bg='white', fg= 'black', font=('Arial', 13)).grid(column=0, row=17, pady=50)
-		Entry(self.frame_uno, state= "disabled", width=80, text=self.ruta_guardar_modelo, textvariable=self.ruta_guardar_modelo, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3).grid(column=1,row=17, padx=130)
-		Button(self.frame_uno, width=12, text='Seleccionar').grid(column=2, row=17, padx=50)
+		Label(self.frame_uno, width=15, text='Guardar modelo:', bg='white', fg= 'black', font=('Arial', 13)).place(relx=0.20, rely=0.90)
+		Entry(self.frame_uno, state= "disabled", width=80, text=self.ruta_guardar_modelo, textvariable=self.ruta_guardar_modelo, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3).place(relx=0.35, rely=0.90)
+		Button(self.frame_uno, width=12, text='Seleccionar').place(relx=0.75, rely=0.90)
 
 		# Página 2 - Clasificación
 		#2.1 - Selección de modelo
-		Label(self.frame_dos, text= 'CLASIFICACIÓN', bg='white', fg= 'black', font= ('Arial', 15, 'bold')).grid(column=1, row=0, pady=20)
-		Label(self.frame_dos, width=15, text='Textos a clasificar:', bg='white', fg= 'black', font=('Arial', 13)).grid(column=0, row=1, pady=12, padx=100)
-		Entry(self.frame_dos, state= "disabled", width=80, text=self.ruta_otros, textvariable=self.ruta_otros, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3).grid(column=1,row=1, padx=115)
-		Button(self.frame_dos, width=12, text='Seleccionar').grid(column=2, row=1, padx=50)
-		Label(self.frame_dos, width=18, text='Modelo clasificador:', bg='white', fg= 'black', font=('Arial', 13)).grid(column=0, row=2, pady=12, padx=100)
-		Entry(self.frame_dos, state= "disabled", width=80, text=self.ruta_modelo, textvariable=self.ruta_modelo, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3).grid(column=1,row=2, padx=115)
-		Button(self.frame_dos, width=12, text='Seleccionar').grid(column=2, row=2, padx=50)
+		Label(self.frame_dos, text= 'CLASIFICACIÓN', bg='white', fg= 'black', font= ('Arial', 15, 'bold')).place(relx=0.458, rely=0.03)
+		Label(self.frame_dos, width=15, text='Textos a clasificar:', bg='white', fg= 'black', font=('Arial', 13)).place(relx=0.2, rely=0.1)
+		Entry(self.frame_dos, state= "disabled", width=80, text=self.ruta_otros, textvariable=self.ruta_otros, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3).place(relx=0.35, rely=0.1)
+		Button(self.frame_dos, width=12, text='Seleccionar').place(relx=0.75, rely=0.10)
+		Label(self.frame_dos, width=18, text='Modelo clasificador:', bg='white', fg= 'black', font=('Arial', 13)).place(relx=0.2, rely=0.14)
+		Entry(self.frame_dos, state= "disabled", width=80, text=self.ruta_modelo, textvariable=self.ruta_modelo, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3).place(relx=0.35, rely=0.14)
+		Button(self.frame_dos, width=12, text='Seleccionar').place(relx=0.75, rely=0.14)
 
 		#2.2 - Tabla
 		treeview = ttk.Treeview(self.frame_dos)
@@ -193,13 +185,13 @@ class Ventana(Frame):
 
 		#2.4 - Resumen
 		lb1 = Label(self.frame_dos, justify=LEFT, text='RESUMEN:', bg='white', fg= 'black', font= ('Arial', 13, 'bold'))
-		lb2 = Label(self.frame_dos, justify=LEFT, text='Aperitivos     - ' + str(self.aperitivos.get()), bg='white', fg= 'black', font= ('Arial', 13))
-		lb3 = Label(self.frame_dos, justify=LEFT, text='Carnes         - ' + str(self.carnes.get()), bg='white', fg= 'black', font= ('Arial', 13))
-		lb4 = Label(self.frame_dos, justify=LEFT, text='Pastas          - ' + str(self.pastas.get()), bg='white', fg= 'black', font= ('Arial', 13))
-		lb5 = Label(self.frame_dos, justify=LEFT, text='Pescados     - ' + str(self.pescados.get()), bg='white', fg= 'black', font= ('Arial', 13))
-		lb6 = Label(self.frame_dos, justify=LEFT, text='Verduras      - ' + str(self.verduras.get()), bg='white', fg= 'black', font= ('Arial', 13))
-		lb7 = Label(self.frame_dos, justify=LEFT, text='Total: ' + str(self.total.get()), bg='white', fg= 'black', font= ('Arial', 13))
-		lb8 = Label(self.frame_dos, justify=LEFT, text='Tiempo: ' + str(self.total.get()), bg='white', fg= 'black', font= ('Arial', 13, 'bold'))
+		lb2 = Label(self.frame_dos, justify=LEFT, text='Aperitivos: ' + str(len(os.listdir(self.pathAperitivos))), bg='white', fg= 'black', font= ('Arial', 13))
+		lb3 = Label(self.frame_dos, justify=LEFT, text='Carnes: ' + str(len(os.listdir(self.pathCarne))), bg='white', fg= 'black', font= ('Arial', 13))
+		lb4 = Label(self.frame_dos, justify=LEFT, text='Pastas: ' + str(len(os.listdir(self.pathPasta))), bg='white', fg= 'black', font= ('Arial', 13))
+		lb5 = Label(self.frame_dos, justify=LEFT, text='Pescados: ' + str(len(os.listdir(self.pathPescado))), bg='white', fg= 'black', font= ('Arial', 13))
+		lb6 = Label(self.frame_dos, justify=LEFT, text='Verduras: ' + str(len(os.listdir(self.pathVerduras))), bg='white', fg= 'black', font= ('Arial', 13))
+		lb7 = Label(self.frame_dos, justify=LEFT, text='Total: ' + str(len(os.listdir(self.pathAperitivos)) + len(os.listdir(self.pathCarne)) + len(os.listdir(self.pathPasta)) + len(os.listdir(self.pathPescado)) + len(os.listdir(self.pathVerduras))), bg='white', fg= 'black', font= ('Arial', 13))
+		lb8 = Label(self.frame_dos, justify=LEFT, text='Tiempo: ', bg='white', fg= 'black', font= ('Arial', 13, 'bold'))
 		
 		values = [10, 20, 30, 40, 25]
 		labels = ['Aperitivos', 'Carnes', 'Pastas', 'Pescados', 'Verduras']
@@ -214,25 +206,25 @@ class Ventana(Frame):
 		b11 = Button(self.frame_dos, width=12, text='Guardar')
 
 		def verResumen():
-			treeview.grid(column=1, row=5, padx=0)
+			treeview.place(relx=0.38, rely= 0.4)
 			sb2.place(relx=0.98, rely= 0.00, relheight=0.99, relwidth=0.02)
-			lb1.grid(column=1, row=4, pady=10)
-			lb2.place(relx=0.15, rely= 0.40)
-			lb3.place(relx=0.15, rely= 0.44)
-			lb4.place(relx=0.15, rely= 0.48)
-			lb5.place(relx=0.15, rely= 0.52)
-			lb6.place(relx=0.15, rely= 0.56)
-			lb7.place(relx=0.15, rely= 0.62)
-			lb8.place(relx=0.15, rely= 0.68)
+			lb1.place(relx=0.475, rely=0.30)
+			lb2.place(relx=0.25, rely= 0.40)
+			lb3.place(relx=0.25, rely= 0.44)
+			lb4.place(relx=0.25, rely= 0.48)
+			lb5.place(relx=0.25, rely= 0.52)
+			lb6.place(relx=0.25, rely= 0.56)
+			lb7.place(relx=0.25, rely= 0.62)
+			lb8.place(relx=0.25, rely= 0.68)
 
-			lb9.place(relx=0.08, rely= 0.80)
-			e10.place(relx=0.31, rely= 0.80)
-			b11.place(relx=0.79, rely= 0.80)
+			lb9.place(relx=0.20, rely=0.90)
+			e10.place(relx=0.35, rely= 0.90)
+			b11.place(relx=0.75, rely=0.90)
 			canvas = FigureCanvasTkAgg(fig, master=self.frame_dos)
 			canvas.draw()
 			canvas.place(relx=0.75, rely= 0.52)
 
-		Button(self.frame_dos, width=12, command=lambda : verResumen(), text='CLASIFICAR!', bg='red2', fg='white', font= ('Arial', 13, 'bold')).grid(column=1, row=3, pady=20)
+		Button(self.frame_dos, width=12, command=lambda : verResumen(), text='CLASIFICAR!', bg='red2', fg='white', font= ('Arial', 13, 'bold')).place(relx=0.465, rely=0.20)
 
 		# Página 3 - Web Scraping
 		Label(self.frame_tres, text= 'WEB SCRAPING', bg='white', fg= 'black', font= ('Arial', 15, 'bold')).pack(expand=1)
