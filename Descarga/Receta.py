@@ -9,13 +9,6 @@ class Receta():
         self.autor = author
         self.url = link
         self.texto = text
-
-    def __init__(self, ruta):
-        f = open(ruta, 'r', encoding="utf-8")
-        self.url = f.readline()
-        self.titulo = f.readline()
-        self.autor = f.readline()
-        self.texto = f.readline()
     
     def guardarTexto(self,ruta):
         try:

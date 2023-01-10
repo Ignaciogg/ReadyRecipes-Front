@@ -47,7 +47,8 @@ def comprobarNuevo(url):
         j = 0
         while nuevo and j < len(listaTextos):
             enlaceReceta = ruta + '\\' + listaTextos[j]
-            if url == Receta(enlaceReceta).url:
+            urlReceta = open(enlaceReceta, 'r', encoding="utf-8").readline()
+            if url == urlReceta:
                 nuevo = False
             j += 1
         i += 1
