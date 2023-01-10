@@ -5,7 +5,7 @@
 from tkinter import *
 from tkinter import ttk, filedialog
 import os
-import pathlib
+from pathlib import Path
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
@@ -21,14 +21,21 @@ class Ventana(Frame):
 		self.color = True
 
 		self.ruta_aperitivos, self.ruta_carne, self.ruta_pasta, self.ruta_pescado, self.ruta_verdura, self.ruta_otros, self.ruta_modelo, self.ruta_guardar_modelo = StringVar(), StringVar(), StringVar(), StringVar(), StringVar(), StringVar(), StringVar(), StringVar()
-		self.ruta_aperitivos.set("./ReadyRecipes/Textos/Aperitivos")
-		self.ruta_carne.set("./ReadyRecipes/Textos/Carnes")
-		self.ruta_pasta.set("./ReadyRecipes/Textos/Pastas")
-		self.ruta_pescado.set("./ReadyRecipes/Textos/Pescados")
-		self.ruta_verdura.set("./ReadyRecipes/Textos/Verduras")
-		self.ruta_otros.set("./ReadyRecipes/Textos/otros")
+		self.pathAperitivos=Path().absolute() / 'Textos' / 'Aperitivos'
+		self.pathCarne=Path().absolute() / 'Textos' / 'Carne'
+		self.pathVerduras=Path().absolute() / 'Textos' / 'Verdura'
+		self.pathPasta=Path().absolute() / 'Textos' / 'Pasta'
+		self.pathPescado=Path().absolute() / 'Textos' / 'Pescado'
+		self.pathOtros=Path().absolute() / 'Textos' / 'otro'
+		self.ruta_aperitivos.set(self.pathAperitivos)
+		self.ruta_carne.set(self.pathCarne)
+		self.ruta_pasta.set(self.pathPasta)
+		self.ruta_pescado.set(self.pathPescado)
+		self.ruta_verdura.set(self.pathVerduras)
+		self.ruta_otros.set(self.pathOtros)
 		self.ruta_modelo.set("./ReadyRecipes/Textos/modelo")
 		self.ruta_guardar_modelo.set("./ReadyRecipes/Textos/modelo/modelo1.txt")
+
 		self.seleccion = StringVar()
 
 		self.aperitivos, self.carnes, self.pastas, self.pescados, self.verduras, self.total = IntVar(), IntVar(), IntVar(), IntVar(), IntVar(), IntVar()
@@ -72,17 +79,6 @@ class Ventana(Frame):
 		print(self.ruta_aperitivos.get())
 
 	def nav(self):
-
-		# Contar cuantos textos hay en una carpeta
-		def contarTextos(self, folder, count):
-			i = 0
-			for root, dirs, files in os.walk(folder):
-				for file in files:
-					if file.endswith(".txt"):
-						i += 1
-			count.set(i)
-
-		contarTextos(self, self.ruta_verdura.get(), self.verduras)
 
 		self.imagen_entrenamiento = PhotoImage(file ='./interfaz/entrenamiento.png')
 		self.imagen_clasificacion = PhotoImage(file ='./interfaz/clasifiacion.png')
@@ -130,18 +126,31 @@ class Ventana(Frame):
 		Button(self.frame_uno, width=12, text='Cambiar', command= lambda : self.abrirExplorador(self.ruta_verdura)).place(relx=0.75, rely=0.26)
 
 		#1.2 - Selección de algoritmos y vista previa
-		self.radio1 = Radiobutton(self.frame_uno, justify=LEFT, command=self.seleccionaAlgoritmo("KNN"), text="KNN", variable=self.seleccion, value="KNN").place(relx=0.2, rely=0.42)
-		self.radio2 = Radiobutton(self.frame_uno, justify=LEFT, command=self.seleccionaAlgoritmo("GBT"), text="Gradient Boosted Tree", variable=self.seleccion, value="GBT").place(relx=0.2, rely=0.46)
-		self.radio3 = Radiobutton(self.frame_uno, justify=LEFT, command=self.seleccionaAlgoritmo("Random Forest"), text="Random Forest", variable=self.seleccion, value="Random Forest").place(relx=0.2, rely=0.50)
+		self.radio1 = Radiobutton(self.frame_uno, justify=LEFT, command=self.seleccionaAlgoritmo("KNN"), text="KNN", variable=self.seleccion, value="KNN").place(relx=0.2, rely=0.45)
+		self.radio2 = Radiobutton(self.frame_uno, justify=LEFT, command=self.seleccionaAlgoritmo("GBT"), text="Gradient Boosted Tree", variable=self.seleccion, value="GBT").place(relx=0.2, rely=0.49)
+		self.radio3 = Radiobutton(self.frame_uno, justify=LEFT, command=self.seleccionaAlgoritmo("Random Forest"), text="Random Forest", variable=self.seleccion, value="Random Forest").place(relx=0.2, rely=0.52)
 
-		Label(self.frame_uno, justify=LEFT, text='VISTA PREVIA:', bg='white', fg= 'black', font= ('Arial', 13, 'bold')).place(relx=0.477, rely=0.35)
-		Label(self.frame_uno, justify=LEFT, text='Aperitivos encontrados     - ' + str(self.aperitivos.get()), bg='white', fg= 'black', font= ('Arial', 13)).place(relx=0.35, rely=0.40)
-		Label(self.frame_uno, justify=LEFT, text='Carnes encontradas         - ' + str(self.carnes.get()) + '                                  Modelo Seleccionado:', bg='white', fg= 'black', font= ('Arial', 13)).place(relx=0.35, rely=0.43)
-		Label(self.frame_uno, justify=LEFT, text='Pastas encontradas          - ' + str(self.pastas.get()) + '                                      ' + str(self.seleccion.get()), bg='white', fg= 'black', font= ('Arial', 13)).place(relx=0.35, rely=0.46)
-		Label(self.frame_uno, justify=LEFT, text='Pescados encontrados     - ' + str(self.pescados.get()), bg='white', fg= 'black', font= ('Arial', 13)).place(relx=0.35, rely=0.49)
-		Label(self.frame_uno, justify=LEFT, text='Verduras encontrados      - ' + str(self.verduras.get()), bg='white', fg= 'black', font= ('Arial', 13)).place(relx=0.35, rely=0.52)
-		Label(self.frame_uno, justify=LEFT, text='Total: ' + str(self.total.get()), bg='white', fg= 'black', font= ('Arial', 13)).place(relx=0.35, rely=0.57)
-		Button(self.frame_uno, width=12, text='ENTRENAR!', bg='red2', fg='white', font= ('Arial', 13, 'bold')).place(relx=0.7, rely=0.46)
+		Label(self.frame_uno, justify=LEFT, text='VISTA PREVIA:', bg='white', fg= 'black', font= ('Arial', 13, 'bold')).place(relx=0.477, rely=0.38)
+		Label(self.frame_uno, justify=LEFT, text='Aperitivos encontrados - ' + str(len(os.listdir(self.pathAperitivos))), bg='white', fg= 'black', font= ('Arial', 13)).place(relx=0.35, rely=0.43)
+		Label(self.frame_uno, justify=LEFT, text='Carnes encontradas - ' + str(len(os.listdir(self.pathCarne))) + '              Modelo Seleccionado:', bg='white', fg= 'black', font= ('Arial', 13)).place(relx=0.35, rely=0.46)
+		Label(self.frame_uno, justify=LEFT, text='Pastas encontradas - ' + str(len(os.listdir(self.pathPasta))) + '                     ' + str(self.seleccion.get()), bg='white', fg= 'black', font= ('Arial', 13)).place(relx=0.35, rely=0.49)
+		Label(self.frame_uno, justify=LEFT, text='Pescados encontrados - ' + str(len(os.listdir(self.pathPescado))), bg='white', fg= 'black', font= ('Arial', 13)).place(relx=0.35, rely=0.52)
+		Label(self.frame_uno, justify=LEFT, text='Verduras encontrados - ' + str(len(os.listdir(self.pathVerduras))), bg='white', fg= 'black', font= ('Arial', 13)).place(relx=0.35, rely=0.55)
+		Label(self.frame_uno, justify=LEFT, text='Total: ' + str(len(os.listdir(self.pathAperitivos)) + len(os.listdir(self.pathCarne)) + len(os.listdir(self.pathPasta)) + len(os.listdir(self.pathPescado)) + len(os.listdir(self.pathVerduras))), bg='white', fg= 'black', font= ('Arial', 13)).place(relx=0.35, rely=0.60)
+		
+		values = [len(os.listdir(self.pathAperitivos)), len(os.listdir(self.pathCarne)), len(os.listdir(self.pathPasta)), len(os.listdir(self.pathPescado)), len(os.listdir(self.pathVerduras))]
+		labels = ['Aperitivos', 'Carnes', 'Pastas', 'Pescados', 'Verduras']
+		colors = ['#66b3ff','#ff9999','#ffcc99','#333333','#99ff99']
+		plt.rcParams['font.size'] = 8
+		fig1 = Figure(figsize=(4,4))
+		ax1 = fig1.add_subplot(111)
+		ax1.pie(values, labels=labels, colors=colors, startangle=90)
+		def verEntreno():
+			canvas1 = FigureCanvasTkAgg(fig1, master=self.frame_uno)
+			canvas1.draw()
+			canvas1.get_tk_widget().grid(column=0, row=0, padx=1010, pady=250)
+		
+		Button(self.frame_uno, width=12, command=lambda : verEntreno(), text='ENTRENAR!', bg='red2', fg='white', font= ('Arial', 13, 'bold')).place(relx=0.38, rely=0.72)
 
 		#1.3 - Guardar modelo
 		Label(self.frame_uno, width=15, text='Guardar modelo:', bg='white', fg= 'black', font=('Arial', 13)).place(relx=0.20, rely=0.90)
@@ -158,7 +167,7 @@ class Ventana(Frame):
 		Entry(self.frame_dos, state= "disabled", width=80, text=self.ruta_modelo, textvariable=self.ruta_modelo, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3).place(relx=0.35, rely=0.14)
 		Button(self.frame_dos, width=12, text='Seleccionar').place(relx=0.75, rely=0.14)
 
-		#2.2 - Tabla, width=760, height=420,
+		#2.2 - Tabla
 		treeview = ttk.Treeview(self.frame_dos)
 		treeview["columns"] = ("Texto", "Tipo", "Ver texto")
 		treeview.column("Texto", width=150, anchor=W)
@@ -189,20 +198,17 @@ class Ventana(Frame):
 
 		#2.4 - Resumen
 		lb1 = Label(self.frame_dos, justify=LEFT, text='RESUMEN:', bg='white', fg= 'black', font= ('Arial', 13, 'bold'))
-		lb2 = Label(self.frame_dos, justify=LEFT, text='Aperitivos     - ' + str(self.aperitivos.get()), bg='white', fg= 'black', font= ('Arial', 13))
-		lb3 = Label(self.frame_dos, justify=LEFT, text='Carnes         - ' + str(self.carnes.get()), bg='white', fg= 'black', font= ('Arial', 13))
-		lb4 = Label(self.frame_dos, justify=LEFT, text='Pastas          - ' + str(self.pastas.get()), bg='white', fg= 'black', font= ('Arial', 13))
-		lb5 = Label(self.frame_dos, justify=LEFT, text='Pescados     - ' + str(self.pescados.get()), bg='white', fg= 'black', font= ('Arial', 13))
-		lb6 = Label(self.frame_dos, justify=LEFT, text='Verduras      - ' + str(self.verduras.get()), bg='white', fg= 'black', font= ('Arial', 13))
-		lb7 = Label(self.frame_dos, justify=LEFT, text='Total: ' + str(self.total.get()), bg='white', fg= 'black', font= ('Arial', 13))
-		lb8 = Label(self.frame_dos, justify=LEFT, text='Tiempo: ' + str(self.total.get()), bg='white', fg= 'black', font= ('Arial', 13, 'bold'))
+		lb2 = Label(self.frame_dos, justify=LEFT, text='Aperitivos: ' + str(len(os.listdir(self.pathAperitivos))), bg='white', fg= 'black', font= ('Arial', 13))
+		lb3 = Label(self.frame_dos, justify=LEFT, text='Carnes: ' + str(len(os.listdir(self.pathCarne))), bg='white', fg= 'black', font= ('Arial', 13))
+		lb4 = Label(self.frame_dos, justify=LEFT, text='Pastas: ' + str(len(os.listdir(self.pathPasta))), bg='white', fg= 'black', font= ('Arial', 13))
+		lb5 = Label(self.frame_dos, justify=LEFT, text='Pescados: ' + str(len(os.listdir(self.pathPescado))), bg='white', fg= 'black', font= ('Arial', 13))
+		lb6 = Label(self.frame_dos, justify=LEFT, text='Verduras: ' + str(len(os.listdir(self.pathVerduras))), bg='white', fg= 'black', font= ('Arial', 13))
+		lb7 = Label(self.frame_dos, justify=LEFT, text='Total: ' + str(len(os.listdir(self.pathAperitivos)) + len(os.listdir(self.pathCarne)) + len(os.listdir(self.pathPasta)) + len(os.listdir(self.pathPescado)) + len(os.listdir(self.pathVerduras))), bg='white', fg= 'black', font= ('Arial', 13))
+		lb8 = Label(self.frame_dos, justify=LEFT, text='Tiempo: ', bg='white', fg= 'black', font= ('Arial', 13, 'bold'))
 		
-		values = [10, 20, 30, 40, 25]
-		labels = ['Aperitivos', 'Carnes', 'Pastas', 'Pescados', 'Verduras']
-		colors = ['#ff9999','#66b3ff','#99ff99','#ffcc99','#ffffff']
-		fig = Figure(figsize=(3,3))
-		ax = fig.add_subplot(111)
-		ax.pie(values, labels=labels, colors=colors, startangle=90)
+		fig2 = Figure(figsize=(4,4))
+		ax2 = fig2.add_subplot(111)
+		ax2.pie(values, labels=labels, colors=colors, startangle=90)
 
 		#2.5 - Guardar resultado
 		lb9 = Label(self.frame_dos, width=15, text='Guardar resultado:', bg='white', fg= 'black', font=('Arial', 13))
@@ -224,9 +230,9 @@ class Ventana(Frame):
 			lb9.place(relx=0.20, rely=0.90)
 			e10.place(relx=0.35, rely= 0.90)
 			b11.place(relx=0.75, rely=0.90)
-			canvas = FigureCanvasTkAgg(fig, master=self.frame_dos)
-			canvas.draw()
-			canvas.place(relx=0.75, rely= 0.52)
+			canvas2 = FigureCanvasTkAgg(fig2, master=self.frame_dos)
+			canvas2.draw()
+			canvas2.get_tk_widget().grid(column=0, row=0, padx=1070, pady=210)
 
 		Button(self.frame_dos, width=12, command=lambda : verResumen(), text='CLASIFICAR!', bg='red2', fg='white', font= ('Arial', 13, 'bold')).place(relx=0.465, rely=0.20)
 
