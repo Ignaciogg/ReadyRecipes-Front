@@ -41,6 +41,7 @@ rutaTextosTratados = "ETL\TextosLeidos.txt"
 def leerFichero(rutaFichero):
     f = open(rutaFichero, 'r', encoding="utf-8")
     texto = f.read()
+    f.close()
     return texto
 
 def leerReceta(rutaReceta):
@@ -49,6 +50,7 @@ def leerReceta(rutaReceta):
     titulo = f.readline()
     autor = f.readline()
     texto = f.readline()
+    f.close()
     return Receta(titulo,url,autor,texto)
 
 #Metodos de Tratamiento de ficheros
@@ -193,17 +195,21 @@ def generarMatriz():
 def KNN():
     X_train, X_test, y_train, y_test = prepararDatos()
     scaler = MinMaxScaler()
-    X_train = scaler.fit_transform(X_train)
-    X_test = scaler.transform(X_test)
+    #X_train = scaler.fit_transform(X_train)
+    #X_test = scaler.transform(X_test)
 
-    n_neighbors = 5
+    n_neighbors = 3
  
-    knn = KNeighborsClassifier(n_neighbors)
-    knn.fit(X_train, y_train)
+    modelo = KNeighborsClassifier(n_neighbors)
+    modelo.fit(X_train, y_train)
+
+    predicciones = modelo.predict(X = X_test)    
+
     print('Accuracy of K-NN classifier on training set: {:.2f}'
-        .format(knn.score(X_train, y_train)))
+        .format(modelo.score(X_train, y_train)))
     print('Accuracy of K-NN classifier on test set: {:.2f}'
-        .format(knn.score(X_test, y_test)))
+        .format(modelo.score(X_test, y_test)))
+    
     
 
 def GradientBoostedTree():    
@@ -261,20 +267,23 @@ def prepararDatos():
     generarDiccionario()
     
     textosLeidos = leerFichero(rutaTextosTratados).splitlines()
-    Categorias = ["Aperitivos","Carne","Pasta","Pescado", "Verdura"]
     listaCategorias = []
     for ruta in textosLeidos:
         fichero = ruta.split('.')[0].split('/')[-1]
         categoria = re.sub("\d+", "", fichero)
-        listaCategorias.append(Categorias.index(categoria))
+        #listaCategorias.append(Categorias.index(categoria))
+        listaCategorias.append(categoria)
+
     
     categorias = pd.DataFrame(listaCategorias)
+    resultados = pd.get_dummies(categorias[0])
+    print(resultados.head(5))
     matriz = pd.DataFrame(generarMatriz())    
 
     X = matriz.values
-    y = categorias.values
+    y = resultados.values
     
-    return train_test_split(X, y, random_state=123)
+    return train_test_split(X, y, random_state=0)
 
 def guardarModelo(modelo):
     fichero = 'finalized_model.sav'

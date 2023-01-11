@@ -4,11 +4,13 @@ from Descarga.Receta import Receta
 
 import ETL.TratamientoDatos as TratamientoDatos
 
-#TratamientoDatos.KNN()
+TratamientoDatos.KNN()
 #TratamientoDatos.GradientBoostedTree()
-TratamientoDatos.RandomForest()
+#TratamientoDatos.RandomForest()
 #TratamientoDatos.generarDiccionario()
 #TratamientoDatos.generarMatriz()
+
+
 
 '''
 listaLinks = ["aperitivos.txt","carnes.txt","pastas.txt","pescados.txt", "verduras.txt"]
