@@ -4,9 +4,15 @@ from Descarga.Receta import Receta
 
 import ETL.TratamientoDatos as TratamientoDatos
 
-TratamientoDatos.KNN()
+#TratamientoDatos.KNN()
 #TratamientoDatos.GradientBoostedTree()
 #TratamientoDatos.RandomForest()
+print('KNN')
+TratamientoDatos.entrenarModelo(0)
+print('GradientBoostedTree')
+TratamientoDatos.entrenarModelo(1)
+print('Random Forest')
+TratamientoDatos.entrenarModelo(2)
 #TratamientoDatos.generarDiccionario()
 #TratamientoDatos.generarMatriz()
 

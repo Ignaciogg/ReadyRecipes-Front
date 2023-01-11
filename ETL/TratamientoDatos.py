@@ -193,55 +193,19 @@ def generarMatriz():
         return matriz
     
 def KNN():
-    X_train, X_test, y_train, y_test = prepararDatos()
-    scaler = MinMaxScaler()
-    #X_train = scaler.fit_transform(X_train)
-    #X_test = scaler.transform(X_test)
-
     n_neighbors = 3
  
-    modelo = KNeighborsClassifier(n_neighbors)
-    modelo.fit(X_train, y_train)
-
-    predicciones = modelo.predict(X = X_test)    
-
-    print('Accuracy of K-NN classifier on training set: {:.2f}'
-        .format(modelo.score(X_train, y_train)))
-    print('Accuracy of K-NN classifier on test set: {:.2f}'
-        .format(modelo.score(X_test, y_test)))
+    return KNeighborsClassifier(n_neighbors)
     
-    
-
 def GradientBoostedTree():    
-    X_train, X_test, y_train, y_test = prepararDatos()
-    scaler = MinMaxScaler()
-    X_train = scaler.fit_transform(X_train)
-    X_test = scaler.transform(X_test)
-
-    modelo = GradientBoostingRegressor(
+    return GradientBoostingRegressor(
         n_estimators = 451,
         max_features = 'auto',
         random_state = 123
     )
-    modelo.fit(X_train, y_train)
-
-    predicciones = modelo.predict(X = X_test)
-
-    rmse = mean_squared_error(
-            y_true  = y_test,
-            y_pred  = predicciones,
-            squared = False
-        )
-    print(f"El error (rmse) de test es: {rmse}")
-
-
+    
 def RandomForest():
-    X_train, X_test, y_train, y_test = prepararDatos()
-    scaler = MinMaxScaler()
-    X_train = scaler.fit_transform(X_train)
-    X_test = scaler.transform(X_test)
-
-    modelo = RandomForestRegressor(
+    return RandomForestRegressor(
         n_estimators = 116,
         criterion    = 'mse',
         max_depth    = None,
@@ -251,9 +215,52 @@ def RandomForest():
         random_state = 123
     )
 
+
+def prepararDatos():
+
+    generarDiccionario()
+    Categorias = ["Aperitivos","Carne","Pasta","Pescado", "Verdura", "Otros"]
+
+    textosLeidos = leerFichero(rutaTextosTratados).splitlines()
+    listaCategorias = []
+    for ruta in textosLeidos:
+        fichero = ruta.split('.')[0].split('/')[-1]
+        categoria = re.sub("\d+", "", fichero)
+        listaCategorias.append(Categorias.index(categoria))
+        #listaCategorias.append(categoria)
+
+    
+    #resultados = pd.get_dummies(categorias[0])
+    resultados = pd.DataFrame(listaCategorias)
+    #print(resultados.head(5))
+    matriz = pd.DataFrame(generarMatriz())    
+
+    X = matriz.values
+    y = resultados.values
+    
+    return train_test_split(X, y, test_size=0.1, random_state=0)
+
+def entrenarModelo(elegido):
+    X_train, X_test, y_train, y_test = prepararDatos()
+    scaler = MinMaxScaler()
+    #X_train = scaler.fit_transform(X_train)
+    #X_test = scaler.transform(X_test)
+
+    if elegido==0:
+        modelo = KNN()
+    elif elegido==1:
+        modelo = GradientBoostedTree()
+    else:
+        modelo = RandomForest()
+
     modelo.fit(X_train, y_train)
 
     predicciones = modelo.predict(X = X_test)
+
+    print('Accuracy on training set: {:.2f}'
+        .format(modelo.score(X_train, y_train)))
+    print('Accuracy on test set: {:.2f}'
+        .format(modelo.score(X_test, y_test)))
 
     rmse = mean_squared_error(
             y_true  = y_test,
@@ -261,29 +268,6 @@ def RandomForest():
             squared = False
         )
     print(f"El error (rmse) de test es: {rmse}")
-
-def prepararDatos():
-
-    generarDiccionario()
-    
-    textosLeidos = leerFichero(rutaTextosTratados).splitlines()
-    listaCategorias = []
-    for ruta in textosLeidos:
-        fichero = ruta.split('.')[0].split('/')[-1]
-        categoria = re.sub("\d+", "", fichero)
-        #listaCategorias.append(Categorias.index(categoria))
-        listaCategorias.append(categoria)
-
-    
-    categorias = pd.DataFrame(listaCategorias)
-    resultados = pd.get_dummies(categorias[0])
-    print(resultados.head(5))
-    matriz = pd.DataFrame(generarMatriz())    
-
-    X = matriz.values
-    y = resultados.values
-    
-    return train_test_split(X, y, random_state=0)
 
 def guardarModelo(modelo):
     fichero = 'finalized_model.sav'
