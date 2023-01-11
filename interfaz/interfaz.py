@@ -36,6 +36,7 @@ class Ventana(Frame):
 		self.ruta_modelo.set("./ReadyRecipes/Textos/modelo")
 		self.ruta_guardar_modelo.set("./ReadyRecipes/Textos/modelo/modelo1.txt")
 
+		self.url = StringVar()
 		self.seleccion = StringVar()
 
 		self.aperitivos, self.carnes, self.pastas, self.pescados, self.verduras, self.total = IntVar(), IntVar(), IntVar(), IntVar(), IntVar(), IntVar()
@@ -109,7 +110,15 @@ class Ventana(Frame):
 		cl.place(relx=0.965, rely=0.10)
 		Label(self.frame_top,text='Bienvenido a Ready Recipes', bg='#061a2b', fg='#4077a6', font=('Arial', 25, 'bold')).pack(expand=1, pady=12)
 		Label(self.frame_inicio, image= self.logo, bg='white').pack(expand=1, pady=0)
-		Label(self.frame_inicio, text= 'Para empezar, seleccione el segundo icono (entrenamiento) del navegador', bg='white', fg= 'black', font= ('Arial', 15)).pack(expand=1)
+		Label(self.frame_inicio, text= 'Para empezar, seleccione un icono del navegador', bg='white', fg= 'black', font= ('Arial', 15)).pack(expand=1)
+
+		# Página 0 - Youtube
+		#0.1 - Entrada de descarga
+		Label(self.frame_cero, text= 'DESCARGA DE VÍDEOS CON YOUTUBE', bg='white', fg= 'black', font= ('Arial', 15, 'bold')).place(relx=0.38, rely=0.03)
+		self.labelFrame0 = Label(self.frame_cero, text= 'Inserte la url del vídeo que desea descargar:', bg='white', fg= 'black', font= ('Arial', 13, 'bold'))
+		self.labelFrame0.place(relx=0.39, rely=0.13)
+		Entry(self.frame_cero,  width=80, textvariable=self.url, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3).place(relx=0.32, rely=0.2)
+		Button(self.frame_cero, width=12, command=lambda : verResumen(), text='DESCARGAR!', bg='red2', fg='white', font= ('Arial', 13, 'bold')).place(relx=0.465, rely=0.26)
 
 		# Página 1 - Entrenamiento
 		#1.1 - Selección de textos
@@ -242,7 +251,7 @@ class Ventana(Frame):
 		def verResumen():
 			treeview.place(relx=0.38, rely= 0.4)
 			sb1.place(relx=0.975, rely= 0.00, relheight=0.99, relwidth=0.02)
-			productos.place(relx=0.3, rely= 0.4)
+			productos.place(relx=0.3, rely= 0.25)
 			sb2.place(relx=0.975, rely= 0.00, relheight=0.99, relwidth=0.05)
 			lb1.place(relx=0.475, rely=0.30)
 			lb2.place(relx=0.25, rely= 0.40)
