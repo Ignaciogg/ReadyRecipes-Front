@@ -37,6 +37,8 @@ def descargarVideo(url):
         except:
             print('ERROR. Audio mayor 10MB')
             os.remove(str(pathAudios) + '\\'+nombre+'.wav')
+    else:
+        print('ERROR. El video está duplicado')
 
 def comprobarNuevo(url):
     nuevo = True
@@ -47,9 +49,11 @@ def comprobarNuevo(url):
         j = 0
         while nuevo and j < len(listaTextos):
             enlaceReceta = ruta + '\\' + listaTextos[j]
-            urlReceta = open(enlaceReceta, 'r', encoding="utf-8").readline()
-            if url == urlReceta:
-                nuevo = False
+            with open(enlaceReceta, 'r', encoding="utf-8") as f:
+                urlReceta = f.readline()[:-1]
+                if url == urlReceta:
+                    nuevo = False
+                f.close()
             j += 1
         i += 1
     return nuevo
