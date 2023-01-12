@@ -1,3 +1,8 @@
+from Descarga.Receta import Receta as receta
+import Descarga.YoutubeDownloader as yt
+import Descarga.SpeechRecognition as sr
+import Descarga.AudioConverter as ac
+
 ''' 	
 	pip install tkinter
 	pip install pandas
@@ -119,21 +124,7 @@ class Ventana(Frame):
 		url = " "
 		Entry(self.frame_cero,  width=80, textvariable=url, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3).place(relx=0.32, rely=0.2)
 		
-		def descargaTexto (url):
-			if url == " ":
-				ventana_error = Toplevel()
-				ventana_error.title("ERROR")
-				ventana_error.config(width=500, height=100)
-				Label(ventana_error, text='ERROR: url del texto no seleccionada', bg='white', fg= 'red', font= ('Arial', 10, 'bold')).place(relx=0.3, rely=0.05)
-			
-			if url == "algo":
-				ventana_error = Toplevel()
-				ventana_error.title("ERROR")
-				ventana_error.config(width=500, height=100)
-				Label(ventana_error, text='ERROR: de este vídeo ya tenemos transcripción', bg='white', fg= 'red', font= ('Arial', 10, 'bold')).place(relx=0.3, rely=0.05)
-			
-		
-		Button(self.frame_cero, width=12, command=lambda : descargaTexto(url), text='DESCARGAR!', bg='red2', fg='white', font= ('Arial', 13, 'bold')).place(relx=0.465, rely=0.26)
+		Button(self.frame_cero, width=12, command=lambda : yt.descargarVideo(url), text='DESCARGAR!', bg='red2', fg='white', font= ('Arial', 13, 'bold')).place(relx=0.465, rely=0.26)
 
 		# Página 1 - Entrenamiento
 		#1.1 - Selección de textos

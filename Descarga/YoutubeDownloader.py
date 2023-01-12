@@ -37,8 +37,10 @@ def descargarVideo(url):
         except:
             print('ERROR. Audio mayor 10MB')
             os.remove(str(pathAudios) + '\\'+nombre+'.wav')
+        return False
     else:
         print('ERROR. El video está duplicado')
+        return True
 
 def comprobarNuevo(url):
     nuevo = True
