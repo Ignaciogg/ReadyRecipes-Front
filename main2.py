@@ -6,9 +6,14 @@ import ETL.TratamientoDatos as TratamientoDatos
 
 
 #print('knn:  {:.2f}'.format(TratamientoDatos.entrenarModelo(0, './Modelos/')*100))
-#print('GradientBoostedTree: {:.2f}'.format(TratamientoDatos.entrenarModelo(1)*100))
-#print('RandomForest: {:.2f}'.format(TratamientoDatos.entrenarModelo(2)*100))
-#TratamientoDatos.categorizar('./Modelos/KNN.sav')
+#print('GradientBoostedTree: {:.2f}'.format(TratamientoDatos.entrenarModelo(1, './Modelos/')*100))
+#print('RandomForest: {:.2f}'.format(TratamientoDatos.entrenarModelo(2, './Modelos/')*100))
 
+print('KNN')
+TratamientoDatos.categorizar('./Modelos/KNN.sav')
+print('\nGradientBoostedTree')
+TratamientoDatos.categorizar('./Modelos/GradientBoostedTree.sav')
+print('\nRandomForest')
+TratamientoDatos.categorizar('./Modelos/RandomForest.sav')
 
-YoutubeDownloader.descargarVideo('https://www.youtube.com/watch?v=wi052l4QRX8&list=PLJvertvohrU3KnCxd9OZpYjvp8M5LK6uV&index=42')
+#YoutubeDownloader.descargarVideo('https://www.youtube.com/watch?v=CqBOygiSnuk')

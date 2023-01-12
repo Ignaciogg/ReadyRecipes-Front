@@ -20,7 +20,7 @@ from Descarga.Receta import Receta
 
 
 #Variables globales
-listaCategorías = ["aperitivos","carne","pasta","pescado", "verdura"]
+Categorias = ["Aperitivos", "Carne", "Pasta", "Pescado", "Verdura"]
 rutaListaParada = "ETL\ListaParada.txt"
 rutaDiccionario = "ETL\DiccionarioL.txt"
 rutaMatriz = "ETL\MatrizL.txt"
@@ -87,17 +87,24 @@ def stemming(tokens):
     stems = [spanishstemmer.stem(token) for token in tokens]
     return stems
 
+def tratarFichero(rutaReceta):
+    tokens = tokenizacion(leerReceta(rutaReceta).texto)
+    tokens = tratamientoBasico(tokens)
+    tokens = listaParada(tokens)
+    tokens = lematizacion(tokens)
+    #tokens = stemming(tokens)
+    return tokens
+
 #Metodo para generar el diccionario
 def generarDiccionario():
     diccionario = []
     ficherosTratados = []
-    #matriz = []
     if os.path.isfile(rutaDiccionario): #Compruebo si existe el fichero
         diccionario = leerFichero(rutaDiccionario).splitlines()
     if os.path.isfile(rutaTextosTratados): #Compruebo si existe el fichero
         ficherosTratados = leerFichero(rutaTextosTratados).splitlines()
     #Recorro todas las categorías
-    for categoría in listaCategorías:
+    for categoría in Categorias:
         rutaCategoría = './textos/'+categoría+'/'
         listaRecetas= os.listdir(rutaCategoría)
         #Recorro todas las recetas de cada categoría
@@ -107,12 +114,7 @@ def generarDiccionario():
             if recetaActual not in ficherosTratados:
                 print(recetaActual)
                 #Tratamiento de la receta
-                tokens = tokenizacion(leerReceta('.'+recetaActual).texto)
-                tokens = tratamientoBasico(tokens)
-                tokens = listaParada(tokens)
-                tokens = lematizacion(tokens)
-                #tokens = stemming(tokens)
-                
+                tokens = tratarFichero('.'+recetaActual)
                 #Compruebo si existe el token en la lista y sino lo añado al diccionario
                 for token in tokens:
                     if token not in diccionario:
@@ -135,59 +137,50 @@ def generarDiccionario():
     
     return diccionario
 
-#Metodo para generar la matriz
+#Metodos para generar la matriz
+def generarFila(diccionario,rutaReceta):
+    filaNueva = np.zeros(len(diccionario))
+    tokens = tratarFichero(rutaReceta)
+    for token in tokens:
+        filaNueva[diccionario.index(token)] += 1
+    return filaNueva
+
 def generarMatriz():
     #leo el diccionario
     diccionario = leerFichero(rutaDiccionario).splitlines()
     #leo el fichero de las recetas tratadas
     recetas = leerFichero(rutaTextosTratados).splitlines()
-    #print("Numero de recetas: " + str(len(recetas)))
-    if os.path.isfile(rutaMatriz): #Compruebo si existe el fichero
+    #Genero la nueva matriz
+    matrizNueva = np.zeros((len(recetas), len(diccionario)), dtype=int)
+
+    nFila = 0
+    if os.path.isfile(rutaMatriz): #Si ya existe una matriz previa
+        #Cargo la matriz antigua
         matriz = np.loadtxt(rutaMatriz)
-        matrizNueva = np.zeros((len(recetas),len(diccionario)),dtype=int)
-        #print("Numero de filas en la matriz inicialmente: "+str(len(matriz)))
-        #print("Numero de palabras en el diccionario: "+str(len(diccionario)))
-        #print("Numero de palabras en la primera columna de la matriz antes de rellenar de ceros: "+str(len(matriz[0])))
-        dicCols = len(diccionario)
-        nFila = 0
+        #Diferencia de longitud de cada fila entre la matriz antigua y nueva
+        difLenRow = len(diccionario) - len(matriz[nFila])
+        
         #Rellenamos de ceros las filas antiguas
         for fila in matriz:
-            filaCols = len(fila)
-            difCols = dicCols - filaCols
-            for i in range(difCols):
+            for i in range(difLenRow):
                 fila = np.append(fila,0)
             matrizNueva[nFila] = fila
-            nFila +=1
+            nFila += 1
+
         #Guardamos las nuevas filas
-        filasMatrizInicial = len(matriz)
-        filasMatrizFinal = len(recetas)
-        diferenciaFilas = filasMatrizFinal-filasMatrizInicial
-        for i in range(diferenciaFilas):
-            filaNueva = np.zeros(dicCols)
-            tokens = tokenizacion(leerReceta(os.getcwd()+recetas[filasMatrizInicial+i]).texto )
-            tokens = tratamientoBasico(tokens)
-            tokens = listaParada(tokens)
-            tokens = lematizacion(tokens)
-            #tokens = stemming(tokens)
-            for token in tokens:
-                filaNueva[diccionario.index(token)] +=1
-            matrizNueva[filasMatrizInicial+i] = filaNueva
-        np.savetxt(rutaMatriz,matrizNueva,fmt='%i')
-        return matrizNueva
-    else:
-        matriz = np.zeros( (len(recetas), dicCols ) ,dtype=int)
-        i=0
+        for i in range(len(recetas)-len(matriz)):
+            filaNueva = generarFila(diccionario, os.getcwd()+recetas[len(matriz)+i])
+            matrizNueva[len(matriz)+i] = filaNueva
+    
+    else:  # Si no existe una matriz previa
+        #Guardamos las nuevas filas
         for receta in recetas:
-            tokens = tokenizacion(leerReceta(os.getcwd()+receta).texto)
-            tokens = tratamientoBasico(tokens)
-            tokens = listaParada(tokens)
-            tokens = lematizacion(tokens)
-            #tokens = stemming(tokens)
-            for token in tokens:
-                matriz[i][diccionario.index(token)] +=1
-            i+=1
-        np.savetxt(rutaMatriz,matriz,fmt='%i')
-        return matriz
+            filaNueva=generarFila(diccionario, os.getcwd()+receta)
+            matrizNueva[nFila] = filaNueva
+            nFila += 1
+
+    np.savetxt(rutaMatriz, matrizNueva, fmt='%i')
+    return matrizNueva
 
 #Métodos para generar modelos l
 def KNN():
@@ -216,8 +209,6 @@ def RandomForest():
 def prepararDatos():
 
     generarDiccionario()
-    Categorias = ["Aperitivos","Carne","Pasta","Pescado", "Verdura", "Otros"]
-
     textosLeidos = leerFichero(rutaTextosTratados).splitlines()
     listaCategorias = []
     for ruta in textosLeidos:
@@ -250,35 +241,33 @@ def entrenarModelo(elegido,ruta):
     modelo.fit(X_train, y_train)
     fichero = ruta + nombre + '.sav'
     guardarModelo(modelo,fichero)
-    print('Modelo1:  {:.2f}'.format(modelo.score(X_test, y_test)*100))
-    modelo2 = cargarModelo('./Modelos/'+nombre+'.sav')
-    print('Modelo2:  {:.2f}'.format(modelo2.score(X_test, y_test)*100))
     
     return modelo.score(X_test, y_test)
 
 #Método para exportar un modelo 
 def guardarModelo(modelo,fichero):
-    pickle.dump(modelo, open(fichero, 'wb'))
+    with open(fichero, 'wb') as f:
+        pickle.dump(modelo, f)
+        f.close()
+    #pickle.dump(modelo, open(fichero, 'wb'))
 
 #Método para importar un modelo
 def cargarModelo(fichero):
-    return pickle.load(open(fichero, 'rb'))
+    with open(fichero, 'rb') as f:
+        modelo = pickle.load(f)
+        f.close()
+    return modelo
 
 #Método para categorizar recetas nuevas
 def categorizar(fichero):
     modelo = cargarModelo(fichero)
     diccionario = leerFichero(rutaDiccionario).splitlines()
     for elemento in os.listdir('./Textos/Otros'):
+        rutaReceta = './Textos/Otros/'+elemento
         filaNueva = np.zeros(len(diccionario))
-        tokens = tokenizacion(leerReceta('./Textos/Otros/'+elemento).texto )
-        tokens = tratamientoBasico(tokens)
-        tokens = listaParada(tokens)
-        tokens = lematizacion(tokens)
-        #tokens = stemming(tokens)
+        tokens = tratarFichero(rutaReceta)
         for token in tokens:
             if token in diccionario:
-                filaNueva[diccionario.index(token)] +=1
-            else:
-                diccionario.append(token)
-                filaNueva.insert(1)
-        print(modelo.predict(filaNueva))
+                filaNueva[diccionario.index(token)] += 1
+
+        print(Categorias[round(modelo.predict([filaNueva])[0])]+' -> '+leerReceta('./Textos/Otros/'+elemento).titulo)
