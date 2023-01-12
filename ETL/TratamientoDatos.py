@@ -1,27 +1,19 @@
 #pip install -U spacy
 #python -m spacy download es
 #pip install nltk
+
+import nltk
 from nltk import text
+
+from nltk.stem import SnowballStemmer
 import spacy 
 import re
 import os
 import pandas as pd
 import numpy as np
-import seaborn as sb
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import MinMaxScaler
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.metrics import classification_report
-from sklearn.metrics import confusion_matrix
-from sklearn.datasets import load_boston
 from sklearn.ensemble import GradientBoostingRegressor
-from sklearn.metrics import mean_squared_error
-from sklearn.model_selection import cross_val_score
-from sklearn.model_selection import RepeatedKFold
-from sklearn.model_selection import KFold
-from sklearn.model_selection import GridSearchCV
-from sklearn.model_selection import ParameterGrid
-from sklearn.inspection import permutation_importance
 from sklearn.ensemble import RandomForestRegressor
 import pickle
 import warnings
@@ -33,9 +25,9 @@ from Descarga.Receta import Receta
 #Variables globales
 listaCategorías = ["aperitivos","carne","pasta","pescado", "verdura"]
 rutaListaParada = "ETL\ListaParada.txt"
-rutaDiccionario = "ETL\Diccionario.txt"
-rutaMatriz = "ETL\Matriz.txt"
-rutaTextosTratados = "ETL\TextosLeidos.txt"
+rutaDiccionario = "ETL\DiccionarioL.txt"
+rutaMatriz = "ETL\MatrizL.txt"
+rutaTextosTratados = "ETL\TextosLeidosL.txt"
 
 #Metodos para lectura de ficheros
 def leerFichero(rutaFichero):
@@ -93,6 +85,11 @@ def lematizacion(tokens):
     lemmas = [tok.lemma_ for tok in doc]
     return lemmas
 
+def stemming(tokens):
+    spanishstemmer=SnowballStemmer('spanish')
+    stems = [spanishstemmer.stem(token) for token in tokens]
+    return stems
+
 #Metodo para generar el diccionario
 def generarDiccionario():
     diccionario = []
@@ -117,6 +114,7 @@ def generarDiccionario():
                 tokens = tratamientoBasico(tokens)
                 tokens = listaParada(tokens)
                 tokens = lematizacion(tokens)
+                #tokens = stemming(tokens)
                 
                 #Compruebo si existe el token en la lista y sino lo añado al diccionario
                 for token in tokens:
@@ -173,6 +171,7 @@ def generarMatriz():
             tokens = tratamientoBasico(tokens)
             tokens = listaParada(tokens)
             tokens = lematizacion(tokens)
+            #tokens = stemming(tokens)
             for token in tokens:
                 filaNueva[diccionario.index(token)] +=1
             matrizNueva[filasMatrizInicial+i] = filaNueva
@@ -186,6 +185,7 @@ def generarMatriz():
             tokens = tratamientoBasico(tokens)
             tokens = listaParada(tokens)
             tokens = lematizacion(tokens)
+            #tokens = stemming(tokens)
             for token in tokens:
                 matriz[i][diccionario.index(token)] +=1
             i+=1
@@ -193,26 +193,25 @@ def generarMatriz():
         return matriz
     
 def KNN():
-    n_neighbors = 3
- 
-    return KNeighborsClassifier(n_neighbors)
+    return KNeighborsClassifier(
+        n_neighbors=16
+    )
     
 def GradientBoostedTree():    
     return GradientBoostingRegressor(
-        n_estimators = 451,
-        max_features = 'auto',
-        random_state = 123
+        n_estimators = 506,
+        random_state = 37
     )
     
 def RandomForest():
     return RandomForestRegressor(
-        n_estimators = 116,
-        criterion    = 'mse',
+        n_estimators = 4,
+        criterion    = 'absolute_error',#'squared_error',
         max_depth    = None,
         max_features = 'auto',
         oob_score    = False,
         n_jobs       = -1,
-        random_state = 123
+        random_state = 27
     )
 
 
@@ -227,25 +226,18 @@ def prepararDatos():
         fichero = ruta.split('.')[0].split('/')[-1]
         categoria = re.sub("\d+", "", fichero)
         listaCategorias.append(Categorias.index(categoria))
-        #listaCategorias.append(categoria)
 
-    
-    #resultados = pd.get_dummies(categorias[0])
     resultados = pd.DataFrame(listaCategorias)
-    #print(resultados.head(5))
     matriz = pd.DataFrame(generarMatriz())    
 
     X = matriz.values
-    y = resultados.values
+    y = resultados.values.ravel()
     
-    return train_test_split(X, y, test_size=0.1, random_state=0)
+    return train_test_split(X, y, test_size=0.1, random_state=10)
 
 def entrenarModelo(elegido):
     X_train, X_test, y_train, y_test = prepararDatos()
-    scaler = MinMaxScaler()
-    #X_train = scaler.fit_transform(X_train)
-    #X_test = scaler.transform(X_test)
-
+    
     if elegido==0:
         modelo = KNN()
     elif elegido==1:
@@ -255,19 +247,10 @@ def entrenarModelo(elegido):
 
     modelo.fit(X_train, y_train)
 
-    predicciones = modelo.predict(X = X_test)
+    #y_pred = modelo.predict(X = X_test)
 
-    print('Accuracy on training set: {:.2f}'
-        .format(modelo.score(X_train, y_train)))
-    print('Accuracy on test set: {:.2f}'
-        .format(modelo.score(X_test, y_test)))
-
-    rmse = mean_squared_error(
-            y_true  = y_test,
-            y_pred  = predicciones,
-            squared = False
-        )
-    print(f"El error (rmse) de test es: {rmse}")
+    #print('Accuracy on test set: {:.2f}'.format(modelo.score(X_test, y_test)))  
+    return modelo.score(X_test, y_test)
 
 def guardarModelo(modelo):
     fichero = 'finalized_model.sav'

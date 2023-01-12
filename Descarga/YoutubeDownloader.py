@@ -22,18 +22,18 @@ except:
     os.mkdir(pathAudios)
     os.mkdir(pathTextos)
 
-def descargarVideo(url, categoria):
+def descargarVideo(url):
     if comprobarNuevo(url):
         yt = YouTube(url)
         titulo = yt.title
         autor = yt.author
         t = yt.streams.filter(only_audio=True).first()
-        nombre = categoria+str(len(os.listdir(str(pathTextos) + '\\' + categoria))+1)
+        nombre = 'Otros'+str(len(os.listdir(str(pathTextos) + '\\' + 'Otros'))+1)
         t.download(pathVideos, nombre+'.mp4')
         AudioConverter.convertirAudio(nombre)
         try:
             texto = SpeechRecognition.transcribirAudio(nombre)
-            receta = Receta(titulo, url, autor, texto).guardarTexto(str(pathTextos)+'\\'+categoria+'\\'+nombre+'.txt')
+            receta = Receta(titulo, url, autor, texto).guardarTexto(str(pathTextos)+'\\'+'Otros'+'\\'+nombre+'.txt')
         except:
             print('ERROR. Audio mayor 10MB')
             os.remove(str(pathAudios) + '\\'+nombre+'.wav')
