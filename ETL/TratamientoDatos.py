@@ -2,9 +2,6 @@
 #python -m spacy download es
 #pip install nltk
 
-import nltk
-from nltk import text
-
 from nltk.stem import SnowballStemmer
 import spacy 
 import re
@@ -166,7 +163,7 @@ def generarMatriz():
         filasMatrizFinal = len(recetas)
         diferenciaFilas = filasMatrizFinal-filasMatrizInicial
         for i in range(diferenciaFilas):
-            filaNueva = np.zeros(len(diccionario))
+            filaNueva = np.zeros(dicCols)
             tokens = tokenizacion(leerReceta(os.getcwd()+recetas[filasMatrizInicial+i]).texto )
             tokens = tratamientoBasico(tokens)
             tokens = listaParada(tokens)
@@ -178,7 +175,7 @@ def generarMatriz():
         np.savetxt(rutaMatriz,matrizNueva,fmt='%i')
         return matrizNueva
     else:
-        matriz = np.zeros( (len(recetas), len(diccionario) ) ,dtype=int)
+        matriz = np.zeros( (len(recetas), dicCols ) ,dtype=int)
         i=0
         for receta in recetas:
             tokens = tokenizacion(leerReceta(os.getcwd()+receta).texto)
@@ -191,7 +188,8 @@ def generarMatriz():
             i+=1
         np.savetxt(rutaMatriz,matriz,fmt='%i')
         return matriz
-    
+
+#Métodos para generar modelos l
 def KNN():
     return KNeighborsClassifier(
         n_neighbors=16
@@ -214,7 +212,7 @@ def RandomForest():
         random_state = 27
     )
 
-
+#Método para preparar los datos que usa el modelo
 def prepararDatos():
 
     generarDiccionario()
@@ -235,27 +233,52 @@ def prepararDatos():
     
     return train_test_split(X, y, test_size=0.1, random_state=10)
 
-def entrenarModelo(elegido):
+#Método para entrenar el modelo elegido
+def entrenarModelo(elegido,ruta):
     X_train, X_test, y_train, y_test = prepararDatos()
     
     if elegido==0:
         modelo = KNN()
+        nombre= 'KNN'
     elif elegido==1:
         modelo = GradientBoostedTree()
+        nombre= 'GradientBoostedTree'
     else:
         modelo = RandomForest()
+        nombre= 'RandomForest'
 
     modelo.fit(X_train, y_train)
-
-    #y_pred = modelo.predict(X = X_test)
-
-    #print('Accuracy on test set: {:.2f}'.format(modelo.score(X_test, y_test)))  
+    fichero = ruta + nombre + '.sav'
+    guardarModelo(modelo,fichero)
+    print('Modelo1:  {:.2f}'.format(modelo.score(X_test, y_test)*100))
+    modelo2 = cargarModelo('./Modelos/'+nombre+'.sav')
+    print('Modelo2:  {:.2f}'.format(modelo2.score(X_test, y_test)*100))
+    
     return modelo.score(X_test, y_test)
 
-def guardarModelo(modelo):
-    fichero = 'finalized_model.sav'
+#Método para exportar un modelo 
+def guardarModelo(modelo,fichero):
     pickle.dump(modelo, open(fichero, 'wb'))
 
+#Método para importar un modelo
 def cargarModelo(fichero):
-    loaded_model = pickle.load(open(fichero, 'rb'))
-    result = loaded_model.score(X_test, Y_test)
+    return pickle.load(open(fichero, 'rb'))
+
+#Método para categorizar recetas nuevas
+def categorizar(fichero):
+    modelo = cargarModelo(fichero)
+    diccionario = leerFichero(rutaDiccionario).splitlines()
+    for elemento in os.listdir('./Textos/Otros'):
+        filaNueva = np.zeros(len(diccionario))
+        tokens = tokenizacion(leerReceta('./Textos/Otros/'+elemento).texto )
+        tokens = tratamientoBasico(tokens)
+        tokens = listaParada(tokens)
+        tokens = lematizacion(tokens)
+        #tokens = stemming(tokens)
+        for token in tokens:
+            if token in diccionario:
+                filaNueva[diccionario.index(token)] +=1
+            else:
+                diccionario.append(token)
+                filaNueva.insert(1)
+        print(modelo.predict(filaNueva))
