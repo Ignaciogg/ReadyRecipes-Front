@@ -1,9 +1,14 @@
 ''' 	
 	pip install tkinter
- 	python -m pip install ttkbootstrap
+	pip install pandas
+	pip install pandastable
 '''
 from tkinter import *
 from tkinter import ttk, filedialog
+
+import pandas as pd
+from pandastable import Table
+
 import os
 from pathlib import Path
 import matplotlib.pyplot as plt
@@ -20,25 +25,23 @@ class Ventana(Frame):
 		self.menu = True
 		self.color = True
 
-		self.ruta_aperitivos, self.ruta_carne, self.ruta_pasta, self.ruta_pescado, self.ruta_verdura, self.ruta_otros, self.ruta_modelo, self.ruta_guardar_modelo = StringVar(), StringVar(), StringVar(), StringVar(), StringVar(), StringVar(), StringVar(), StringVar()
+		self.ruta_aperitivos, self.ruta_carne, self.ruta_pasta, self.ruta_pescado, self.ruta_verdura, self.ruta_otros, self.ruta_modelo = StringVar(), StringVar(), StringVar(), StringVar(), StringVar(), StringVar(), StringVar()
 		self.pathAperitivos=Path().absolute() / 'Textos' / 'Aperitivos'
 		self.pathCarne=Path().absolute() / 'Textos' / 'Carne'
 		self.pathVerduras=Path().absolute() / 'Textos' / 'Verdura'
 		self.pathPasta=Path().absolute() / 'Textos' / 'Pasta'
 		self.pathPescado=Path().absolute() / 'Textos' / 'Pescado'
 		self.pathOtros=Path().absolute() / 'Textos' / 'otro'
+		self.path_modelo=Path().absolute() / 'Modelos'
 		self.ruta_aperitivos.set(self.pathAperitivos)
 		self.ruta_carne.set(self.pathCarne)
 		self.ruta_pasta.set(self.pathPasta)
 		self.ruta_pescado.set(self.pathPescado)
 		self.ruta_verdura.set(self.pathVerduras)
 		self.ruta_otros.set(self.pathOtros)
-		self.ruta_modelo.set("./ReadyRecipes/Textos/modelo")
-		self.ruta_guardar_modelo.set("./ReadyRecipes/Textos/modelo/modelo1.txt")
+		self.ruta_modelo.set(self.path_modelo)
 
-		self.url = StringVar()
 		self.seleccion = StringVar()
-
 		self.aperitivos, self.carnes, self.pastas, self.pescados, self.verduras, self.total = IntVar(), IntVar(), IntVar(), IntVar(), IntVar(), IntVar()
 
 		# Settings frame principal
@@ -76,13 +79,9 @@ class Ventana(Frame):
 		self.paginas.select([self.frame_tres])	
 		self.frame_tres.columnconfigure(0, weight=1)
 		self.frame_tres.columnconfigure(1, weight=1)
-	
-	def seleccionaAlgoritmo(self, seleccion):
-		self.seleccion.set(seleccion)
 
 	def abrirExplorador(self, ruta):
 		ruta.set(filedialog.askdirectory())
-		print(self.ruta_aperitivos.get())
 
 	def nav(self):
 		self.imagen_youtube = PhotoImage(file ='./interfaz/youtube.png')
@@ -117,39 +116,53 @@ class Ventana(Frame):
 		Label(self.frame_cero, text= 'DESCARGA DE VÍDEOS CON YOUTUBE', bg='white', fg= 'black', font= ('Arial', 15, 'bold')).place(relx=0.38, rely=0.03)
 		self.labelFrame0 = Label(self.frame_cero, text= 'Inserte la url del vídeo que desea descargar:', bg='white', fg= 'black', font= ('Arial', 13, 'bold'))
 		self.labelFrame0.place(relx=0.39, rely=0.13)
-		Entry(self.frame_cero,  width=80, textvariable=self.url, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3).place(relx=0.32, rely=0.2)
-		Button(self.frame_cero, width=12, command=lambda : verResumen(), text='DESCARGAR!', bg='red2', fg='white', font= ('Arial', 13, 'bold')).place(relx=0.465, rely=0.26)
+		url = " "
+		Entry(self.frame_cero,  width=80, textvariable=url, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3).place(relx=0.32, rely=0.2)
+		
+		def descargaTexto (url):
+			if url == " ":
+				ventana_error = Toplevel()
+				ventana_error.title("ERROR")
+				ventana_error.config(width=500, height=100)
+				Label(ventana_error, text='ERROR: url del texto no seleccionada', bg='white', fg= 'red', font= ('Arial', 10, 'bold')).place(relx=0.3, rely=0.05)
+			
+			if url == "algo":
+				ventana_error = Toplevel()
+				ventana_error.title("ERROR")
+				ventana_error.config(width=500, height=100)
+				Label(ventana_error, text='ERROR: de este vídeo ya tenemos transcripción', bg='white', fg= 'red', font= ('Arial', 10, 'bold')).place(relx=0.3, rely=0.05)
+			
+		
+		Button(self.frame_cero, width=12, command=lambda : descargaTexto(url), text='DESCARGAR!', bg='red2', fg='white', font= ('Arial', 13, 'bold')).place(relx=0.465, rely=0.26)
 
 		# Página 1 - Entrenamiento
 		#1.1 - Selección de textos
 		Label(self.frame_uno, text='ENTRENAMIENTO', bg='white', fg= 'black', font= ('Arial', 15, 'bold')).place(relx=0.458, rely=0.03)
-		Label(self.frame_uno, width=15, text='Textos Aperitivos', bg='white', fg= 'black', font=('Arial', 13)).place(relx=0.2, rely=0.1)
-		Label(self.frame_uno, width=15, text='Textos Carne', bg='white', fg= 'black', font=('Arial', 13)).place(relx=0.2, rely=0.14)
-		Label(self.frame_uno, width=15, text='Textos Pasta', bg='white', fg= 'black', font=('Arial', 13)).place(relx=0.2, rely=0.18)
-		Label(self.frame_uno, width=15, text='Textos Pesacado', bg='white', fg= 'black', font=('Arial', 13)).place(relx=0.2, rely=0.22)
-		Label(self.frame_uno, width=15, text='Textos Verdura', bg='white', fg= 'black', font=('Arial', 13)).place(relx=0.2, rely=0.26)
+		Label(self.frame_uno, width=15, text='Textos Aperitivos', bg='white', fg= 'black', font=('Arial', 13)).place(relx=0.25, rely=0.1)
+		Label(self.frame_uno, width=15, text='Textos Carne', bg='white', fg= 'black', font=('Arial', 13)).place(relx=0.25, rely=0.14)
+		Label(self.frame_uno, width=15, text='Textos Pasta', bg='white', fg= 'black', font=('Arial', 13)).place(relx=0.25, rely=0.18)
+		Label(self.frame_uno, width=15, text='Textos Pesacado', bg='white', fg= 'black', font=('Arial', 13)).place(relx=0.25, rely=0.22)
+		Label(self.frame_uno, width=15, text='Textos Verdura', bg='white', fg= 'black', font=('Arial', 13)).place(relx=0.25, rely=0.26)
 
-		Entry(self.frame_uno, state= "disabled", width=80, text=self.ruta_aperitivos, textvariable=self.ruta_aperitivos, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3).place(relx=0.35, rely=0.1)
-		Entry(self.frame_uno, state= "disabled", width=80, text=self.ruta_carne, textvariable=self.ruta_carne, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3).place(relx=0.35, rely=0.14)
-		Entry(self.frame_uno, state= "disabled", width=80, text=self.ruta_pasta, textvariable=self.ruta_pasta, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3).place(relx=0.35, rely=0.18)
-		Entry(self.frame_uno, state= "disabled", width=80, text=self.ruta_pescado, textvariable=self.ruta_pescado, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3).place(relx=0.35, rely=0.22)
-		Entry(self.frame_uno, state= "disabled", width=80, text=self.ruta_verdura, textvariable=self.ruta_verdura, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3).place(relx=0.35, rely=0.26)
-
-		Button(self.frame_uno, width=12, text='Cambiar', command= lambda : self.abrirExplorador(self.ruta_aperitivos)).place(relx=0.75, rely=0.10)
-		Button(self.frame_uno, width=12, text='Cambiar', command= lambda : self.abrirExplorador(self.ruta_carne)).place(relx=0.75, rely=0.14)
-		Button(self.frame_uno, width=12, text='Cambiar', command= lambda : self.abrirExplorador(self.ruta_pasta)).place(relx=0.75, rely=0.18)
-		Button(self.frame_uno, width=12, text='Cambiar', command= lambda : self.abrirExplorador(self.ruta_pescado)).place(relx=0.75, rely=0.22)
-		Button(self.frame_uno, width=12, text='Cambiar', command= lambda : self.abrirExplorador(self.ruta_verdura)).place(relx=0.75, rely=0.26)
+		Entry(self.frame_uno, state= "disabled", width=80, text=self.ruta_aperitivos, textvariable=self.ruta_aperitivos, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3).place(relx=0.40, rely=0.1)
+		Entry(self.frame_uno, state= "disabled", width=80, text=self.ruta_carne, textvariable=self.ruta_carne, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3).place(relx=0.40, rely=0.14)
+		Entry(self.frame_uno, state= "disabled", width=80, text=self.ruta_pasta, textvariable=self.ruta_pasta, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3).place(relx=0.40, rely=0.18)
+		Entry(self.frame_uno, state= "disabled", width=80, text=self.ruta_pescado, textvariable=self.ruta_pescado, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3).place(relx=0.40, rely=0.22)
+		Entry(self.frame_uno, state= "disabled", width=80, text=self.ruta_verdura, textvariable=self.ruta_verdura, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3).place(relx=0.40, rely=0.26)
 
 		#1.2 - Selección de algoritmos y vista previa
-		self.radio1 = Radiobutton(self.frame_uno, justify=LEFT, command=self.seleccionaAlgoritmo("KNN"), text="KNN", variable=self.seleccion, value="KNN").place(relx=0.2, rely=0.48)
-		self.radio2 = Radiobutton(self.frame_uno, justify=LEFT, command=self.seleccionaAlgoritmo("GBT"), text="Gradient Boosted Tree", variable=self.seleccion, value="GBT").place(relx=0.2, rely=0.51)
-		self.radio3 = Radiobutton(self.frame_uno, justify=LEFT, command=self.seleccionaAlgoritmo("Random Forest"), text="Random Forest", variable=self.seleccion, value="Random Forest").place(relx=0.2, rely=0.54)
+		seleccion = IntVar()
+		def seleccionaAlgoritmo(seleccion):
+			print(seleccion)
 
-		Label(self.frame_uno, justify=LEFT, text='VISTA PREVIA:', bg='white', fg= 'black', font= ('Arial', 13, 'bold')).place(relx=0.477, rely=0.40)
+		self.radio1 = Radiobutton(self.frame_uno, justify=LEFT, command= lambda : seleccionaAlgoritmo(1), variable=seleccion, value=1, text="KNN").place(relx=0.2, rely=0.48)
+		self.radio2 = Radiobutton(self.frame_uno, justify=LEFT, command= lambda : seleccionaAlgoritmo(2), variable=seleccion, value=2, text="Gradient Boosted Tree").place(relx=0.2, rely=0.51)
+		self.radio3 = Radiobutton(self.frame_uno, justify=LEFT, command= lambda : seleccionaAlgoritmo(3), variable=seleccion, value=3, text="Random Forest").place(relx=0.2, rely=0.54)
+
+		Label(self.frame_uno, justify=LEFT, text='VISTA PREVIA:', bg='white', fg= 'black', font= ('Arial', 13, 'bold')).place(relx=0.477, rely=0.35)
 		Label(self.frame_uno, justify=LEFT, text='Aperitivos encontrados - ' + str(len(os.listdir(self.pathAperitivos))), bg='white', fg= 'black', font= ('Arial', 13)).place(relx=0.35, rely=0.45)
-		Label(self.frame_uno, justify=LEFT, text='Carnes encontradas - ' + str(len(os.listdir(self.pathCarne))) + '              Modelo Seleccionado:', bg='white', fg= 'black', font= ('Arial', 13)).place(relx=0.35, rely=0.48)
-		Label(self.frame_uno, justify=LEFT, text='Pastas encontradas - ' + str(len(os.listdir(self.pathPasta))) + '                     ' + str(self.seleccion.get()), bg='white', fg= 'black', font= ('Arial', 13)).place(relx=0.35, rely=0.51)
+		Label(self.frame_uno, justify=LEFT, text='Carnes encontradas - ' + str(len(os.listdir(self.pathCarne))), bg='white', fg= 'black', font= ('Arial', 13)).place(relx=0.35, rely=0.48)
+		Label(self.frame_uno, justify=LEFT, text='Pastas encontradas - ' + str(len(os.listdir(self.pathPasta))), bg='white', fg= 'black', font= ('Arial', 13)).place(relx=0.35, rely=0.51)
 		Label(self.frame_uno, justify=LEFT, text='Pescados encontrados - ' + str(len(os.listdir(self.pathPescado))), bg='white', fg= 'black', font= ('Arial', 13)).place(relx=0.35, rely=0.54)
 		Label(self.frame_uno, justify=LEFT, text='Verduras encontrados - ' + str(len(os.listdir(self.pathVerduras))), bg='white', fg= 'black', font= ('Arial', 13)).place(relx=0.35, rely=0.57)
 		Label(self.frame_uno, justify=LEFT, text='Total: ' + str(len(os.listdir(self.pathAperitivos)) + len(os.listdir(self.pathCarne)) + len(os.listdir(self.pathPasta)) + len(os.listdir(self.pathPescado)) + len(os.listdir(self.pathVerduras))), bg='white', fg= 'black', font= ('Arial', 13)).place(relx=0.35, rely=0.63)
@@ -158,20 +171,20 @@ class Ventana(Frame):
 		labels = ['Aperitivos', 'Carnes', 'Pastas', 'Pescados', 'Verduras']
 		colors = ['#66b3ff','#ff9999','#ffcc99','#333333','#99ff99']
 		plt.rcParams['font.size'] = 8
-		fig1 = Figure(figsize=(4,4))
+		fig1 = Figure(figsize=(3,3))
 		ax1 = fig1.add_subplot(111)
 		ax1.pie(values, labels=labels, colors=colors, startangle=90)
 		def verEntreno():
 			canvas1 = FigureCanvasTkAgg(fig1, master=self.frame_uno)
 			canvas1.draw()
-			canvas1.get_tk_widget().grid(column=0, row=0, padx=1010, pady=250)
+			canvas1.get_tk_widget().grid(column=0, row=0, padx=900, pady=250)
 		
-		Button(self.frame_uno, width=12, command=lambda : verEntreno(), text='ENTRENAR!', bg='red2', fg='white', font= ('Arial', 13, 'bold')).place(relx=0.38, rely=0.72)
+		Button(self.frame_uno, width=12, command=lambda : verEntreno(), text='ENTRENAR!', bg='red2', fg='white', font= ('Arial', 13, 'bold')).place(relx=0.48, rely=0.90)
 
 		#1.3 - Guardar modelo
-		Label(self.frame_uno, width=15, text='Guardar modelo:', bg='white', fg= 'black', font=('Arial', 13)).place(relx=0.20, rely=0.90)
-		Entry(self.frame_uno, state= "disabled", width=80, text=self.ruta_guardar_modelo, textvariable=self.ruta_guardar_modelo, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3).place(relx=0.35, rely=0.90)
-		Button(self.frame_uno, width=12, text='Seleccionar').place(relx=0.75, rely=0.90)
+		Label(self.frame_uno, width=15, text='Guardar modelo:', bg='white', fg= 'black', font=('Arial', 13)).place(relx=0.20, rely=0.78)
+		Entry(self.frame_uno, state= "disabled", width=80, text=self.ruta_modelo, textvariable=self.ruta_modelo, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3).place(relx=0.35, rely=0.78)
+		Button(self.frame_uno, width=12, text='Seleccionar', command= lambda : self.abrirExplorador(self.ruta_modelo)).place(relx=0.75, rely=0.78)
 
 		# Página 2 - Clasificación
 		#2.1 - Selección de modelo
@@ -195,10 +208,12 @@ class Ventana(Frame):
 		treeview['show'] = 'headings'
 
 		productos = ttk.Treeview(self.frame_tres)
-		productos["columns"] = ("Producto", "Precio", "Supermercado")
+		productos["columns"] = ("Texto", "Producto", "Precio", "Supermercado")
+		productos.column("Texto", width=200, anchor=W)
 		productos.column("Producto", width=300, anchor=W)
 		productos.column("Precio", width=200, anchor=W)
 		productos.column("Supermercado", width=200, anchor=W)
+		productos.heading("Texto", text="Texto")
 		productos.heading("Producto", text="Producto")
 		productos.heading("Precio", text="Precio")
 		productos.heading("Supermercado", text="Supermercado")
@@ -222,9 +237,10 @@ class Ventana(Frame):
 		sb1 = ttk.Scrollbar(treeview, orient=VERTICAL, command=treeview.yview)
 		treeview.configure(yscrollcommand=sb1.set)
 
-		productos.insert("", "end", values=("Tomate", "3€", "Mercadona"))
-		sb2 = ttk.Scrollbar(productos, orient=VERTICAL, command=productos.yview)
-		productos.configure(yscrollcommand=sb2.set)
+		data = [['Ejemplo1.txt', 'Pasta', 3.30, 'Mercadona'], ['Ejemplo2.txt', 'Carne', 5.20, 'Carrefour']]
+		df = pd.DataFrame(data, columns=['Texto', 'Categoria predicha', 'Precio (€)', 'Supermercado'])
+		self.pt = Table(self.frame_tres, width=760, height=420, dataframe=df)
+		#, showtoolbar=True, showstatusbar=True
 
 		#2.4 - Resumen
 		lb1 = Label(self.frame_dos, justify=LEFT, text='RESUMEN:', bg='white', fg= 'black', font= ('Arial', 13, 'bold'))
@@ -242,7 +258,7 @@ class Ventana(Frame):
 
 		#2.5 - Guardar resultado
 		lb9 = Label(self.frame_dos, width=15, text='Guardar resultado:', bg='white', fg= 'black', font=('Arial', 13))
-		e10 = Entry(self.frame_dos, state= "disabled", width=80, text=self.ruta_guardar_modelo, textvariable=self.ruta_guardar_modelo, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3)
+		e10 = Entry(self.frame_dos, state= "disabled", width=80, text=self.ruta_modelo, textvariable=self.ruta_modelo, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3)
 		b11 = Button(self.frame_dos, width=12, text='Guardar')
 
 		self.labelFrame3 = Label(self.frame_tres, text= 'Clasifique un conjunto de textos para utilizar esta función', bg='white', fg= 'black', font= ('Arial', 13, 'bold'))
@@ -251,8 +267,9 @@ class Ventana(Frame):
 		def verResumen():
 			treeview.place(relx=0.38, rely= 0.4)
 			sb1.place(relx=0.975, rely= 0.00, relheight=0.99, relwidth=0.02)
-			productos.place(relx=0.3, rely= 0.25)
-			sb2.place(relx=0.975, rely= 0.00, relheight=0.99, relwidth=0.05)
+			self.pt.show()
+			self.pt.place(relx=0.25, rely=0.44)
+
 			lb1.place(relx=0.475, rely=0.30)
 			lb2.place(relx=0.25, rely= 0.40)
 			lb3.place(relx=0.25, rely= 0.44)
