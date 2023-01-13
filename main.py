@@ -2,6 +2,9 @@ from Descarga.Receta import Receta as receta
 import Descarga.YoutubeDownloader as yt
 import Descarga.SpeechRecognition as sr
 import Descarga.AudioConverter as ac
+import Descarga.Receta as receta
+import ETL.TratamientoDatos as td
+import WebScraping.webscraping as ws
 
 ''' 	
 	pip install tkinter
@@ -31,13 +34,15 @@ class Ventana(Frame):
 		self.color = True
 
 		self.ruta_aperitivos, self.ruta_carne, self.ruta_pasta, self.ruta_pescado, self.ruta_verdura, self.ruta_otros, self.ruta_modelo = StringVar(), StringVar(), StringVar(), StringVar(), StringVar(), StringVar(), StringVar()
-		self.pathAperitivos=Path().absolute() / 'Textos' / 'Aperitivos'
-		self.pathCarne=Path().absolute() / 'Textos' / 'Carne'
-		self.pathVerduras=Path().absolute() / 'Textos' / 'Verdura'
-		self.pathPasta=Path().absolute() / 'Textos' / 'Pasta'
-		self.pathPescado=Path().absolute() / 'Textos' / 'Pescado'
-		self.pathOtros=Path().absolute() / 'Textos' / 'otro'
-		self.path_modelo=Path().absolute() / 'Modelos'
+		self.pathAperitivos = Path().absolute() / 'Textos' / 'Aperitivos'
+		self.pathCarne = Path().absolute() / 'Textos' / 'Carne'
+		self.pathVerduras = Path().absolute() / 'Textos' / 'Verdura'
+		self.pathPasta = Path().absolute() / 'Textos' / 'Pasta'
+		self.pathPescado = Path().absolute() / 'Textos' / 'Pescado'
+		self.pathOtros = Path().absolute() / 'Textos' / 'Otros'
+		self.otros = StringVar()
+		self.otros = Path().absolute() / 'Textos' / 'Otros' / 'Otros1.txt'
+		self.path_modelo = Path().absolute() / 'Modelos'
 		self.ruta_aperitivos.set(self.pathAperitivos)
 		self.ruta_carne.set(self.pathCarne)
 		self.ruta_pasta.set(self.pathPasta)
@@ -121,11 +126,27 @@ class Ventana(Frame):
 		Label(self.frame_cero, text= 'DESCARGA DE VÍDEOS CON YOUTUBE', bg='white', fg= 'black', font= ('Arial', 15, 'bold')).place(relx=0.38, rely=0.03)
 		self.labelFrame0 = Label(self.frame_cero, text= 'Inserte la url del vídeo que desea descargar:', bg='white', fg= 'black', font= ('Arial', 13, 'bold'))
 		self.labelFrame0.place(relx=0.39, rely=0.13)
-		url = " "
+		url = StringVar()
+		def showurl(*args):
+			print (url.get())
+
+		url.trace("w", showurl)
 		Entry(self.frame_cero,  width=80, textvariable=url, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3).place(relx=0.32, rely=0.2)
 		
-		Button(self.frame_cero, width=12, command=lambda : yt.descargarVideo(url), text='DESCARGAR!', bg='red2', fg='white', font= ('Arial', 13, 'bold')).place(relx=0.465, rely=0.26)
+		def comienzaDescarga (url):
+			yt.descargarVideo(url)
+			b0.place(relx=0.437, rely=0.33)
 
+		lista_ingredientes = []
+		def pasarReceta():
+			food = pd.read_csv('./WebScraping/food.csv')
+			receta = td.leerReceta(self.otros)
+			lista_ingredientes = ws.buscar_ingredientes(receta.texto, food)
+		
+
+		Button(self.frame_cero, width=12, command= lambda : comienzaDescarga(url.get()), text='DESCARGAR!', bg='red2', fg='white', font= ('Arial', 13, 'bold')).place(relx=0.465, rely=0.26)
+		b0 = Button(self.frame_cero, width=20, command= lambda : pasarReceta(), text='LISTAR INGREDIENTES!', bg='red2', fg='white', font= ('Arial', 13, 'bold')).place(relx=0.437, rely=0.33)
+		
 		# Página 1 - Entrenamiento
 		#1.1 - Selección de textos
 		Label(self.frame_uno, text='ENTRENAMIENTO', bg='white', fg= 'black', font= ('Arial', 15, 'bold')).place(relx=0.458, rely=0.03)
@@ -166,11 +187,12 @@ class Ventana(Frame):
 		ax1 = fig1.add_subplot(111)
 		ax1.pie(values, labels=labels, colors=colors, startangle=90)
 		def verEntreno():
-			canvas1 = FigureCanvasTkAgg(fig1, master=self.frame_uno)
-			canvas1.draw()
-			canvas1.get_tk_widget().grid(column=0, row=0, padx=900, pady=250)
+			print('entrena')
 		
 		Button(self.frame_uno, width=12, command=lambda : verEntreno(), text='ENTRENAR!', bg='red2', fg='white', font= ('Arial', 13, 'bold')).place(relx=0.48, rely=0.90)
+		canvas1 = FigureCanvasTkAgg(fig1, master=self.frame_uno)
+		canvas1.draw()
+		canvas1.get_tk_widget().grid(column=0, row=0, padx=900, pady=250)
 
 		#1.3 - Guardar modelo
 		Label(self.frame_uno, width=15, text='Guardar modelo:', bg='white', fg= 'black', font=('Arial', 13)).place(relx=0.20, rely=0.78)
@@ -252,8 +274,8 @@ class Ventana(Frame):
 		e10 = Entry(self.frame_dos, state= "disabled", width=80, text=self.ruta_modelo, textvariable=self.ruta_modelo, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3)
 		b11 = Button(self.frame_dos, width=12, text='Guardar')
 
-		self.labelFrame3 = Label(self.frame_tres, text= 'Clasifique un conjunto de textos para utilizar esta función', bg='white', fg= 'black', font= ('Arial', 13, 'bold'))
-		self.labelFrame3.place(relx=0.355, rely=0.10)
+		self.labelFrame3 = Label(self.frame_tres, text= 'Descargue un vídeo y liste sus ingredientes para utilizar esta función', bg='white', fg= 'black', font= ('Arial', 13, 'bold'))
+		self.labelFrame3.place(relx=0.3, rely=0.10)
 
 		def verResumen():
 			treeview.place(relx=0.38, rely= 0.4)
