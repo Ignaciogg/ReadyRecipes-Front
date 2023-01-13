@@ -5,7 +5,7 @@ import numpy as np
 import re
 
 
-food = pd.read_csv('food.csv')
+food = pd.read_csv('./WebScraping/food.csv')
 food.drop(['Unnamed: 0'], axis=1,inplace=True)
 
 def buscador_precios_por_supermercado(array_ingredientes,supermercado):
@@ -153,7 +153,7 @@ def get_url_order(orden, ingredient):
 
     return url_productos
 
-def buscar_ingredientes(receta,lista_alimentos_csv):
+def buscar_ingredientes(receta, lista_alimentos_csv):
     alimentos_csv_list = lista_alimentos_csv['Nombre'].values
     receta_lower=normalize(receta)
     lista_ingredientes= []
