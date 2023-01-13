@@ -230,10 +230,10 @@ def entrenarModelo(elegido,ruta):
     X_train, X_test, y_train, y_test = prepararDatos()
     
     #Eleccion del modelo que se entrena
-    if elegido==0:
+    if elegido==1:
         modelo = KNN()
         nombre= 'KNN'
-    elif elegido==1:
+    elif elegido==2:
         modelo = GradientBoostedTree()
         nombre= 'GradientBoostedTree'
     else:
@@ -252,7 +252,7 @@ def entrenarModelo(elegido,ruta):
     modelo.fit(X_train, y_train)
 
     #Guardamos el modelo
-    fichero = ruta + nombre + '.sav'
+    fichero = ruta + '/' +nombre + '.sav'
     guardarModelo(modelo,fichero)
     
     return modelo.score(X_test, y_test)
@@ -282,4 +282,4 @@ def categorizar(fichero):
             if token in diccionario:
                 filaNueva[diccionario.index(token)] += 1
 
-        print(Categorias[round(modelo.predict([filaNueva])[0])]+' -> '+leerReceta('./Textos/Otros/'+elemento).titulo)
+        print(Categorias[round(modelo.predict([filaNueva])[0])]+';'+leerReceta('./Textos/Otros/'+elemento).titulo[:-1]+';'+str(elemento))
