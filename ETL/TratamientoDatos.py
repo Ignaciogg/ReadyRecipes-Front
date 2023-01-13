@@ -232,7 +232,7 @@ def entrenarModelo(elegido,ruta):
     #Eleccion del modelo que se entrena
     if elegido==1:
         modelo = KNN()
-        nombre = 'KNN'
+        nombre= 'KNN'
     elif elegido==2:
         modelo = GradientBoostedTree()
         nombre = 'GradientBoostedTree'
@@ -282,4 +282,4 @@ def categorizar(fichero):
             if token in diccionario:
                 filaNueva[diccionario.index(token)] += 1
 
-        print(Categorias[round(modelo.predict([filaNueva])[0])]+' -> '+leerReceta('./Textos/Otros/'+elemento).titulo)
+        print(Categorias[round(modelo.predict([filaNueva])[0])]+';'+leerReceta('./Textos/Otros/'+elemento).titulo[:-1]+';'+str(elemento))
