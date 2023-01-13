@@ -41,7 +41,8 @@ class Ventana(Frame):
 		self.pathPescado = Path().absolute() / 'Textos' / 'Pescado'
 		self.pathOtros = Path().absolute() / 'Textos' / 'Otros'
 		self.otros = StringVar()
-		self.otros = Path().absolute() / 'Textos' / 'Otros' / 'Otros1.txt'
+		filename = '/Otros ' + str(len(os.listdir(self.pathOtros))) + '.txt'
+		self.otros = os.path.join(self.pathOtros, filename)
 		self.path_modelo = Path().absolute() / 'Modelos'
 		self.ruta_aperitivos.set(self.pathAperitivos)
 		self.ruta_carne.set(self.pathCarne)
@@ -137,14 +138,16 @@ class Ventana(Frame):
 			yt.descargarVideo(url)
 			b0.place(relx=0.437, rely=0.33)
 
-		lista_ingredientes = []
 		def pasarReceta():
 			food = pd.read_csv('./WebScraping/food.csv')
 			receta = td.leerReceta(self.otros)
 			lista_ingredientes = ws.buscar_ingredientes(receta.texto, food)
-			data = [['Ejemplo1.txt', 'Pasta', 3.30, 'Mercadona'], ['Ejemplo2.txt', 'Carne', 5.20, 'Carrefour']]
-			df = pd.DataFrame(data, columns=['Texto', 'Categoria predicha', 'Precio (€)', 'Supermercado'])
-			self.pt = Table(self.frame_tres, width=760, height=420, dataframe=df)
+			data = ws.buscador_precios_por_supermercado(lista_ingredientes, "mercadona")
+			df = pd.DataFrame(data, columns=['Nombre', 'Precio (€)', 'Supermercado'])
+			self.labelFrame3.place_forget()
+			self.pt = Table(self.frame_tres, width=900, height=420, dataframe=df)
+			self.pt.show()
+			self.pt.place(relx=0.25, rely=0.2)
 		
 
 		Button(self.frame_cero, width=12, command= lambda : comienzaDescarga(url.get()), text='DESCARGAR!', bg='red2', fg='white', font= ('Arial', 13, 'bold')).place(relx=0.465, rely=0.26)
@@ -262,13 +265,11 @@ class Ventana(Frame):
 		b11 = Button(self.frame_dos, width=12, text='Guardar')
 
 		self.labelFrame3 = Label(self.frame_tres, text= 'Descargue un vídeo y liste sus ingredientes para utilizar esta función', bg='white', fg= 'black', font= ('Arial', 13, 'bold'))
-		self.labelFrame3.place(relx=0.3, rely=0.10)
+		self.labelFrame3.place(relx=0.33, rely=0.30)
 
 		def verResumen():
 			treeview.place(relx=0.38, rely= 0.4)
 			sb1.place(relx=0.975, rely= 0.00, relheight=0.99, relwidth=0.02)
-			self.pt.show()
-			self.pt.place(relx=0.25, rely=0.44)
 
 			lb1.place(relx=0.475, rely=0.30)
 			lb2.place(relx=0.25, rely= 0.40)
@@ -285,12 +286,11 @@ class Ventana(Frame):
 			canvas2 = FigureCanvasTkAgg(fig2, master=self.frame_dos)
 			canvas2.draw()
 			canvas2.get_tk_widget().grid(column=0, row=0, padx=1070, pady=210)
-			self.labelFrame3.place_forget()
 
 		Button(self.frame_dos, width=12, command=lambda : verResumen(), text='CLASIFICAR!', bg='red2', fg='white', font= ('Arial', 13, 'bold')).place(relx=0.465, rely=0.20)
 
 		# Página 3 - Web Scraping
-		Label(self.frame_tres, text= 'WEB SCRAPING', bg='white', fg= 'black', font= ('Arial', 15, 'bold')).place(relx=0.458, rely=0.03)
+		Label(self.frame_tres, text= 'WEB SCRAPING', bg='white', fg= 'black', font= ('Arial', 15, 'bold')).place(relx=0.458, rely=0.07)
 
 # Settings ventana
 if __name__ == "__main__":
