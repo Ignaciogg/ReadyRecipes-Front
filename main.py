@@ -146,10 +146,10 @@ class Ventana(Frame):
 			print(receta.texto)
 			lista_ingredientes = ws.buscar_ingredientes(receta.texto, food)
 			data = ws.buscador_precios_por_supermercado(lista_ingredientes, "mercadona")
-			df = pd.DataFrame(data, columns=['Nombre', 'Precio (€)', 'Supermercado'])
-			print(df)
+			#df = pd.DataFrame(data, columns=['Nombre', 'Precio (€)', 'Supermercado'])
+			#print(df)
 			self.labelFrame3.place_forget()
-			self.pt = Table(self.frame_tres, width=900, height=420, dataframe=df)
+			self.pt = Table(self.frame_tres, width=900, height=420, dataframe=data)
 			self.pt.show()
 			self.pt.place(relx=0.25, rely=0.2)
 		

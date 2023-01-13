@@ -38,7 +38,14 @@ def buscador_precios_por_supermercado(array_ingredientes,supermercado):
         
         result.append(valor.tolist())
         
-    return result
+    print(result)
+    res2  = pd.DataFrame(result[0])
+    res3 = pd.DataFrame(result[1])
+    res4 = pd.DataFrame(result[2])
+
+    result_fin  = pd.concat([res2, res3,res4],ignore_index=True)
+    result_fin.columns=['Alimento', 'Precio/Peso', 'Supermercado']
+    return result_fin
             
 
 
@@ -55,7 +62,6 @@ def mostrar_precio_ordenado(orden, array_ingredientes):
         soup_productos = bs(url_productos.content, 'lxml')
         productos = soup_productos.find_all(class_="productname")
         precios = soup_productos.find_all(class_="price")
-        #imagenes=soup_productos.find_all(class_="img")
         supermercados = get_url_product(soup_productos)
         
         supermercado=[]
@@ -65,18 +71,19 @@ def mostrar_precio_ordenado(orden, array_ingredientes):
 
         products = [i.text for i in productos]
         price = [i.text for i in precios]
-        '''image=[]
-        
-        for i in imagenes:
-            for j in (i.find_all('img')):
-                image.append(j['src'])'''
-                
         
         valor = np.stack((products[:3],price[:3],supermercado[:3]), axis=1)
         
         result.append(valor.tolist())
+    
+    res2  = pd.DataFrame(result[0])
+    res3 = pd.DataFrame(result[1])
+    res4 = pd.DataFrame(result[2])
+
+    result_fin  = pd.concat([res2, res3,res4],ignore_index=True)
+    result_fin.columns=['Alimento', 'Precio/Peso', 'Supermercado']
         
-    return result
+    return result_fin
 
 def mostrar_precio_ordenado_supermercado(orden, array_ingredientes,mercado):
     result=[]
@@ -91,7 +98,6 @@ def mostrar_precio_ordenado_supermercado(orden, array_ingredientes,mercado):
         soup_productos = bs(url_productos.content, 'lxml')
         productos = soup_productos.find_all(class_="productname")
         precios = soup_productos.find_all(class_="price")
-        #imagenes=soup_productos.find_all(class_="img")
         supermercados = get_url_product(soup_productos)
         
         supermercado=[]
@@ -101,18 +107,19 @@ def mostrar_precio_ordenado_supermercado(orden, array_ingredientes,mercado):
 
         products = [i.text for i in productos]
         price = [i.text for i in precios]
-        '''image=[]
-        
-        for i in imagenes:
-            for j in (i.find_all('img')):
-                image.append(j['src'])'''
-                
         
         valor = np.stack((products[:3],price[:3],supermercado[:3]), axis=1)
         
         result.append(valor.tolist())
+    
+    res2  = pd.DataFrame(result[0])
+    res3 = pd.DataFrame(result[1])
+    res4 = pd.DataFrame(result[2])
+
+    result_fin  = pd.concat([res2, res3,res4],ignore_index=True)
+    result_fin.columns=['Alimento', 'Precio/Peso', 'Supermercado']
         
-    return result
+    return result_fin
 
 def get_supermarket(url):
     try:
