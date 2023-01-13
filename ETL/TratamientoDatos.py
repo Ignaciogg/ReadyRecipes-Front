@@ -230,15 +230,15 @@ def entrenarModelo(elegido,ruta):
     X_train, X_test, y_train, y_test = prepararDatos()
     
     #Eleccion del modelo que se entrena
-    if elegido==0:
+    if elegido==1:
         modelo = KNN()
-        nombre= 'KNN'
-    elif elegido==1:
+        nombre = 'KNN'
+    elif elegido==2:
         modelo = GradientBoostedTree()
-        nombre= 'GradientBoostedTree'
+        nombre = 'GradientBoostedTree'
     else:
         modelo = RandomForest()
-        nombre= 'RandomForest'
+        nombre = 'RandomForest'
     
     #Generar nombre del modelo
     contador = 0
@@ -252,7 +252,7 @@ def entrenarModelo(elegido,ruta):
     modelo.fit(X_train, y_train)
 
     #Guardamos el modelo
-    fichero = ruta + nombre + '.sav'
+    fichero = ruta + '/' +nombre + '.sav'
     guardarModelo(modelo,fichero)
     
     return modelo.score(X_test, y_test)

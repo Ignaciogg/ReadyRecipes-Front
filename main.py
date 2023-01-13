@@ -142,10 +142,13 @@ class Ventana(Frame):
 			food = pd.read_csv('./WebScraping/food.csv')
 			receta = td.leerReceta(self.otros)
 			lista_ingredientes = ws.buscar_ingredientes(receta.texto, food)
+			data = [['Ejemplo1.txt', 'Pasta', 3.30, 'Mercadona'], ['Ejemplo2.txt', 'Carne', 5.20, 'Carrefour']]
+			df = pd.DataFrame(data, columns=['Texto', 'Categoria predicha', 'Precio (€)', 'Supermercado'])
+			self.pt = Table(self.frame_tres, width=760, height=420, dataframe=df)
 		
 
 		Button(self.frame_cero, width=12, command= lambda : comienzaDescarga(url.get()), text='DESCARGAR!', bg='red2', fg='white', font= ('Arial', 13, 'bold')).place(relx=0.465, rely=0.26)
-		b0 = Button(self.frame_cero, width=20, command= lambda : pasarReceta(), text='LISTAR INGREDIENTES!', bg='red2', fg='white', font= ('Arial', 13, 'bold')).place(relx=0.437, rely=0.33)
+		b0 = Button(self.frame_cero, width=20, command= lambda : pasarReceta(), text='LISTAR INGREDIENTES!', bg='red2', fg='white', font= ('Arial', 13, 'bold'))
 		
 		# Página 1 - Entrenamiento
 		#1.1 - Selección de textos
@@ -186,10 +189,11 @@ class Ventana(Frame):
 		fig1 = Figure(figsize=(3,3))
 		ax1 = fig1.add_subplot(111)
 		ax1.pie(values, labels=labels, colors=colors, startangle=90)
-		def verEntreno():
-			print('entrena')
+		def verEntreno(seleccion, pathModelo):
+			print(str(pathModelo))
+			td.entrenarModelo(seleccion, str(pathModelo))
 		
-		Button(self.frame_uno, width=12, command=lambda : verEntreno(), text='ENTRENAR!', bg='red2', fg='white', font= ('Arial', 13, 'bold')).place(relx=0.48, rely=0.90)
+		Button(self.frame_uno, width=12, command=lambda : verEntreno(seleccion.get(), self.path_modelo), text='ENTRENAR!', bg='red2', fg='white', font= ('Arial', 13, 'bold')).place(relx=0.48, rely=0.90)
 		canvas1 = FigureCanvasTkAgg(fig1, master=self.frame_uno)
 		canvas1.draw()
 		canvas1.get_tk_widget().grid(column=0, row=0, padx=900, pady=250)
@@ -204,10 +208,10 @@ class Ventana(Frame):
 		Label(self.frame_dos, text= 'CLASIFICACIÓN', bg='white', fg= 'black', font= ('Arial', 15, 'bold')).place(relx=0.458, rely=0.03)
 		Label(self.frame_dos, width=15, text='Textos a clasificar:', bg='white', fg= 'black', font=('Arial', 13)).place(relx=0.2, rely=0.1)
 		Entry(self.frame_dos, state= "disabled", width=80, text=self.ruta_otros, textvariable=self.ruta_otros, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3).place(relx=0.35, rely=0.1)
-		Button(self.frame_dos, width=12, text='Seleccionar').place(relx=0.75, rely=0.10)
+		Button(self.frame_dos, width=12, command=lambda : self.abrirExplorador(self.ruta_otros), text='Seleccionar').place(relx=0.75, rely=0.10)
 		Label(self.frame_dos, width=18, text='Modelo clasificador:', bg='white', fg= 'black', font=('Arial', 13)).place(relx=0.2, rely=0.14)
 		Entry(self.frame_dos, state= "disabled", width=80, text=self.ruta_modelo, textvariable=self.ruta_modelo, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3).place(relx=0.35, rely=0.14)
-		Button(self.frame_dos, width=12, text='Seleccionar').place(relx=0.75, rely=0.14)
+		Button(self.frame_dos, width=12, command=lambda : self.abrirExplorador(self.ruta_modelo), text='Seleccionar').place(relx=0.75, rely=0.14)
 
 		#2.2 - Tablas
 		treeview = ttk.Treeview(self.frame_dos)
@@ -219,18 +223,6 @@ class Ventana(Frame):
 		treeview.heading("Tipo", text="Tipo")
 		treeview.heading("Ver texto", text="Ver texto")
 		treeview['show'] = 'headings'
-
-		productos = ttk.Treeview(self.frame_tres)
-		productos["columns"] = ("Texto", "Producto", "Precio", "Supermercado")
-		productos.column("Texto", width=200, anchor=W)
-		productos.column("Producto", width=300, anchor=W)
-		productos.column("Precio", width=200, anchor=W)
-		productos.column("Supermercado", width=200, anchor=W)
-		productos.heading("Texto", text="Texto")
-		productos.heading("Producto", text="Producto")
-		productos.heading("Precio", text="Precio")
-		productos.heading("Supermercado", text="Supermercado")
-		productos['show'] = 'headings'
 
 		#2.3 - Insertar datos
 		treeview.insert("", "end", values=("ejemplo1.txt", "Carne", "ejemplo1.txt"))
@@ -249,11 +241,6 @@ class Ventana(Frame):
 		treeview.insert("", "end", values=("ejemplo14.txt", "Aperitivo", "ejemplo3.txt"))
 		sb1 = ttk.Scrollbar(treeview, orient=VERTICAL, command=treeview.yview)
 		treeview.configure(yscrollcommand=sb1.set)
-
-		data = [['Ejemplo1.txt', 'Pasta', 3.30, 'Mercadona'], ['Ejemplo2.txt', 'Carne', 5.20, 'Carrefour']]
-		df = pd.DataFrame(data, columns=['Texto', 'Categoria predicha', 'Precio (€)', 'Supermercado'])
-		self.pt = Table(self.frame_tres, width=760, height=420, dataframe=df)
-		#, showtoolbar=True, showstatusbar=True
 
 		#2.4 - Resumen
 		lb1 = Label(self.frame_dos, justify=LEFT, text='RESUMEN:', bg='white', fg= 'black', font= ('Arial', 13, 'bold'))
