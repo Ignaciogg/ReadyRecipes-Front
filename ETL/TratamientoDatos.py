@@ -226,8 +226,10 @@ def prepararDatos():
 
 #Método para entrenar el modelo elegido
 def entrenarModelo(elegido,ruta):
+    #Preparar los datos que se utilizan para entrenar el modelo
     X_train, X_test, y_train, y_test = prepararDatos()
     
+    #Eleccion del modelo que se entrena
     if elegido==0:
         modelo = KNN()
         nombre= 'KNN'
@@ -237,8 +239,19 @@ def entrenarModelo(elegido,ruta):
     else:
         modelo = RandomForest()
         nombre= 'RandomForest'
+    
+    #Generar nombre del modelo
+    contador = 0
+    for elemento in os.listdir(ruta):
+        categoria = re.sub("\d+", "", str(elemento).split('.')[0])
+        if categoria == nombre:
+            contador+=1
+    nombre+=str(contador+1)
 
+    #Entrenamos el modelo elegido
     modelo.fit(X_train, y_train)
+
+    #Guardamos el modelo
     fichero = ruta + nombre + '.sav'
     guardarModelo(modelo,fichero)
     
@@ -249,7 +262,6 @@ def guardarModelo(modelo,fichero):
     with open(fichero, 'wb') as f:
         pickle.dump(modelo, f)
         f.close()
-    #pickle.dump(modelo, open(fichero, 'wb'))
 
 #Método para importar un modelo
 def cargarModelo(fichero):
