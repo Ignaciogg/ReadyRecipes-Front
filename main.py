@@ -41,8 +41,8 @@ class Ventana(Frame):
 		self.pathPescado = Path().absolute() / 'Textos' / 'Pescado'
 		self.pathOtros = Path().absolute() / 'Textos' / 'Otros'
 		self.otros = StringVar()
-		filename = '/Otros ' + str(len(os.listdir(self.pathOtros))) + '.txt'
-		self.otros = os.path.join(self.pathOtros, filename)
+		filename = 'Otros' + str(len(os.listdir(self.pathOtros))) + '.txt'
+		self.otros = Path().absolute() / 'Textos' / 'Otros' / filename
 		self.path_modelo = Path().absolute() / 'Modelos'
 		self.ruta_aperitivos.set(self.pathAperitivos)
 		self.ruta_carne.set(self.pathCarne)
@@ -140,10 +140,14 @@ class Ventana(Frame):
 
 		def pasarReceta():
 			food = pd.read_csv('./WebScraping/food.csv')
+			filename = 'Otros' + str(len(os.listdir(self.pathOtros))) + '.txt'
+			self.otros = Path().absolute() / 'Textos' / 'Otros' / filename
 			receta = td.leerReceta(self.otros)
+			print(receta.texto)
 			lista_ingredientes = ws.buscar_ingredientes(receta.texto, food)
 			data = ws.buscador_precios_por_supermercado(lista_ingredientes, "mercadona")
 			df = pd.DataFrame(data, columns=['Nombre', 'Precio (€)', 'Supermercado'])
+			print(df)
 			self.labelFrame3.place_forget()
 			self.pt = Table(self.frame_tres, width=900, height=420, dataframe=df)
 			self.pt.show()
