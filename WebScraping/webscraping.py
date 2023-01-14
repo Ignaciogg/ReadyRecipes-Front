@@ -38,13 +38,18 @@ def buscador_precios_por_supermercado(array_ingredientes,supermercado):
         
         result.append(valor.tolist())
         
-    print(result)
-    res2  = pd.DataFrame(result[0])
-    res3 = pd.DataFrame(result[1])
-    res4 = pd.DataFrame(result[2])
+    
 
-    result_fin  = pd.concat([res2, res3,res4],ignore_index=True)
+    lista_fin_alimentos=[]
+    for i in range (len(result)):
+        lista_fin_alimentos.append(result[i][:1][0])
+
+    print(lista_fin_alimentos)
+    
+    result_fin=pd.DataFrame(lista_fin_alimentos)
+
     result_fin.columns=['Alimento', 'Precio/Peso', 'Supermercado']
+
     return result_fin
             
 
@@ -76,11 +81,12 @@ def mostrar_precio_ordenado(orden, array_ingredientes):
         
         result.append(valor.tolist())
     
-    res2  = pd.DataFrame(result[0])
-    res3 = pd.DataFrame(result[1])
-    res4 = pd.DataFrame(result[2])
+    lista_fin_alimentos=[]
+    for i in range (len(result)):
+        lista_fin_alimentos.append(result[i][:1][0])
+    
+    result_fin=pd.DataFrame(lista_fin_alimentos)
 
-    result_fin  = pd.concat([res2, res3,res4],ignore_index=True)
     result_fin.columns=['Alimento', 'Precio/Peso', 'Supermercado']
         
     return result_fin
@@ -112,11 +118,12 @@ def mostrar_precio_ordenado_supermercado(orden, array_ingredientes,mercado):
         
         result.append(valor.tolist())
     
-    res2  = pd.DataFrame(result[0])
-    res3 = pd.DataFrame(result[1])
-    res4 = pd.DataFrame(result[2])
+    lista_fin_alimentos=[]
+    for i in range (len(result)):
+        lista_fin_alimentos.append(result[i][:1][0])
+    
+    result_fin=pd.DataFrame(lista_fin_alimentos)
 
-    result_fin  = pd.concat([res2, res3,res4],ignore_index=True)
     result_fin.columns=['Alimento', 'Precio/Peso', 'Supermercado']
         
     return result_fin
