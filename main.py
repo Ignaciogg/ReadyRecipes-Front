@@ -94,6 +94,9 @@ class Ventana(Frame):
 	def abrirExplorador(self, ruta):
 		ruta.set(filedialog.askdirectory())
 
+	def abrirExploradorFile(self, ruta):
+		ruta.set(filedialog.askopenfilename())
+
 	def nav(self):
 		self.imagen_youtube = PhotoImage(file ='./interfaz/youtube.png')
 		self.imagen_entrenamiento = PhotoImage(file ='./interfaz/entrenamiento.png')
@@ -218,37 +221,10 @@ class Ventana(Frame):
 		Button(self.frame_dos, width=12, command=lambda : self.abrirExplorador(self.ruta_otros), text='Seleccionar').place(relx=0.75, rely=0.10)
 		Label(self.frame_dos, width=18, text='Modelo clasificador:', bg='white', fg= 'black', font=('Arial', 13)).place(relx=0.2, rely=0.14)
 		Entry(self.frame_dos, state= "disabled", width=80, text=self.ruta_modelo, textvariable=self.ruta_modelo, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3).place(relx=0.35, rely=0.14)
-		Button(self.frame_dos, width=12, command=lambda : self.abrirExplorador(self.ruta_modelo), text='Seleccionar').place(relx=0.75, rely=0.14)
+		Button(self.frame_dos, width=12, command=lambda : self.abrirExploradorFile(self.ruta_modelo), text='Seleccionar').place(relx=0.75, rely=0.14)
 
-		#2.2 - Tablas
-		treeview = ttk.Treeview(self.frame_dos)
-		treeview["columns"] = ("Texto", "Tipo", "Ver texto")
-		treeview.column("Texto", width=150, anchor=W)
-		treeview.column("Tipo", width=150, anchor=W)
-		treeview.column("Ver texto", width=150, anchor=W)
-		treeview.heading("Texto", text="Texto")
-		treeview.heading("Tipo", text="Tipo")
-		treeview.heading("Ver texto", text="Ver texto")
-		treeview['show'] = 'headings'
-
-		#2.3 - Insertar datos
-		treeview.insert("", "end", values=("ejemplo1.txt", "Carne", "ejemplo1.txt"))
-		treeview.insert("", "end", values=("ejemplo2.txt", "Verdura", "ejemplo2.txt"))
-		treeview.insert("", "end", values=("ejemplo3.txt", "Aperitivo", "ejemplo3.txt"))
-		treeview.insert("", "end", values=("ejemplo4.txt", "Aperitivo", "ejemplo3.txt"))
-		treeview.insert("", "end", values=("ejemplo5.txt", "Aperitivo", "ejemplo3.txt"))
-		treeview.insert("", "end", values=("ejemplo6.txt", "Aperitivo", "ejemplo3.txt"))
-		treeview.insert("", "end", values=("ejemplo7.txt", "Aperitivo", "ejemplo3.txt"))
-		treeview.insert("", "end", values=("ejemplo8.txt", "Aperitivo", "ejemplo3.txt"))
-		treeview.insert("", "end", values=("ejemplo9.txt", "Aperitivo", "ejemplo3.txt"))
-		treeview.insert("", "end", values=("ejemplo10.txt", "Aperitivo", "ejemplo3.txt"))
-		treeview.insert("", "end", values=("ejemplo11.txt", "Aperitivo", "ejemplo3.txt"))
-		treeview.insert("", "end", values=("ejemplo12.txt", "Aperitivo", "ejemplo3.txt"))
-		treeview.insert("", "end", values=("ejemplo13.txt", "Aperitivo", "ejemplo3.txt"))
-		treeview.insert("", "end", values=("ejemplo14.txt", "Aperitivo", "ejemplo3.txt"))
-		sb1 = ttk.Scrollbar(treeview, orient=VERTICAL, command=treeview.yview)
-		treeview.configure(yscrollcommand=sb1.set)
-
+		
+		'''
 		#2.4 - Resumen
 		lb1 = Label(self.frame_dos, justify=LEFT, text='RESUMEN:', bg='white', fg= 'black', font= ('Arial', 13, 'bold'))
 		lb2 = Label(self.frame_dos, justify=LEFT, text='Aperitivos: ' + str(len(os.listdir(self.pathAperitivos))), bg='white', fg= 'black', font= ('Arial', 13))
@@ -262,7 +238,7 @@ class Ventana(Frame):
 		fig2 = Figure(figsize=(4,4))
 		ax2 = fig2.add_subplot(111)
 		ax2.pie(values, labels=labels, colors=colors, startangle=90)
-
+		'''
 		#2.5 - Guardar resultado
 		lb9 = Label(self.frame_dos, width=15, text='Guardar resultado:', bg='white', fg= 'black', font=('Arial', 13))
 		e10 = Entry(self.frame_dos, state= "disabled", width=80, text=self.ruta_modelo, textvariable=self.ruta_modelo, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3)
@@ -270,7 +246,7 @@ class Ventana(Frame):
 
 		self.labelFrame3 = Label(self.frame_tres, text= 'Descargue un vídeo y liste sus ingredientes para utilizar esta función', bg='white', fg= 'black', font= ('Arial', 13, 'bold'))
 		self.labelFrame3.place(relx=0.33, rely=0.30)
-
+		'''
 		def verResumen():
 			treeview.place(relx=0.38, rely= 0.4)
 			sb1.place(relx=0.975, rely= 0.00, relheight=0.99, relwidth=0.02)
@@ -290,8 +266,32 @@ class Ventana(Frame):
 			canvas2 = FigureCanvasTkAgg(fig2, master=self.frame_dos)
 			canvas2.draw()
 			canvas2.get_tk_widget().grid(column=0, row=0, padx=1070, pady=210)
+		'''
+		Button(self.frame_dos, width=12, command=lambda: tabla(self.ruta_modelo.get()),
+		       text='CLASIFICAR!', bg='red2', fg='white', font=('Arial', 13, 'bold')).place(relx=0.465, rely=0.20)
 
-		Button(self.frame_dos, width=12, command=lambda : verResumen(), text='CLASIFICAR!', bg='red2', fg='white', font= ('Arial', 13, 'bold')).place(relx=0.465, rely=0.20)
+		def tabla(modelo):
+			lista = td.categorizar(modelo)
+			#2.2 - Tablas
+			treeview = ttk.Treeview(self.frame_dos)
+			treeview["columns"] = ("Prediccion", "Titulo", "Fichero")
+			treeview.column("Prediccion", width=150, anchor=W)
+			treeview.column("Titulo", width=150, anchor=W)
+			treeview.column("Fichero", width=150, anchor=W)
+			treeview.heading("Prediccion", text="Prediccion")
+			treeview.heading("Titulo", text="Titulo")
+			treeview.heading("Fichero", text="Fichero")
+			treeview['show'] = 'headings'
+			
+			#2.3 - Insertar datos
+			i = 0
+			while i < len(lista):
+				treeview.insert("", "end", values=(	str(lista[i]), str(lista[i+1]), str(lista[i+2])))
+				i+=3
+			sb1 = ttk.Scrollbar(treeview, orient=VERTICAL, command=treeview.yview)
+			treeview.configure(yscrollcommand=sb1.set)
+
+			treeview.place(relx=0.38, rely=0.4)
 
 		# Página 3 - Web Scraping
 		Label(self.frame_tres, text= 'WEB SCRAPING', bg='white', fg= 'black', font= ('Arial', 15, 'bold')).place(relx=0.458, rely=0.07)

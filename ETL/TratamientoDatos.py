@@ -272,6 +272,7 @@ def cargarModelo(fichero):
 
 #Método para categorizar recetas nuevas
 def categorizar(fichero):
+    resultado = []
     modelo = cargarModelo(fichero)
     diccionario = leerFichero(rutaDiccionario).splitlines()
     for elemento in os.listdir('./Textos/Otros'):
@@ -281,5 +282,9 @@ def categorizar(fichero):
         for token in tokens:
             if token in diccionario:
                 filaNueva[diccionario.index(token)] += 1
-
-        print(Categorias[round(modelo.predict([filaNueva])[0])]+';'+leerReceta('./Textos/Otros/'+elemento).titulo[:-1]+';'+str(elemento))
+        resultado.append(Categorias[round(modelo.predict([filaNueva])[0])])
+        resultado.append(leerReceta('./Textos/Otros/'+elemento).titulo[:-1])
+        resultado.append(str(elemento))
+        #print(Categorias[round(modelo.predict([filaNueva])[0])]+';'+leerReceta('./Textos/Otros/'+elemento).titulo[:-1]+';'+str(elemento))
+    print(resultado)
+    return resultado
