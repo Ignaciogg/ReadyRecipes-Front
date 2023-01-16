@@ -223,56 +223,20 @@ class Ventana(Frame):
 		Entry(self.frame_dos, state= "disabled", width=80, text=self.ruta_modelo, textvariable=self.ruta_modelo, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3).place(relx=0.35, rely=0.14)
 		Button(self.frame_dos, width=12, command=lambda : self.abrirExploradorFile(self.ruta_modelo), text='Seleccionar').place(relx=0.75, rely=0.14)
 
-		
-		'''
-		#2.4 - Resumen
-		lb1 = Label(self.frame_dos, justify=LEFT, text='RESUMEN:', bg='white', fg= 'black', font= ('Arial', 13, 'bold'))
-		lb2 = Label(self.frame_dos, justify=LEFT, text='Aperitivos: ' + str(len(os.listdir(self.pathAperitivos))), bg='white', fg= 'black', font= ('Arial', 13))
-		lb3 = Label(self.frame_dos, justify=LEFT, text='Carnes: ' + str(len(os.listdir(self.pathCarne))), bg='white', fg= 'black', font= ('Arial', 13))
-		lb4 = Label(self.frame_dos, justify=LEFT, text='Pastas: ' + str(len(os.listdir(self.pathPasta))), bg='white', fg= 'black', font= ('Arial', 13))
-		lb5 = Label(self.frame_dos, justify=LEFT, text='Pescados: ' + str(len(os.listdir(self.pathPescado))), bg='white', fg= 'black', font= ('Arial', 13))
-		lb6 = Label(self.frame_dos, justify=LEFT, text='Verduras: ' + str(len(os.listdir(self.pathVerduras))), bg='white', fg= 'black', font= ('Arial', 13))
-		lb7 = Label(self.frame_dos, justify=LEFT, text='Total: ' + str(len(os.listdir(self.pathAperitivos)) + len(os.listdir(self.pathCarne)) + len(os.listdir(self.pathPasta)) + len(os.listdir(self.pathPescado)) + len(os.listdir(self.pathVerduras))), bg='white', fg= 'black', font= ('Arial', 13))
-		lb8 = Label(self.frame_dos, justify=LEFT, text='Tiempo: ', bg='white', fg= 'black', font= ('Arial', 13, 'bold'))
-		
-		fig2 = Figure(figsize=(4,4))
-		ax2 = fig2.add_subplot(111)
-		ax2.pie(values, labels=labels, colors=colors, startangle=90)
-		'''
-		#2.5 - Guardar resultado
+		#2.2 - Guardar resultado
 		lb9 = Label(self.frame_dos, width=15, text='Guardar resultado:', bg='white', fg= 'black', font=('Arial', 13))
 		e10 = Entry(self.frame_dos, state= "disabled", width=80, text=self.ruta_modelo, textvariable=self.ruta_modelo, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3)
 		b11 = Button(self.frame_dos, width=12, text='Guardar')
 
 		self.labelFrame3 = Label(self.frame_tres, text= 'Descargue un vídeo y liste sus ingredientes para utilizar esta función', bg='white', fg= 'black', font= ('Arial', 13, 'bold'))
 		self.labelFrame3.place(relx=0.33, rely=0.30)
-		'''
-		def verResumen():
-			treeview.place(relx=0.38, rely= 0.4)
-			sb1.place(relx=0.975, rely= 0.00, relheight=0.99, relwidth=0.02)
-
-			lb1.place(relx=0.475, rely=0.30)
-			lb2.place(relx=0.25, rely= 0.40)
-			lb3.place(relx=0.25, rely= 0.44)
-			lb4.place(relx=0.25, rely= 0.48)
-			lb5.place(relx=0.25, rely= 0.52)
-			lb6.place(relx=0.25, rely= 0.56)
-			lb7.place(relx=0.25, rely= 0.62)
-			lb8.place(relx=0.25, rely= 0.68)
-
-			lb9.place(relx=0.20, rely=0.90)
-			e10.place(relx=0.35, rely= 0.90)
-			b11.place(relx=0.75, rely=0.90)
-			canvas2 = FigureCanvasTkAgg(fig2, master=self.frame_dos)
-			canvas2.draw()
-			canvas2.get_tk_widget().grid(column=0, row=0, padx=1070, pady=210)
-		'''
+		
 		Button(self.frame_dos, width=12, command=lambda: tabla(self.ruta_modelo.get()),
 		       text='CLASIFICAR!', bg='red2', fg='white', font=('Arial', 13, 'bold')).place(relx=0.465, rely=0.20)
 
 		def tabla(modelo):
 			lista = td.categorizar(modelo)
-			#2.2 - Tablas
+			#2.3 - Tablas
 			treeview = ttk.Treeview(self.frame_dos)
 			treeview["columns"] = ("Prediccion", "Titulo", "Fichero")
 			treeview.column("Prediccion", width=150, anchor=W)
@@ -283,7 +247,7 @@ class Ventana(Frame):
 			treeview.heading("Fichero", text="Fichero")
 			treeview['show'] = 'headings'
 			
-			#2.3 - Insertar datos
+			#2.4 - Insertar datos
 			i = 0
 			while i < len(lista):
 				treeview.insert("", "end", values=(	str(lista[i]), str(lista[i+1]), str(lista[i+2])))
