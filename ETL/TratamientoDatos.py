@@ -271,20 +271,21 @@ def cargarModelo(fichero):
     return modelo
 
 #Método para categorizar recetas nuevas
-def categorizar(fichero):
+def categorizar(fichero, textos):
     resultado = []
     modelo = cargarModelo(fichero)
     diccionario = leerFichero(rutaDiccionario).splitlines()
-    for elemento in os.listdir('./Textos/Otros'):
-        rutaReceta = './Textos/Otros/'+elemento
-        filaNueva = np.zeros(len(diccionario))
-        tokens = tratarFichero(rutaReceta)
-        for token in tokens:
-            if token in diccionario:
-                filaNueva[diccionario.index(token)] += 1
-        resultado.append(Categorias[round(modelo.predict([filaNueva])[0])])
-        resultado.append(leerReceta('./Textos/Otros/'+elemento).titulo[:-1])
-        resultado.append(str(elemento))
-        #print(Categorias[round(modelo.predict([filaNueva])[0])]+';'+leerReceta('./Textos/Otros/'+elemento).titulo[:-1]+';'+str(elemento))
+    for elemento in os.listdir(textos):
+        if re.search('.txt$', elemento):
+            rutaReceta = textos+elemento
+            filaNueva = np.zeros(len(diccionario))
+            tokens = tratarFichero(rutaReceta)
+            for token in tokens:
+                if token in diccionario:
+                    filaNueva[diccionario.index(token)] += 1
+            resultado.append(Categorias[round(modelo.predict([filaNueva])[0])])
+            resultado.append(leerReceta(textos+elemento).titulo[:-1])
+            resultado.append(str(elemento))
+            #print(Categorias[round(modelo.predict([filaNueva])[0])]+';'+leerReceta('./Textos/Otros/'+elemento).titulo[:-1]+';'+str(elemento))
     print(resultado)
     return resultado

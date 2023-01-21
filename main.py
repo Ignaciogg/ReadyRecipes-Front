@@ -16,7 +16,7 @@ from tkinter import ttk, filedialog
 
 import pandas as pd
 from pandastable import Table
-
+import re
 import os
 from pathlib import Path
 import matplotlib.pyplot as plt
@@ -231,11 +231,12 @@ class Ventana(Frame):
 		self.labelFrame3 = Label(self.frame_tres, text= 'Descargue un vídeo y liste sus ingredientes para utilizar esta función', bg='white', fg= 'black', font= ('Arial', 13, 'bold'))
 		self.labelFrame3.place(relx=0.33, rely=0.30)
 		
-		Button(self.frame_dos, width=12, command=lambda: tabla(self.ruta_modelo.get()),
+		Button(self.frame_dos, width=12, command=lambda: tabla(self.ruta_modelo.get(), (self.ruta_otros.get()+'/')),
 		       text='CLASIFICAR!', bg='red2', fg='white', font=('Arial', 13, 'bold')).place(relx=0.465, rely=0.20)
 
-		def tabla(modelo):
-			lista = td.categorizar(modelo)
+		def tabla(modelo, textos):
+			
+			lista = td.categorizar(modelo,textos)
 			#2.3 - Tablas
 			treeview = ttk.Treeview(self.frame_dos)
 			treeview["columns"] = ("Prediccion", "Titulo", "Fichero")
