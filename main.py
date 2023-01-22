@@ -139,6 +139,7 @@ class Ventana(Frame):
 		
 		def comienzaDescarga (url):
 			yt.descargarVideo(url)
+			final.place(relx=0.462, rely=0.5)
 			b0.place(relx=0.437, rely=0.33)
 
 		def pasarReceta():
@@ -149,8 +150,6 @@ class Ventana(Frame):
 			print(receta.texto)
 			lista_ingredientes = ws.buscar_ingredientes(receta.texto, food)
 			data = ws.buscador_precios_por_supermercado(lista_ingredientes, "mercadona")
-			#df = pd.DataFrame(data, columns=['Nombre', 'Precio (€)', 'Supermercado'])
-			#print(df)
 			self.labelFrame3.place_forget()
 			self.pt = Table(self.frame_tres, width=900, height=420, dataframe=data)
 			self.pt.show()
@@ -158,6 +157,7 @@ class Ventana(Frame):
 		
 
 		Button(self.frame_cero, width=12, command= lambda : comienzaDescarga(url.get()), text='DESCARGAR!', bg='red2', fg='white', font= ('Arial', 13, 'bold')).place(relx=0.465, rely=0.26)
+		final = Label(self.frame_cero, text= 'Vídeo descargado', bg='white', fg= 'red', font= ('Arial', 13, 'bold'))
 		b0 = Button(self.frame_cero, width=20, command= lambda : pasarReceta(), text='LISTAR INGREDIENTES!', bg='red2', fg='white', font= ('Arial', 13, 'bold'))
 		
 		# Página 1 - Entrenamiento
@@ -177,12 +177,10 @@ class Ventana(Frame):
 
 		#1.2 - Selección de algoritmos y vista previa
 		seleccion = IntVar()
-		def seleccionaAlgoritmo(seleccion):
-			print(seleccion)
 
-		self.radio1 = Radiobutton(self.frame_uno, justify=LEFT, command= lambda : seleccionaAlgoritmo(1), variable=seleccion, value=1, text="KNN").place(relx=0.2, rely=0.48)
-		self.radio2 = Radiobutton(self.frame_uno, justify=LEFT, command= lambda : seleccionaAlgoritmo(2), variable=seleccion, value=2, text="Gradient Boosted Tree").place(relx=0.2, rely=0.51)
-		self.radio3 = Radiobutton(self.frame_uno, justify=LEFT, command= lambda : seleccionaAlgoritmo(3), variable=seleccion, value=3, text="Random Forest").place(relx=0.2, rely=0.54)
+		self.radio1 = Radiobutton(self.frame_uno, justify=LEFT, variable=seleccion, value=1, text="KNN").place(relx=0.2, rely=0.48)
+		self.radio2 = Radiobutton(self.frame_uno, justify=LEFT, variable=seleccion, value=2, text="Gradient Boosted Tree").place(relx=0.2, rely=0.51)
+		self.radio3 = Radiobutton(self.frame_uno, justify=LEFT, variable=seleccion, value=3, text="Random Forest").place(relx=0.2, rely=0.54)
 
 		Label(self.frame_uno, justify=LEFT, text='VISTA PREVIA:', bg='white', fg= 'black', font= ('Arial', 13, 'bold')).place(relx=0.477, rely=0.35)
 		Label(self.frame_uno, justify=LEFT, text='Aperitivos encontrados - ' + str(len(os.listdir(self.pathAperitivos))), bg='white', fg= 'black', font= ('Arial', 13)).place(relx=0.35, rely=0.45)
