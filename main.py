@@ -244,8 +244,6 @@ class Ventana(Frame):
 			sb1 = ttk.Scrollbar(treeview, orient=VERTICAL, command=treeview.yview)
 			treeview.configure(yscrollcommand=sb1.set)
 			treeview.place(relx=0.38, rely=0.4)
-			save_path = filedialog.asksaveasfilename()
-			np.savetxt(save_path, lista, delimiter=',')
 
 		# Página 3 - Web Scraping
 		Label(self.frame_tres, text= 'WEB SCRAPING', bg='white', fg= 'black', font= ('Arial', 15, 'bold')).place(relx=0.458, rely=0.07)

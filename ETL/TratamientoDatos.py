@@ -3,6 +3,8 @@
 #pip install nltk
 
 from nltk.stem import SnowballStemmer
+from pathlib import Path
+import shutil
 import spacy 
 import re
 import os
@@ -25,6 +27,7 @@ rutaListaParada = "ETL\ListaParada.txt"
 rutaDiccionario = "ETL\DiccionarioL.txt"
 rutaMatriz = "ETL\MatrizL.txt"
 rutaTextosTratados = "ETL\TextosLeidosL.txt"
+pathTextos = Path().absolute() / 'Textos'
 
 #Metodos para lectura de ficheros
 def leerFichero(rutaFichero):
@@ -283,9 +286,17 @@ def categorizar(fichero, textos):
             for token in tokens:
                 if token in diccionario:
                     filaNueva[diccionario.index(token)] += 1
-            resultado.append(Categorias[round(modelo.predict([filaNueva])[0])])
+            categoria = Categorias[round(modelo.predict([filaNueva])[0])]
+            ruta = textos + str(elemento)
+            resultado.append(categoria)
             resultado.append(leerReceta(textos+elemento).titulo[:-1])
             resultado.append(str(elemento))
-            #print(Categorias[round(modelo.predict([filaNueva])[0])]+';'+leerReceta('./Textos/Otros/'+elemento).titulo[:-1]+';'+str(elemento))
+            moverFichero(ruta, categoria)
     print(resultado)
     return resultado
+
+def moverFichero(rutaInicial, categoria):
+    nombre = categoria+str(len(os.listdir(str(pathTextos) + '\\' + categoria))+1)
+    rutaFinal = str(pathTextos)+nombre+'.txt'
+    #print(rutaInicial + '----' + rutaFinal)
+    shutil.move(rutaInicial, rutaFinal)
