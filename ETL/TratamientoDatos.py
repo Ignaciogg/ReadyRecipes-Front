@@ -297,6 +297,6 @@ def categorizar(fichero, textos):
 
 def moverFichero(rutaInicial, categoria):
     nombre = categoria+str(len(os.listdir(str(pathTextos) + '\\' + categoria))+1)
-    rutaFinal = str(pathTextos)+nombre+'.txt'
+    rutaFinal = str(pathTextos)+'\\'+categoria+'\\'+nombre+'.txt'
     #print(rutaInicial + '----' + rutaFinal)
     shutil.move(rutaInicial, rutaFinal)
