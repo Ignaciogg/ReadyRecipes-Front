@@ -6,16 +6,12 @@ import Descarga.Receta as receta
 import ETL.TratamientoDatos as td
 import WebScraping.webscraping as ws
 
-''' 	
-	pip install tkinter
-	pip install pandas
-	pip install pandastable
-'''
 from tkinter import *
 from tkinter import ttk, filedialog
 
 import pandas as pd
 from pandastable import Table
+import numpy as np
 import re
 import os
 from pathlib import Path
@@ -221,16 +217,10 @@ class Ventana(Frame):
 		Entry(self.frame_dos, state= "disabled", width=80, text=self.ruta_modelo, textvariable=self.ruta_modelo, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3).place(relx=0.35, rely=0.14)
 		Button(self.frame_dos, width=12, command=lambda : self.abrirExploradorFile(self.ruta_modelo), text='Seleccionar').place(relx=0.75, rely=0.14)
 
-		#2.2 - Guardar resultado
-		lb9 = Label(self.frame_dos, width=15, text='Guardar resultado:', bg='white', fg= 'black', font=('Arial', 13))
-		e10 = Entry(self.frame_dos, state= "disabled", width=80, text=self.ruta_modelo, textvariable=self.ruta_modelo, font=('Arial', 10), highlightbackground = "#061a2b", highlightthickness=3)
-		b11 = Button(self.frame_dos, width=12, text='Guardar')
-
 		self.labelFrame3 = Label(self.frame_tres, text= 'Descargue un vídeo y liste sus ingredientes para utilizar esta función', bg='white', fg= 'black', font= ('Arial', 13, 'bold'))
 		self.labelFrame3.place(relx=0.33, rely=0.30)
 		
-		Button(self.frame_dos, width=12, command=lambda: tabla(self.ruta_modelo.get(), (self.ruta_otros.get()+'/')),
-		       text='CLASIFICAR!', bg='red2', fg='white', font=('Arial', 13, 'bold')).place(relx=0.465, rely=0.20)
+		Button(self.frame_dos, width=12, command=lambda: tabla(self.ruta_modelo.get(), (self.ruta_otros.get()+'/')), text='CLASIFICAR!', bg='red2', fg='white', font=('Arial', 13, 'bold')).place(relx=0.465, rely=0.20)
 
 		def tabla(modelo, textos):
 			
@@ -253,8 +243,9 @@ class Ventana(Frame):
 				i+=3
 			sb1 = ttk.Scrollbar(treeview, orient=VERTICAL, command=treeview.yview)
 			treeview.configure(yscrollcommand=sb1.set)
-
 			treeview.place(relx=0.38, rely=0.4)
+			save_path = filedialog.asksaveasfilename()
+			np.savetxt(save_path, lista, delimiter=',')
 
 		# Página 3 - Web Scraping
 		Label(self.frame_tres, text= 'WEB SCRAPING', bg='white', fg= 'black', font= ('Arial', 15, 'bold')).place(relx=0.458, rely=0.07)
