@@ -1,0 +1,15 @@
+<hr>
+<button (click)="alternarTexto()">Alternar texto</button>
+<p *ngIf="textoVisible">Hola, {{ miTexto }}</p>
+<button (click)="nuevaFruta()">Añadir plátano</button>
+<table>
+    <tr>
+        <td>Nombre</td>
+        <td>Color</td>
+    </tr>
+    <tr *ngFor="let fruta of frutas">
+        <td>{{ fruta.nombre }}</td>
+        <td>{{ fruta.color }}</td>
+    </tr>
+</table>
+<p>home works!</p>
