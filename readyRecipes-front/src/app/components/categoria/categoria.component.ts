@@ -7,8 +7,4 @@ import { Component, Input } from '@angular/core';
 })
 export class CategoriaComponent {
   @Input() nombre: string = "Nombre";
-
-  // constructor(nombre:string) {
-    // this.nombre = nombre;
-  // }
 }
