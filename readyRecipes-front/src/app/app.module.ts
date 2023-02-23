@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './views/home/home.component';
 import { BibliotecaComponent } from './views/biblioteca/biblioteca.component';
 import { CategoriaComponent } from './components/categoria/categoria.component';
+import { SelectorFiltroComponent } from './components/selector-filtro/selector-filtro.component';
+import { RecetaEncontradaComponent } from './components/receta-encontrada/receta-encontrada.component';
 
 @NgModule({
   declarations: [
@@ -13,6 +15,8 @@ import { CategoriaComponent } from './components/categoria/categoria.component';
     HomeComponent,
     BibliotecaComponent,
     CategoriaComponent,
+    SelectorFiltroComponent,
+    RecetaEncontradaComponent,
   ],
   imports: [
     BrowserModule,
