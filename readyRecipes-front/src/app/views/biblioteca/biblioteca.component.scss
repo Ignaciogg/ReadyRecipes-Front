@@ -2,7 +2,25 @@ body {
     margin: 0px !important;
 }
 
+.filtros {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-left: max(11vw, 25px);
+    margin-right: max(11vw, 25px);
+}
+
+.inlineBlock {
+    display: inline-block;
+}
+
+.selectorDerecha {
+    align-self: flex-end;
+}
+
 .resultadoBuscador {
     border: 1px solid black;
-    margin: 0px;
+    padding: 10px;
+    margin-left: max(10vw, 30px);
+    margin-right: max(10vw, 30px);
 }

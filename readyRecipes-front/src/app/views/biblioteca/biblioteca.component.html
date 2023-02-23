@@ -8,15 +8,39 @@
     <categoria class="col-lg-2 col-md-4 col-sm-6" nombre="APERITIVOS"></categoria>
 </div>
 <p class="text-center m-0 p-0">O filtre según otros parámetros</p>
-<div class="d-flex m-0 p-0">
-    <selectorFiltro texto="Categoría"></selectorFiltro>
-    <selectorFiltro texto="Ingredientes"></selectorFiltro>
-    <selectorFiltro texto="Nutriscore"></selectorFiltro>
-    <selectorFiltro texto="Sentimiento"></selectorFiltro>
-    <selectorFiltro texto="Mis favoritos"></selectorFiltro>
+<div class="buscador filtros">
+    <div>
+        <selectorFiltro *ngStyle="filtroElegido=='Categoría' ? {'background-color': 'green'} : {'background-color': 'green'}" titulo="Categoría"></selectorFiltro>
+        <selectorFiltro (click)="cambiarFiltro('Ingredientes')" titulo="Ingredientes"></selectorFiltro>
+        <selectorFiltro (click)="cambiarFiltro('Nutriscore')" titulo="Nutriscore"></selectorFiltro>
+        <selectorFiltro (click)="cambiarFiltro('Sentimiento')" titulo="Sentimiento"></selectorFiltro>
+    </div>
+    <div class="selectorDerecha">
+        <selectorFiltro (click)="cambiarFiltro('Favoritos')" titulo="Favoritos"></selectorFiltro>
+    </div>
 </div>
-<div class="resultadoBuscador">
+<div class="buscador resultadoBuscador">
     <hr>
+        <div [ngSwitch]="this.filtroElegido">
+            <div *ngSwitchDefault=>
+                <p>Aún no se ha elegido ningún filtro...</p>
+            </div>
+            <div *ngSwitchCase="'Categoría'">
+                <p>Buscando por categoría!!</p>
+            </div>
+            <div *ngSwitchCase="'Ingredientes'">
+                <p>Buscando por Ingredientes!!</p>
+            </div>
+            <div *ngSwitchCase="'Nutriscore'">
+                <p>Buscando por nutriscore!!</p>
+            </div>
+            <div *ngSwitchCase="'Sentimiento'">
+                <p>Buscando por sentimiento!!</p>
+            </div>
+            <div *ngSwitchCase="'Favoritos'">
+                <p>Buscando en mis favoritos!!</p>
+            </div>
+        </div>
     <hr>
     <recetaEncontrada *ngFor="let res of resultados" nombre="{{res.nombre}}" ruta="{{res.ruta}}"></recetaEncontrada>
 </div>
