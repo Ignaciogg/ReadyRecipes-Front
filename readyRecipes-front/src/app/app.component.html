@@ -1,7 +1,17 @@
-<div class="header">
-    <img src="rutaRota">
-    <h1>ReadyRecipes!</h1>
-    <button>Login</button>
+<header>
+    <div class="d-flex">
+        <a routerLink="/">
+            <img class="logo" src="assets/imagenes/logo.png">
+        </a>
+    </div>
+    <button>
+        <img src="iconoPerfil.png">
+        Login
+    </button>
+</header>
+<div class="contenido">
+    <router-outlet></router-outlet>
 </div>
-<hr>
-<router-outlet></router-outlet>
+<footer>
+    <p>ReadyRecipes - 2023</p>
+</footer>

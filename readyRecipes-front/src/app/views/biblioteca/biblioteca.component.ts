@@ -6,7 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./biblioteca.component.scss']
 })
 export class BibliotecaComponent {
-  filtroElegido: string = "Ninguno";
   resultados = [
     {
       nombre: "Receta encontrada 1",
@@ -29,7 +28,4 @@ export class BibliotecaComponent {
       ruta: "https://www.google.com/",
     },
   ];
-  cambiarFiltro(filtro: string) {
-    this.filtroElegido = filtro;
-  }
 }

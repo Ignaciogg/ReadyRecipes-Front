@@ -1,46 +1,48 @@
-<a routerLink="/"><button>Volver a home</button></a>
 <p class="text-center">Elija el tipo de plato que desea encontrar</p>
 <div class="row justify-content-center">
-    <categoria class="col-lg-2 col-md-4 col-sm-6" nombre="VERDURAS"></categoria>
-    <categoria class="col-lg-2 col-md-4 col-sm-6" nombre="CARNES"></categoria>
-    <categoria class="col-lg-2 col-md-4 col-sm-6" nombre="PESCADOS"></categoria>
-    <categoria class="col-lg-2 col-md-4 col-sm-6" nombre="PASTA"></categoria>
-    <categoria class="col-lg-2 col-md-4 col-sm-6" nombre="APERITIVOS"></categoria>
+    <categoria class="col-lg-2 col-md-4 col-sm-4 col-6" nombre="VERDURAS" imagen="assets/imagenes/verduras.png"/>
+    <categoria class="col-lg-2 col-md-4 col-sm-4 col-6" nombre="CARNES" imagen="assets/imagenes/carnes.png"/>
+    <categoria class="col-lg-2 col-md-4 col-sm-4 col-6" nombre="PESCADOS" imagen="assets/imagenes/pescados.png"/>
+    <categoria class="col-lg-2 col-md-4 col-sm-4 col-6" nombre="PASTA" imagen="assets/imagenes/pasta.png"/>
+    <categoria class="col-lg-2 col-md-4 col-sm-4 col-6" nombre="APERITIVOS" imagen="assets/imagenes/aperitivos.png"/>
 </div>
 <p class="text-center m-0 p-0">O filtre según otros parámetros</p>
-<div class="buscador filtros">
-    <div>
-        <selectorFiltro (click)="cambiarFiltro('Categoría')" [ngClass]="filtroElegido=='Categoría' ? 'selectorElegido' : null" titulo="Categoría"></selectorFiltro>
-        <selectorFiltro (click)="cambiarFiltro('Ingredientes')" [ngClass]="filtroElegido=='Ingredientes' ? 'selectorElegido' : null" titulo="Ingredientes"></selectorFiltro>
-        <selectorFiltro (click)="cambiarFiltro('Nutriscore')" [ngClass]="filtroElegido=='Nutriscore' ? 'selectorElegido' : null" titulo="Nutriscore"></selectorFiltro>
-        <selectorFiltro (click)="cambiarFiltro('Sentimiento')" [ngClass]="filtroElegido=='Sentimiento' ? 'selectorElegido' : null" titulo="Sentimiento"></selectorFiltro>
-    </div>
-    <div class="selectorDerecha">
-        <selectorFiltro (click)="cambiarFiltro('Favoritos')" [ngClass]="filtroElegido=='Favoritos' ? 'selectorElegido' : null" titulo="Favoritos"></selectorFiltro>
-    </div>
+<div class="filtros" style="margin-top: 10px;">
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" data-bs-toggle="tab" href="#cat">Categoría</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" href="#nut">Nutriscore</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" href="#pre">Precio</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" href="#sen">Sentimientos</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" href="#fav">Favoritos</a>
+        </li>
+    </ul>
 </div>
 <div class="buscador resultadoBuscador">
     <hr>
-        <div [ngSwitch]="this.filtroElegido">
-            <div *ngSwitchDefault=>
-                <p>Aún no se ha elegido ningún filtro...</p>
-            </div>
-            <div *ngSwitchCase="'Categoría'">
-                <p>Buscando por categoría!!</p>
-            </div>
-            <div *ngSwitchCase="'Ingredientes'">
-                <p>Buscando por ingredientes!!</p>
-            </div>
-            <div *ngSwitchCase="'Nutriscore'">
-                <p>Buscando por nutriscore!!</p>
-            </div>
-            <div *ngSwitchCase="'Sentimiento'">
-                <p>Buscando por sentimiento!!</p>
-            </div>
-            <div *ngSwitchCase="'Favoritos'">
-                <p>Buscando en mis favoritos!!</p>
+    <div class="tab-content">
+        <div class="tab-pane container active" id="cat">
+            <div class="d-flex">
+                <aplicadorFiltro titulo="Verduras"/>
+                <aplicadorFiltro titulo="Carnes"/>
+                <aplicadorFiltro titulo="Pescados"/>
+                <aplicadorFiltro titulo="Pasta"/>
+                <aplicadorFiltro titulo="Aperitivos"/>
             </div>
         </div>
+        <div class="tab-pane container fade" id="nut">Buscando por nutriscore!</div>
+        <div class="tab-pane container fade" id="pre">Buscando por precio!</div>
+        <div class="tab-pane container active" id="sen">Buscando por sentimiento!</div>
+        <div class="tab-pane container fade" id="fav">Buscando en mis favoritos!</div>
+    </div>
     <hr>
     <recetaEncontrada *ngFor="let res of resultados" nombre="{{res.nombre}}" ruta="{{res.ruta}}"></recetaEncontrada>
 </div>

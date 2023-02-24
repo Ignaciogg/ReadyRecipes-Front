@@ -6,8 +6,8 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './views/home/home.component';
 import { BibliotecaComponent } from './views/biblioteca/biblioteca.component';
 import { CategoriaComponent } from './components/categoria/categoria.component';
-import { SelectorFiltroComponent } from './components/selector-filtro/selector-filtro.component';
 import { RecetaEncontradaComponent } from './components/receta-encontrada/receta-encontrada.component';
+import { AplicadorFiltroComponent } from './components/aplicador-filtro/aplicador-filtro.component';
 
 @NgModule({
   declarations: [
@@ -15,8 +15,8 @@ import { RecetaEncontradaComponent } from './components/receta-encontrada/receta
     HomeComponent,
     BibliotecaComponent,
     CategoriaComponent,
-    SelectorFiltroComponent,
     RecetaEncontradaComponent,
+    AplicadorFiltroComponent,
   ],
   imports: [
     BrowserModule,

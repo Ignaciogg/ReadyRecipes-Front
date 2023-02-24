@@ -7,5 +7,5 @@ import { Component, Input } from '@angular/core';
 })
 export class CategoriaComponent {
   @Input() nombre: string = "Nombre";
-  @Input() imagen: string = "http://localhost:4200/biblioteca/verduras.png";
+  @Input() imagen: string = "assets/imagenes/logo.png";
 }
