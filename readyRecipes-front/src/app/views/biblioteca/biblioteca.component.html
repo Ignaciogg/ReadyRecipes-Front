@@ -7,42 +7,67 @@
     <categoria class="col-lg-2 col-md-4 col-sm-4 col-6" nombre="APERITIVOS" imagen="assets/imagenes/aperitivos.png"/>
 </div>
 <p class="text-center m-0 p-0">O filtre según otros parámetros</p>
-<div class="filtros" style="margin-top: 10px;">
-    <ul class="nav nav-tabs">
+<div class="row justify-content-center">
+    <ul class="nav nav-tabs col-lg-8 col-md-10 col-sm-12 col-12">
         <li class="nav-item">
-            <a class="nav-link active" data-bs-toggle="tab" href="#cat">Categoría</a>
+            <a class="nav-link filtro active" data-bs-toggle="tab" href="#ca">Categoría</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="tab" href="#nut">Nutriscore</a>
+            <a class="nav-link filtro" data-bs-toggle="tab" href="#in">Ingredientes</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="tab" href="#pre">Precio</a>
+            <a class="nav-link filtro" data-bs-toggle="tab" href="#nu">Nutriscore</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="tab" href="#sen">Sentimientos</a>
+            <a class="nav-link filtro" data-bs-toggle="tab" href="#pr">Precio</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="tab" href="#fav">Favoritos</a>
+            <a class="nav-link filtro" data-bs-toggle="tab" href="#fa">Favoritos</a>
         </li>
     </ul>
 </div>
-<div class="buscador resultadoBuscador">
-    <hr>
-    <div class="tab-content">
-        <div class="tab-pane container active" id="cat">
-            <div class="d-flex">
-                <aplicadorFiltro titulo="Verduras"/>
-                <aplicadorFiltro titulo="Carnes"/>
-                <aplicadorFiltro titulo="Pescados"/>
-                <aplicadorFiltro titulo="Pasta"/>
-                <aplicadorFiltro titulo="Aperitivos"/>
-            </div>
+<div class="row justify-content-center">
+    <div class="resultadoBuscador col-lg-8 col-md-10 col-sm-12 col-12">
+        <p>Filtros de búsqueda:</p>
+        <div class="d-flex flex-wrap ms-0">
+            <aplicadorFiltro *ngFor="let filtro of filtrosBusqueda" titulo={{filtro}} indicador="-"/>
         </div>
-        <div class="tab-pane container fade" id="nut">Buscando por nutriscore!</div>
-        <div class="tab-pane container fade" id="pre">Buscando por precio!</div>
-        <div class="tab-pane container active" id="sen">Buscando por sentimiento!</div>
-        <div class="tab-pane container fade" id="fav">Buscando en mis favoritos!</div>
+        <hr>
+        <p>Elija el filtro que desea añadir a la búsqueda:</p>
+        <div class="tab-content">
+            <div class="tab-pane container active" id="ca">
+                <div class="d-flex flex-wrap ms-0">
+                    <aplicadorFiltro titulo="Verduras"/>
+                    <aplicadorFiltro titulo="Carnes"/>
+                    <aplicadorFiltro titulo="Pescados"/>
+                    <aplicadorFiltro titulo="Pasta"/>
+                    <aplicadorFiltro titulo="Aperitivos"/>
+                </div>
+            </div>
+            <div class="tab-pane container" id="in">
+                <div class="d-flex flex-wrap ms-0">
+                    <aplicadorFiltro *ngFor="let ingrediente of ingredientes" titulo={{ingrediente}}/>
+                </div>
+            </div>
+            <div class="tab-pane container" id="nu">
+                <div class="d-flex flex-wrap ms-0">
+                    <aplicadorFiltro titulo="Nutriscore A"/>
+                    <aplicadorFiltro titulo="Nutriscore B"/>
+                    <aplicadorFiltro titulo="Nutriscore C"/>
+                    <aplicadorFiltro titulo="Nutriscore D"/>
+                </div>
+            </div>
+            <div class="tab-pane container" id="pr">
+                <div class="d-flex flex-wrap ms-0">
+                    <aplicadorFiltro titulo="Hasta 5€"/>
+                    <aplicadorFiltro titulo="Hasta 10€"/>
+                    <aplicadorFiltro titulo="Hasta 20€"/>
+                    <aplicadorFiltro titulo="Hasta 50€"/>
+                </div>
+            </div>
+            <div class="tab-pane container" id="fa">Buscando en mis favoritos!</div>
+        </div>
+        <hr>
+        <recetaEncontrada *ngFor="let res of resultados" nombre="{{res.nombre}}" ruta="{{res.ruta}}"></recetaEncontrada>
     </div>
-    <hr>
-    <recetaEncontrada *ngFor="let res of resultados" nombre="{{res.nombre}}" ruta="{{res.ruta}}"></recetaEncontrada>
 </div>

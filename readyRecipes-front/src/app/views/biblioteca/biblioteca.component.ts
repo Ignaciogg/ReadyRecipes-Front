@@ -6,6 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./biblioteca.component.scss']
 })
 export class BibliotecaComponent {
+  filtrosBusqueda: string[] = ["pr", "ue", "ba"];
+  ingredientes: string[] = ["Aceite", "Arroz", "Azúcar", "Comino", "Guisantes", "Harina", "Leche", "Pollo", "Salmón"];
   resultados = [
     {
       nombre: "Receta encontrada 1",

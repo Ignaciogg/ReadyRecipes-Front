@@ -7,4 +7,5 @@ import { Component, Input } from '@angular/core';
 })
 export class AplicadorFiltroComponent {
   @Input() titulo: string = "No se ha especificado título";
+  @Input() indicador: string = "+";
 }
