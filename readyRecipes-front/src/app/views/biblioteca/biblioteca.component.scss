@@ -1,3 +1,9 @@
+h1 {
+    font-size: x-large;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
 .filtro {
     border-top: 1px solid black;
     border-right: 1px solid black;
@@ -21,6 +27,7 @@
 .resultadoBuscador {
     border: 1px solid black;
     padding: 10px;
+    margin-bottom: 20px;
 }
 
 .selectorElegido {

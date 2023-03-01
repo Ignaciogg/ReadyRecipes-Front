@@ -1,4 +1,4 @@
-<p class="text-center">Elija el tipo de plato que desea encontrar</p>
+<h1 class="text-center">Elija el tipo de plato que desea encontrar</h1>
 <div class="row justify-content-center">
     <categoria
         class="col-lg-2 col-md-4 col-sm-4 col-6"
@@ -31,8 +31,8 @@
         (click)="buscarTipo('Aperitivos')"
     />
 </div>
-<p class="text-center m-0 p-0">O filtre según otros parámetros</p>
-<div class="row justify-content-center">
+<h1 class="text-center">O filtre según otros parámetros</h1>
+<div class="row justify-content-center filtros">
     <ul class="nav nav-tabs col-lg-8 col-md-10 col-sm-12 col-12">
         <li class="nav-item">
             <a class="nav-link filtro active" data-bs-toggle="tab" href="#ca">Categoría</a>
@@ -53,7 +53,7 @@
 </div>
 <div class="row justify-content-center">
     <div class="resultadoBuscador col-lg-8 col-md-10 col-sm-12 col-12">
-        <p>Filtros de búsqueda:</p>
+        <p>Filtros seleccionados:</p>
         <div class="d-flex flex-wrap ms-0">
             <div class="d-flex flex-wrap ms-0">
                 <ng-container *ngFor="let filtro of filtros">
