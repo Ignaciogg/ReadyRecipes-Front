@@ -60,7 +60,7 @@
                     <aplicadorFiltro
                         *ngIf="filtro.activo==true"
                         titulo={{filtro.nombre}}
-                        indicador="-"
+                        [activo]=true
                         (click)="eliminarFiltro(filtro.nombre)"
                     />
                 </ng-container>

@@ -6,7 +6,10 @@ button {
     padding-left: 15px;
     padding-right: 15px;
     border: 1px solid;
-    background-color: var(--colorPrincipalClaro);;
+    background-color: var(--colorPrincipalClaro);
+    &.activado{
+        background-color: var(--colorSecundarioClaro);
+    }
     p {
         margin-top: 0px;
         margin-bottom: 0px;

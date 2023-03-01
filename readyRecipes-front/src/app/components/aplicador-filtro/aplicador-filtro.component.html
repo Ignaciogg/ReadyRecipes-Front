@@ -1,4 +1,5 @@
-<button class="d-flex">
+<button class="d-flex" [ngClass]="{activado: activo}">
     <p>{{titulo}}</p>
-    <p class="mas">{{indicador}}</p>
+    <p class="mas" *ngIf="activo">-</p>
+    <p class="mas" *ngIf="!activo">+</p>
 </button>
