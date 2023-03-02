@@ -1,12 +1,15 @@
 <div class="flexSuperior d-flex flex-wrap justify-content-between align-items-center">
     <div class="d-flex flex-wrap align-items-center ms-0">
-        <img class="flechaVolver" src="assets/imagenes/iconos/flechaIzquierda.png">
+        <a href="/biblioteca">
+            <img class="iconoSuperior" src="assets/imagenes/iconos/flechaIzquierda.png">
+        </a>
         <h1>{{nombre}}</h1>
     </div>
-    <img class="flechaVolver" src="assets/imagenes/iconos/favorito.png">
+    <img class="iconoSuperior favoritoSi" (click)="cambiarFavorito()" *ngIf="esFavorito==true" src="assets/imagenes/iconos/favoritoSi.png">
+    <img class="iconoSuperior favoritoNo" (click)="cambiarFavorito()" *ngIf="esFavorito==false" src="assets/imagenes/iconos/favoritoNo.png">
 </div>
 <div class="d-flex flex-wrap ms-0">
-    <iframe src="https://www.youtube.com/embed/9ZnhL3ADyKs"></iframe>
+    <iframe src="https://www.youtube.com/embed/9ZnhL3ADyKs" allowfullscreen="true"></iframe>
     <section>
         <h3>Comentarios ({{numComentarios}})</h3>
         <div class="d-flex flex-wrap align-items-center">
@@ -26,14 +29,24 @@
     <section>
         <h3>Ingredientes</h3>
         <p>Puntuación nutriscore: {{nutriscore}}</p>
-        <p>Ingredientes ({{ingredientes.length}}): </p>
-        <div class="d-flex flex-wrap ms-0">
-            <p *ngFor="let ingrediente of ingredientes">{{ingrediente}},&nbsp;</p>
+        <div class="d-flex flex-wrap align-items-center mb-3">
+            <p class="m-0">Ingredientes ({{ingredientes.length}}):&nbsp;</p>
+            <p class="m-0" *ngFor="let ingrediente of ingredientes">{{ingrediente}},&nbsp;</p>
         </div>
-        <p>Precio aproximado: {{precio}} €</p>
+        <p>Precio: {{precio}} €</p>
     </section>
 </div>
 <h2>Transcripción</h2>
 <div>
     <p>{{transcripcion}}</p>
 </div>
+<h2>Comentarios</h2>
+<form method="POST" action="/ruta/de/destino">
+    <input type="text" name="nombre" placeholder="¿Qué opina sobre esta receta?">
+    <button type="submit">Enviar</button>
+  </form>
+<comentario
+    *ngFor="let comentario of comentarios"
+    autor="{{comentario.autor}}"
+    mensaje="{{comentario.mensaje}}"
+/>
