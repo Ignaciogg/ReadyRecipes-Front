@@ -116,6 +116,10 @@
             <div class="tab-pane container" id="fa">Buscando en mis favoritos!</div>
         </div>
         <hr>
-        <recetaEncontrada *ngFor="let res of resultados" nombre="{{res.nombre}}" ruta="{{res.ruta}}"></recetaEncontrada>
+        <recetaEncontrada
+            *ngFor="let res of resultados"
+            nombre="{{res.nombre}}"
+            ruta="./receta"
+        />
     </div>
 </div>
