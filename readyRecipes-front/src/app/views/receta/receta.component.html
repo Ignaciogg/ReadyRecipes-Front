@@ -9,10 +9,10 @@
     <img class="iconoSuperior favoritoNo" (click)="cambiarFavorito()" *ngIf="esFavorito==false" src="assets/imagenes/iconos/favoritoNo.png">
 </div>
 <div class="d-flex flex-wrap ms-0">
-    <section class="col-lg-4 col-md-4 col-12">
+    <section class="col-lg-6 col-md-4 col-12">
         <iframe src="https://www.youtube.com/embed/9ZnhL3ADyKs" allowfullscreen="true"></iframe>
     </section>
-    <section class="col-lg-4 col-md-4 col-6">
+    <section class="col-lg-3 col-md-4 col-6">
         <h3>Comentarios ({{numComentariosPositivos + numComentariosNeutros + numComentariosNegativos}})</h3>
         <div class="d-flex mb-2">
             <img *ngIf="isViewportLarge && numComentariosPositivos != 0" class="cara" src="assets/imagenes/iconos/caras/felizRellena.png">
@@ -31,7 +31,7 @@
         </div>
         <p>Sentimiento medio: {{sentimientoMedio}} %</p>
     </section>
-    <section class="col-lg-4 col-md-4 col-6">
+    <section class="col-lg-3 col-md-4 col-6">
         <h3>Ingredientes</h3>
         <p class="mb-2">Puntuación nutriscore: {{nutriscore}}</p>
         <div class="d-flex flex-wrap align-items-center  mb-2">
