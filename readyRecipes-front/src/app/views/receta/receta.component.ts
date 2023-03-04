@@ -11,7 +11,6 @@ export class RecetaComponent {
   @Input() nombre: string = "Nombre de la receta";
   @Input() esFavorito: boolean = false;
   @Input() rutaVideo: string = "https://www.youtube.com/embed/9ZnhL3ADyKs";
-  @Input() numComentarios: number = 149;
   @Input() numComentariosPositivos: number = 27;
   @Input() numComentariosNeutros: number = 109;
   @Input() numComentariosNegativos: number = 13;
