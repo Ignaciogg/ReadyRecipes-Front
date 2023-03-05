@@ -9,11 +9,31 @@
     height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
-    padding-bottom: 10vh;
+    padding: 10vh 0px;
+}
+
+.logo {
+    width: min(50vw, 400px);
+}
+
+.contenidoInferior{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
 }
 
 button {
+    border-radius: 200px;
+    padding: 5px 20px;
+    margin-bottom: 20px;
+}
 
+p {
+    color: white;
+    a {
+        color: var(--colorPrincipal);
+    }
 }

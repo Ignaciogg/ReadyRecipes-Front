@@ -1,11 +1,14 @@
-<div class="home" [style.background-image]="'linear-gradient(rgba(0,0,0,0), rgba(0,0,0,1)), url(assets/imagenes/carnes.png)'">
+<div class="home" [style.background-image]="'linear-gradient(rgba(0,0,0,0) 50%, rgba(0,0,0,1) 90%), url(assets/imagenes/carnes.png)'">
     <div class="container">
-        <a routerLink="/biblioteca">
-            <button>Ir a biblioteca</button>
-        </a>
-        <a routerLink="/login">
-            <button>Log in</button>
-        </a>
-        <p>¿No tiene cuenta? <a>Regístrese ahora</a></p>
+        <img class="logo" src="assets/imagenes/logoBlanco.png">
+        <div class="contenidoInferior">
+            <a routerLink="/biblioteca">
+                <button>Acceder sin cuenta</button>
+            </a>
+            <a routerLink="/login">
+                <button>Log in</button>
+            </a>
+            <p>¿No tiene cuenta? <a href="google.com">Regístrese ahora</a></p>
+        </div>
     </div>
 </div>
