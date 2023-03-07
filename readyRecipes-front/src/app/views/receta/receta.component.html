@@ -1,57 +1,59 @@
-<div class="flexSuperior d-flex flex-wrap justify-content-between align-items-center">
-    <div class="d-flex flex-wrap align-items-center ms-0">
-        <a href="/biblioteca">
-            <img class="iconoSuperior" src="assets/imagenes/iconos/flechaIzquierda.png">
-        </a>
-        <h1>{{nombre}}</h1>
+<div class="pagina">
+    <div class="flexSuperior d-flex flex-wrap justify-content-between align-items-center">
+        <div class="d-flex flex-wrap align-items-center ms-0">
+            <a href="/biblioteca">
+                <img class="iconoSuperior" src="assets/imagenes/iconos/flechaIzquierda.png">
+            </a>
+            <h1>{{nombre}}</h1>
+        </div>
+        <img class="iconoSuperior favoritoSi" (click)="cambiarFavorito()" *ngIf="esFavorito==true" src="assets/imagenes/iconos/favoritoSi.png">
+        <img class="iconoSuperior favoritoNo" (click)="cambiarFavorito()" *ngIf="esFavorito==false" src="assets/imagenes/iconos/favoritoNo.png">
     </div>
-    <img class="iconoSuperior favoritoSi" (click)="cambiarFavorito()" *ngIf="esFavorito==true" src="assets/imagenes/iconos/favoritoSi.png">
-    <img class="iconoSuperior favoritoNo" (click)="cambiarFavorito()" *ngIf="esFavorito==false" src="assets/imagenes/iconos/favoritoNo.png">
+    <div class="d-flex flex-wrap ms-0">
+        <section class="col-lg-6 col-md-4 col-12">
+            <iframe src="https://www.youtube.com/embed/9ZnhL3ADyKs" allowfullscreen="true"></iframe>
+        </section>
+        <section class="col-lg-3 col-md-4 col-6">
+            <h3>Comentarios ({{numComentariosPositivos + numComentariosNeutros + numComentariosNegativos}})</h3>
+            <div class="d-flex mb-2">
+                <img *ngIf="isViewportLarge && numComentariosPositivos != 0" class="cara" src="assets/imagenes/iconos/caras/felizRellena.png">
+                <img *ngIf="isViewportLarge && numComentariosPositivos == 0" class="cara" src="assets/imagenes/iconos/caras/felizVacia.png">
+                <p class="numComentarios">Comentarios positivos: {{numComentariosPositivos}}</p>
+            </div>
+            <div class="d-flex mb-2">
+                <img *ngIf="isViewportLarge && numComentariosNeutros != 0" class="cara" src="assets/imagenes/iconos/caras/neutraRellena.png">
+                <img *ngIf="isViewportLarge && numComentariosNeutros == 0" class="cara" src="assets/imagenes/iconos/caras/neutraVacia.png">
+                <p class="numComentarios">Comentarios neutros: {{numComentariosNeutros}}</p>
+            </div>
+            <div class="d-flex mb-2">
+                <img *ngIf="isViewportLarge && numComentariosNegativos != 0" class="cara" src="assets/imagenes/iconos/caras/tristeRellena.png">
+                <img *ngIf="isViewportLarge && numComentariosNegativos == 0" class="cara" src="assets/imagenes/iconos/caras/tristeVacia.png">
+                <p class="numComentarios">Comentarios negativos: {{numComentariosNegativos}}</p>
+            </div>
+            <p>Sentimiento medio: {{sentimientoMedio}} %</p>
+        </section>
+        <section class="col-lg-3 col-md-4 col-6">
+            <h3>Ingredientes</h3>
+            <p class="mb-2">Puntuación nutriscore: {{nutriscore}}</p>
+            <div class="d-flex flex-wrap align-items-center  mb-2">
+                <p class="m-0">Ingredientes ({{ingredientes.length}}):&nbsp;</p>
+                <p class="m-0" *ngFor="let ingrediente of ingredientes">{{ingrediente}},&nbsp;</p>
+            </div>
+            <p>Precio: {{precio}} €</p>
+        </section>
+    </div>
+    <h2>Transcripción</h2>
+    <div>
+        <p>{{transcripcion}}</p>
+    </div>
+    <h2>Comentarios</h2>
+    <form method="POST" action="/ruta/de/destino">
+        <input type="text" name="nombre" placeholder="¿Qué opina sobre esta receta?">
+        <button>Enviar</button>
+      </form>
+    <comentario
+        *ngFor="let comentario of comentarios"
+        autor="{{comentario.autor}}"
+        mensaje="{{comentario.mensaje}}"
+    />
 </div>
-<div class="d-flex flex-wrap ms-0">
-    <section class="col-lg-6 col-md-4 col-12">
-        <iframe src="https://www.youtube.com/embed/9ZnhL3ADyKs" allowfullscreen="true"></iframe>
-    </section>
-    <section class="col-lg-3 col-md-4 col-6">
-        <h3>Comentarios ({{numComentariosPositivos + numComentariosNeutros + numComentariosNegativos}})</h3>
-        <div class="d-flex mb-2">
-            <img *ngIf="isViewportLarge && numComentariosPositivos != 0" class="cara" src="assets/imagenes/iconos/caras/felizRellena.png">
-            <img *ngIf="isViewportLarge && numComentariosPositivos == 0" class="cara" src="assets/imagenes/iconos/caras/felizVacia.png">
-            <p class="numComentarios">Comentarios positivos: {{numComentariosPositivos}}</p>
-        </div>
-        <div class="d-flex mb-2">
-            <img *ngIf="isViewportLarge && numComentariosNeutros != 0" class="cara" src="assets/imagenes/iconos/caras/neutraRellena.png">
-            <img *ngIf="isViewportLarge && numComentariosNeutros == 0" class="cara" src="assets/imagenes/iconos/caras/neutraVacia.png">
-            <p class="numComentarios">Comentarios neutros: {{numComentariosNeutros}}</p>
-        </div>
-        <div class="d-flex mb-2">
-            <img *ngIf="isViewportLarge && numComentariosNegativos != 0" class="cara" src="assets/imagenes/iconos/caras/tristeRellena.png">
-            <img *ngIf="isViewportLarge && numComentariosNegativos == 0" class="cara" src="assets/imagenes/iconos/caras/tristeVacia.png">
-            <p class="numComentarios">Comentarios negativos: {{numComentariosNegativos}}</p>
-        </div>
-        <p>Sentimiento medio: {{sentimientoMedio}} %</p>
-    </section>
-    <section class="col-lg-3 col-md-4 col-6">
-        <h3>Ingredientes</h3>
-        <p class="mb-2">Puntuación nutriscore: {{nutriscore}}</p>
-        <div class="d-flex flex-wrap align-items-center  mb-2">
-            <p class="m-0">Ingredientes ({{ingredientes.length}}):&nbsp;</p>
-            <p class="m-0" *ngFor="let ingrediente of ingredientes">{{ingrediente}},&nbsp;</p>
-        </div>
-        <p>Precio: {{precio}} €</p>
-    </section>
-</div>
-<h2>Transcripción</h2>
-<div>
-    <p>{{transcripcion}}</p>
-</div>
-<h2>Comentarios</h2>
-<form method="POST" action="/ruta/de/destino">
-    <input type="text" name="nombre" placeholder="¿Qué opina sobre esta receta?">
-    <button>Enviar</button>
-  </form>
-<comentario
-    *ngFor="let comentario of comentarios"
-    autor="{{comentario.autor}}"
-    mensaje="{{comentario.mensaje}}"
-/>

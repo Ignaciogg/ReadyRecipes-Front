@@ -21,6 +21,13 @@
 
 .categoriaCard:hover>img {
     filter: brightness(50%);
+    animation: animacionHover 0.4s;
+}
+
+@keyframes animacionHover {
+    0% {
+        margin-bottom: -20px;
+    }
 }
 
 .textoHover {
