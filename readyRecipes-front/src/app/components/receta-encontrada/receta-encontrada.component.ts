@@ -6,6 +6,6 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./receta-encontrada.component.scss']
 })
 export class RecetaEncontradaComponent {
-  @Input() ruta: string = "https://www.google.com/";
+  @Input() ruta: string = "/receta";
   @Input() nombre: string = "Ruta no especificada";
 }

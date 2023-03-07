@@ -1,4 +1,4 @@
-<header>
+<header *ngIf="router.url !== '/'">
     <div class="d-flex">
         <a routerLink="/">
             <img class="logo" src="assets/imagenes/logoBlanco.png">
@@ -9,9 +9,7 @@
         Login
     </button>
 </header>
-<div class="contenido">
-    <router-outlet></router-outlet>
-</div>
-<footer>
+<router-outlet/>
+<footer *ngIf="router.url !== '/'">
     <p>ReadyRecipes - 2023</p>
 </footer>
