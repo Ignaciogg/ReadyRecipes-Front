@@ -1,3 +1,47 @@
+.login{
+ margin-left: min(30%,100px);
+ margin-right: min(30%,100px);
+}
+
+
 button {
     background-color: var(--colorPrincipal);
+    margin: 30px;
 }
+
+header{
+    color: var(--colorPrincipal);
+
+}
+form{
+     color: var(--colorPrincipal);
+     font-size: large;
+     
+}
+a {
+    color: var(--colorSecundario);
+    p {
+        color: var(--colorPrincipal);
+    }
+}
+
+
+input{
+    margin-top: 10px;
+    margin-bottom: 30px;
+    padding-left: 20px;
+    border-radius: 100px;
+    font-size: 0.875rem;
+
+}
+
+.cuenta{
+    text-decoration: none;
+}
+
+.registrarse{
+    margin: 50px;
+    margin-left: 150px;
+    margin-right: 20px;
+}
+
