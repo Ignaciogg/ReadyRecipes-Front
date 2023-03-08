@@ -6,7 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./biblioteca.component.scss']
 })
 export class BibliotecaComponent {
-  filtrosBusqueda: string[] = ["pr", "ue", "ba"];
   filtros = [
     {
       nombre: "Verduras",
@@ -49,7 +48,32 @@ export class BibliotecaComponent {
       activo: false,
     },
     {
+      nombre: "Berenjenas",
+      categoria: "Ingredientes",
+      activo: false,
+    },
+    {
+      nombre: "Brócoli",
+      categoria: "Ingredientes",
+      activo: false,
+    },
+    {
+      nombre: "Calabaza",
+      categoria: "Ingredientes",
+      activo: false,
+    },
+    {
+      nombre: "Calabacín",
+      categoria: "Ingredientes",
+      activo: false,
+    },
+    {
       nombre: "Comino",
+      categoria: "Ingredientes",
+      activo: false,
+    },
+    {
+      nombre: "Fresa",
       categoria: "Ingredientes",
       activo: false,
     },
@@ -69,12 +93,37 @@ export class BibliotecaComponent {
       activo: false,
     },
     {
+      nombre: "Melón",
+      categoria: "Ingredientes",
+      activo: false,
+    },
+    {
+      nombre: "Mermelada",
+      categoria: "Ingredientes",
+      activo: false,
+    },
+    {
+      nombre: "Plátano",
+      categoria: "Ingredientes",
+      activo: false,
+    },
+    {
       nombre: "Pollo",
       categoria: "Ingredientes",
       activo: false,
     },
     {
+      nombre: "Sal",
+      categoria: "Ingredientes",
+      activo: false,
+    },
+    {
       nombre: "Salmón",
+      categoria: "Ingredientes",
+      activo: false,
+    },
+    {
+      nombre: "Zanahoria",
       categoria: "Ingredientes",
       activo: false,
     },
@@ -158,6 +207,22 @@ export class BibliotecaComponent {
   activarFiltro(elegido: string) {
     for(let i=0; i<this.filtros.length; i++) {
       if(this.filtros[i].nombre == elegido) {
+        switch(this.filtros[i].categoria) {
+          case "Nutriscore":
+            for(let i=0; i<this.filtros.length; i++) {
+              if(this.filtros[i].categoria == "Nutriscore") {
+                this.filtros[i].activo = false;
+              }
+            }
+          break;
+          case "Precio":
+            for(let i=0; i<this.filtros.length; i++) {
+              if(this.filtros[i].categoria == "Precio") {
+                this.filtros[i].activo = false;
+              }
+            }
+          break;
+        }
         this.filtros[i].activo = true;
       }
     }

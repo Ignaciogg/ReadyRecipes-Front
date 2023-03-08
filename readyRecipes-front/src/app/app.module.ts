@@ -10,6 +10,9 @@ import { RecetaEncontradaComponent } from './components/receta-encontrada/receta
 import { AplicadorFiltroComponent } from './components/aplicador-filtro/aplicador-filtro.component';
 import { RecetaComponent } from './views/receta/receta.component';
 import { ComentarioComponent } from './components/comentario/comentario.component';
+import { LoginComponent } from './views/login/login.component';
+import { RegistroComponent } from './views/registro/registro.component';
+import { RecuperarComponent } from './views/recuperar/recuperar.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +24,9 @@ import { ComentarioComponent } from './components/comentario/comentario.componen
     AplicadorFiltroComponent,
     RecetaComponent,
     ComentarioComponent,
+    LoginComponent,
+    RegistroComponent,
+    RecuperarComponent,
   ],
   imports: [
     BrowserModule,

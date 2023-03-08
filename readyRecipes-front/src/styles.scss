@@ -1,8 +1,16 @@
 :root {
-    --colorPrincipal: rgb(140, 200, 100);
-    --colorPrincipalClaro: rgba(140, 200, 100, 0.25);
-    --colorSecundario: cornflowerblue;
-    --colorSecundarioClaro: rgb(210, 240, 255);
+    --luminosidad: 45%;
+    --saturacion: 60%;
+
+    --primaryColor: 225; // Tonalidad del 0 al 255
+    --secondaryColor: 20; // Tonalidad del 0 al 255
+
+    --colorPrincipal: hsl(var(--primaryColor), var(--saturacion), var(--luminosidad));
+    --colorPrincipalMedioClaro: hsl(var(--primaryColor), var(--saturacion), calc(var(--luminosidad) + 30%));
+    --colorPrincipalClaro: hsl(var(--primaryColor), var(--saturacion), calc(var(--luminosidad) + 45%));
+
+    --colorSecundario: hsl(var(--secondaryColor), var(--saturacion), var(--luminosidad));
+    --colorSecundarioClaro: hsl(var(--secondaryColor), var(--saturacion), calc(var(--luminosidad) + 45%));
 }
 
 .pagina {

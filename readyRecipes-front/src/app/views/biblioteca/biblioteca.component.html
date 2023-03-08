@@ -79,6 +79,9 @@
                                 (click)="activarFiltro(filtro.nombre)"
                             />
                         </ng-container>
+                        <div *ngIf="filtros.length == 0">
+                            <p>¡Todos los filtros seleccionados!</p>
+                        </div>
                     </div>
                 </div>
                 <div class="tab-pane container" id="in">
