@@ -1,10 +1,7 @@
 .registro{
         margin-left: min(30%,100px);
         margin-right: min(30%,100px);
-    
-       
 }
-
 
 header{
     color: var(--colorPrincipal);
@@ -20,15 +17,15 @@ input{
     margin-top: 10px;
     margin-bottom: 30px;
     padding-left: 20px;
-    border-radius: 100px;
+    border-radius: 50px;
     font-size: 0.875rem;
 
 }
 
 button{
-    margin: 40px;
-    margin-top: 30px;
-    margin-bottom: 30px;
-    margin-left: 500px;
-    margin-right: 300px;
+    margin: 50px;
+    margin-left: min(45%, 500px);
+    margin-right: min(30%,100px);
+
 }
+

@@ -3,7 +3,6 @@
  margin-right: min(30%,100px);
 }
 
-
 button {
     background-color: var(--colorPrincipal);
     margin: 30px;
@@ -29,7 +28,7 @@ input{
     margin-top: 10px;
     margin-bottom: 30px;
     padding-left: 20px;
-    border-radius: 100px;
+    border-radius: 50px;
     font-size: 0.875rem;
 
 }
@@ -40,7 +39,7 @@ input{
 
 .registrarse{
     margin: 50px;
-    margin-left: 500px;
-    margin-right: 20px;
+    margin-left: min(50%, 500px);
+    margin-right: min(30%,100px);
 }
 
