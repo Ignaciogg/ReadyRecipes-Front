@@ -3,13 +3,13 @@ header {
     background-color: var(--colorPrincipal);
     justify-content: space-between;
     padding: 10px;
-    button {
+    .login {
         background-color: var(--colorSecundario);
+        text-decoration: none;
         color: white;
         border: 1px solid white;
         border-radius: 100px;
-        padding-left: 20px;
-        padding-right: 20px;
+        padding: 10px 20px;
         img {
             width: 20px;
             height: 20px;
@@ -31,4 +31,8 @@ footer {
     color: white;
     padding: 10px;
     text-align: center;
+}
+
+.oculto{
+    display: none;
 }

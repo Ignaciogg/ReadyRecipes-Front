@@ -4,11 +4,9 @@
             <img class="logo" src="assets/imagenes/logoBlanco.png">
         </a>
     </div>
-    <a routerLink="/login">
-        <button>
-            <img src="assets/imagenes/iconos/perfil.png">
-            Login
-        </button>
+    <a *ngIf="!router.url.includes('registro') && !router.url.includes('recuperar')" class="login" routerLink="/login" routerLinkActive="oculto">
+        <img src="assets/imagenes/iconos/perfil.png">
+        Login
     </a>
 </header>
 <router-outlet/>
