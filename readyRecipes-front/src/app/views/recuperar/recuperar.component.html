@@ -1,14 +1,10 @@
 <div class="recuperar">
-    <body>
-        <h2>Recuperar Contraseña</h2>
-        <form action="enviar_email.php" method="post">
-            <div class="correo">
-                <label for="email">Correo electrónico</label>
-                <input type="text" formContrhm.olName="email" name="email" class="form-control" aria-describedby="emailHelp"
-                    placeholder="Introduce el correo">
-            </div>           
-            <button class="btn btn-lg btn-primary btn-block"type="submit" value="Enviar">Enviar email</button>
-        </form>
-    </body>
-    
+    <h1>Registrarse</h1>
+    <form>
+        <label for="email">Correo electrónico</label>
+        <input type="email" formControlName="email" name="email" class="form-control" placeholder="Introduzca su correo">
+        <div class="text-center">
+            <input class="enviar" type="submit" value="Enviar">
+        </div>
+    </form>
 </div>

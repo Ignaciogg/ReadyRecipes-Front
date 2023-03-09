@@ -1,32 +1,32 @@
-.registro{
-        margin-left: min(30%,100px);
-        margin-right: min(30%,100px);
-}
-
-header{
+.registro {
+    margin-left: min(30%,100px);
+    margin-right: min(30%,100px);
+    margin-bottom: 20px;
     color: var(--colorPrincipal);
-
-}
-form{
-     color: var(--colorPrincipal);
-     font-size: large;
-     
 }
 
+h1 {
+    text-align: center;
+    margin-top: 20px;
+}
 
-input{
+a {
+    color: var(--colorSecundario);
+    margin-bottom: 20px;
+}
+
+label {
     margin-top: 10px;
-    margin-bottom: 30px;
+}
+
+input {
+    margin-top: 10px;
+    margin-bottom: 20px;
     padding-left: 20px;
     border-radius: 50px;
-    font-size: 0.875rem;
-
 }
 
-button{
-    margin: 50px;
-    margin-left: min(45%, 500px);
-    margin-right: min(30%,100px);
-
+.enviar {
+    padding: 5px 20px;
+    background-color: var(--colorPrincipalClaro);
 }
-

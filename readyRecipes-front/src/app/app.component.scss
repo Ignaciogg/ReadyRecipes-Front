@@ -1,6 +1,17 @@
+.contenedor {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
 header {
     display: flex;
-    background-color: var(--colorPrincipal);
+    background-image: linear-gradient(
+        90deg,
+        var(--colorPrincipal), 
+        var(--colorPrincipalDegradado),
+    );
     justify-content: space-between;
     padding: 10px;
     .login {

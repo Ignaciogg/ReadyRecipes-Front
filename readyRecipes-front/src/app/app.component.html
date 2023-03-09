@@ -1,15 +1,19 @@
-<header *ngIf="router.url !== '/'">
-    <div class="d-flex">
-        <a routerLink="/">
-            <img class="logo" src="assets/imagenes/logoBlanco.png">
-        </a>
+<div class="contenedor">
+    <div>
+        <header *ngIf="router.url !== '/'">
+            <div class="d-flex">
+                <a routerLink="/biblioteca">
+                    <img class="logo" src="assets/imagenes/logoBlanco.png">
+                </a>
+            </div>
+            <a *ngIf="!router.url.includes('registro') && !router.url.includes('recuperar')" class="login" routerLink="/login" routerLinkActive="oculto">
+                <img src="assets/imagenes/iconos/perfil.png">
+                Login
+            </a>
+        </header>
+        <router-outlet/>
     </div>
-    <a *ngIf="!router.url.includes('registro') && !router.url.includes('recuperar')" class="login" routerLink="/login" routerLinkActive="oculto">
-        <img src="assets/imagenes/iconos/perfil.png">
-        Login
-    </a>
-</header>
-<router-outlet/>
-<footer *ngIf="router.url !== '/'">
-    <p>ReadyRecipes - 2023</p>
-</footer>
+    <footer *ngIf="router.url !== '/'">
+        <p>ReadyRecipes - 2023</p>
+    </footer>
+</div>
