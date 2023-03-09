@@ -1,0 +1,34 @@
+h2{
+    color: var(--colorPrincipal);
+    margin-left: min(30%,100px);
+    margin-right: min(30%,100px);
+}
+
+form{
+    color: var(--colorPrincipal);
+    font-size: large;
+    
+}
+
+input{
+    margin-top: 10px;
+    margin-bottom: 30px;
+    padding-left: 20px;
+    border-radius: 50px;
+}
+
+.correo{
+    margin-top: 10px;
+    margin-bottom: 30px;
+    padding-left: 20px;
+    border-radius: 50px;
+    margin-right: 100px;
+    margin-left: 100px;
+}
+
+button{
+    margin: 20px;
+    margin-left: min(50%, 125px);
+    margin-right: min(50%,100px);
+
+}
