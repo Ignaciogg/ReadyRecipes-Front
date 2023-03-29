@@ -5,7 +5,7 @@
             class="col-lg-2 col-md-4 col-sm-4 col-6"
             nombre="VERDURAS"
             imagen="assets/imagenes/verduras.png"
-            (click)="buscarTipo('Verduras')"
+            (click)="buscarTipo('Verduras')" 
         />
         <categoria
             class="col-lg-2 col-md-4 col-sm-4 col-6"
@@ -127,4 +127,6 @@
             />
         </div>
     </div>
+    <p *ngFor="let receta of recetas">{{receta.id}} - {{receta.nombre}} - {{receta.precio}}</p>
+    <button (click)="crearReceta()">Refrescar</button>
 </div>
