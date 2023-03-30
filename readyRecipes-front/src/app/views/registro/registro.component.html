@@ -1,19 +1,19 @@
-<div class="registro">
-    <h1>Registrarse</h1>
+<div class="pageLog">
+    <h1 class="h1Log">Registrarse</h1>
     <form>
-        <label for="name">Nombre</label>
-        <input type="text" formControlName="name" name="name" class="form-control" aria-describedby="emailHelp" placeholder="Introduzca su nombre">
-        <label for="email">Correo electrónico</label>
-        <input type="email" formControlName="email" name="email" class="form-control" placeholder="Introduzca su correo">
-        <label for="password">Contraseña</label>
-        <input type="password" formControlName="password" name="password" class="form-control" placeholder="Introduzca su contraseña">
-        <label for="password">Repita su contraseña</label>
-        <input type="password" formControlName="password" name="password" class="form-control" placeholder="Introduzca su contraseña">
+        <label for="name" class="labelLog">Nombre</label>
+        <input type="text" name="name" class="form-control inputLog" placeholder="Introduzca su nombre">
+        <label for="email" class="labelLog">Correo electrónico</label>
+        <input type="email" name="email" class="form-control inputLog" placeholder="Introduzca su correo">
+        <label for="password" class="labelLog">Contraseña</label>
+        <input type="password" name="password" class="form-control inputLog" placeholder="Introduzca su contraseña">
+        <label for="password" class="labelLog">Repita su contraseña</label>
+        <input type="password" name="password" class="form-control inputLog" placeholder="Introduzca su contraseña">
         <div class="text-center">
-            <input class="enviar" type="submit" value="Enviar">
+            <input class="botonEnviar mb-3 mt-4" type="submit" value="Enviar">
         </div>
     </form>
     <div class="text-center">
-        <a routerLink="/recuperar">¿Ha olvidado su contraseña?</a>
+        <a routerLink="/recuperar" class="aLog">¿Ha olvidado su contraseña?</a>
     </div>
 </div>

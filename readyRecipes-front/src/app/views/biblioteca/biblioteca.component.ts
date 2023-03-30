@@ -1,4 +1,6 @@
-import { Component } from '@angular/core'; 
+import { Component } from '@angular/core';
+import { Receta } from 'src/app/models/receta';
+import { RecetaService } from 'src/app/services/receta.service';
 
 @Component({
   selector: 'app-biblioteca',
@@ -6,6 +8,31 @@ import { Component } from '@angular/core';
   styleUrls: ['./biblioteca.component.scss']
 })
 export class BibliotecaComponent {
+
+  recetas: Receta[] = [];
+  cargando: boolean = false;
+
+  constructor(private recetaService: RecetaService) { }
+
+  ngOnInit(): void {
+    this.cargarRecetas();
+  }
+
+  private cargarRecetas() {
+    this.cargando = true;
+    this.recetaService.getAll().subscribe(data=> {
+      this.recetas = data;
+      this.cargando = false;
+    });
+  }
+
+  public crearReceta() {
+    let receta: Receta = new Receta("Nombre de receta", 3.5);
+    this.recetaService.create(receta).subscribe(data=> {
+      this.cargarRecetas();
+    });
+  }
+
   filtros = [
     {
       nombre: "Verduras",

@@ -51,5 +51,39 @@
 .pagina {
     margin-left: 5vw;
     margin-right: 5vw;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.botonEnviar {
+    padding: 5px 20px;
+    background-color: var(--colorPrincipalClaro);
+    border-radius: 8px;
+}
+
+////////////////////// PANTALLAS DE GESTION DE CUENTA //////////////////////
+
+.pageLog {
+    margin: 0px 10%;
+    color: var(--colorPrincipal);
+}
+
+.h1Log {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.inputLog {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    padding-left: 20px;
+    border: 2px solid var(--colorPrincipalClaro);
+    border-radius: 50px;
+}
+
+.labelLog {
+    margin-top: 10px;
+}
+
+.aLog {
+    color: var(--colorSecundario);
 }
