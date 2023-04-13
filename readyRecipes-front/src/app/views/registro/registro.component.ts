@@ -14,9 +14,10 @@ export class RegistroComponent {
   emailInput: string = "";
   passwordInput: string = "";
   repetirPasswordInput: string = "";
+  
   constructor(private usuarioService: UsuarioService) { }
 
-  public registrar(nombre: string, apellidos: string, email: string, password: string, repetirPassword: string) {
+  public async registrar(nombre: string, apellidos: string, email: string, password: string, repetirPassword: string) {
     this.respuesta = -1;
     const regexNumeros = /\d/;
     const regexMayus = /[A-Z]/;

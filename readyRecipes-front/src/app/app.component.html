@@ -6,10 +6,18 @@
                     <img class="logo" src="assets/imagenes/logoBlanco.png">
                 </a>
             </div>
-            <a *ngIf="!router.url.includes('registro') && !router.url.includes('recuperar')" class="login" routerLink="/login" routerLinkActive="oculto">
-                <img src="assets/imagenes/iconos/perfil.png">
-                Login
-            </a>
+            <div *ngIf="!router.url.includes('registr') && !router.url.includes('recuperar') && !router.url.includes('login')" class="d-flex align-items-center">
+                <a *ngIf="getCorreoUsuario() == ''" class="login d-flex align-items-center" routerLink="/login" routerLinkActive="oculto">
+                    <img src="assets/imagenes/iconos/perfil.png">
+                    <p *ngIf="getCorreoUsuario() == ''" class="m-0">Login</p>
+                    <p *ngIf="getCorreoUsuario() != ''" class="m-0">Logout {{getCorreoUsuario()}}</p>
+                </a>
+                <a *ngIf="getCorreoUsuario() != ''" class="login d-flex align-items-center" (click)="logout()" routerLink="/" routerLinkActive="oculto">
+                    <img src="assets/imagenes/iconos/perfil.png">
+                    <p *ngIf="getCorreoUsuario() == ''" class="m-0">Login</p>
+                    <p *ngIf="getCorreoUsuario() != ''" class="m-0">Logout {{getCorreoUsuario()}}</p>
+                </a>
+            </div>
         </header>
         <router-outlet/>
     </div>

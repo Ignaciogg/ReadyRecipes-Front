@@ -86,10 +86,16 @@
 
 .aLog {
     color: var(--colorSecundario);
+    cursor: pointer;
 }
 
 .textoError {
     color: red;
     font-size: x-large;
     font-weight: bold;
+}
+
+.infoErrorLog {
+    color: var(--colorSecundario);
+    margin-top: -10px;
 }

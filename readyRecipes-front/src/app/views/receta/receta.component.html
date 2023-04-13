@@ -47,10 +47,11 @@
         <p>{{transcripcion}}</p>
     </div>
     <h2>Comentarios</h2>
-    <form method="POST" action="/ruta/de/destino">
+    <p *ngIf="getCorreoUsuario() == ''" style="color: var(--colorPrincipal);">¡Inicie sesión para opinar sobre esta receta!</p>
+    <form *ngIf="getCorreoUsuario() != ''" method="POST" action="/ruta/de/destino">
         <input type="text" name="nombre" placeholder="¿Qué opina sobre esta receta?">
         <button class="botonEnviar">Enviar</button>
-      </form>
+    </form>
     <comentario
         *ngFor="let comentario of comentarios"
         autor="{{comentario.autor}}"
