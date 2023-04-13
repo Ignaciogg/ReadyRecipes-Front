@@ -2,18 +2,39 @@
     <h1 class="h1Log">Registrarse</h1>
     <form>
         <label for="name" class="labelLog">Nombre</label>
-        <input type="text" name="name" class="form-control inputLog" placeholder="Introduzca su nombre">
+        <input [(ngModel)]="nombreInput" type="text" name="name" class="form-control inputLog" placeholder="Introduzca su nombre">
+        <label for="surname" class="labelLog">Apellidos</label>
+        <input [(ngModel)]="apellidosInput" type="text" name="surname" class="form-control inputLog" placeholder="Introduzca sus apellidos">
         <label for="email" class="labelLog">Correo electrónico</label>
-        <input type="email" name="email" class="form-control inputLog" placeholder="Introduzca su correo">
+        <input [(ngModel)]="emailInput" type="email" name="email" class="form-control inputLog" placeholder="Introduzca su correo">
         <label for="password" class="labelLog">Contraseña</label>
-        <input type="password" name="password" class="form-control inputLog" placeholder="Introduzca su contraseña">
-        <label for="password" class="labelLog">Repita su contraseña</label>
-        <input type="password" name="password" class="form-control inputLog" placeholder="Introduzca su contraseña">
-        <div class="text-center">
-            <input class="botonEnviar mb-3 mt-4" type="submit" value="Enviar">
+        <input [(ngModel)]="passwordInput" type="password" name="password" class="form-control inputLog" placeholder="Introduzca su contraseña">
+        <label for="passwordConfirm" class="labelLog">Repita su contraseña</label>
+        <input [(ngModel)]="repetirPasswordInput" type="password" name="password" class="form-control inputLog" placeholder="Introduzca su contraseña">
+        <div *ngIf="respuesta != -1" class="text-center">
+            <input (click)="registrar(nombreInput, apellidosInput, emailInput, passwordInput, repetirPasswordInput)" class="botonEnviar mb-3 mt-4" type="submit" value="Enviar">
         </div>
     </form>
-    <div class="text-center">
+    <div *ngIf="respuesta != -1" class="text-center">
         <a routerLink="/recuperar" class="aLog">¿Ha olvidado su contraseña?</a>
+    </div>
+    <div class="d-flex justify-content-center m-5">
+        <cargando *ngIf="respuesta == -1"/>
+        <p *ngIf="respuesta == -2" class="textoError">El campo nombre está vacío</p>
+        <p *ngIf="respuesta == -3" class="textoError">El campo apellidos está vacío</p>
+        <p *ngIf="respuesta == -4" class="textoError">El campo correo está vacío</p>
+        <p *ngIf="respuesta == -5" class="textoError">El campo contraseña está vacío</p>
+        <p *ngIf="respuesta == -6" class="textoError">El campo repetir contraseña está vacío</p>
+        <p *ngIf="respuesta == -7" class="textoError">Su nombre no puede contener números</p>
+        <p *ngIf="respuesta == -8" class="textoError">Su apellido no puede contener números</p>
+        <p *ngIf="respuesta == -9" class="textoError">Formato de correo incorrecto</p>
+        <p *ngIf="respuesta == -10" class="textoError">La contraseña debe tener mínimo 6 caracteres</p>
+        <p *ngIf="respuesta == -11" class="textoError">La contraseña debe tener máximo 16 caracteres</p>
+        <p *ngIf="respuesta == -12" class="textoError">La contraseña debe contener al menos una letra mayúscula, una minúscula y un número</p>
+        <p *ngIf="respuesta == -13" class="textoError">Las contraseñas no coinciden</p>
+        <p *ngIf="200 <= respuesta && respuesta < 300" class="textoError">¡Registrado correctamente!</p>
+        <p *ngIf="400 <= respuesta && respuesta < 500" class="textoError">No es posible acceder a los servidores en estos momentos. Por favor, inténtelo de nuevo más tarde</p>
+        <p *ngIf="500 <= respuesta && respuesta < 600" class="textoError">Ya existe un usuario con ese correo</p>
+        <p *ngIf="(0 < respuesta && respuesta < 200) || respuesta > 600">Ha ocurrido un error</p>
     </div>
 </div>
