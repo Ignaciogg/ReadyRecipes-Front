@@ -15,6 +15,7 @@ import { ComentarioComponent } from './components/comentario/comentario.componen
 import { LoginComponent } from './views/login/login.component';
 import { RegistroComponent } from './views/registro/registro.component';
 import { RecuperarComponent } from './views/recuperar/recuperar.component';
+import { CargandoComponent } from './components/cargando/cargando.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { RecuperarComponent } from './views/recuperar/recuperar.component';
     LoginComponent,
     RegistroComponent,
     RecuperarComponent,
+    CargandoComponent,
   ],
   imports: [
     BrowserModule,
