@@ -194,6 +194,11 @@ export class BibliotecaComponent {
       categoria: "Precio",
       activo: false,
     },
+    {
+      nombre: "Mis favoritos",
+      categoria: "Favoritos",
+      activo: false,
+    }
   ];
   resultados = [
     {
