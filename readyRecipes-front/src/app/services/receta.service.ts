@@ -21,6 +21,6 @@ export class RecetaService {
   }
 
   public get(id: number): Observable<Receta> {
-    return this.httpClient.get<Receta>("http://127.0.0.1:8000/api/recetas/get/"+id);
+    return this.httpClient.get<Receta>("http://127.0.0.1:8000/api/receta/"+id);
   }
 }
