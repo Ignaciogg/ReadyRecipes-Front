@@ -99,3 +99,17 @@
     color: var(--colorSecundario);
     margin-top: -10px;
 }
+
+.cargandoGeneral {
+    background-color: #F7F7F7;
+    padding: 30px;
+    margin: auto;
+    margin-top: 25vh;
+    width: 75vw;
+    border: 1px solid #DDD;
+    border-radius: 20px;
+    p {
+        color: var(--colorPrincipal);
+        margin: 0px;
+    }
+}

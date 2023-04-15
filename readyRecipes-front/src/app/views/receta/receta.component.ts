@@ -1,5 +1,7 @@
 import { Component, Input, HostListener } from '@angular/core';
 import { VariablesGlobalesService } from '../../services/variables-globales.service';
+import { RecetaService } from '../../services/receta.service';
+import { Receta } from '../../models/receta';
 
 @Component({
   selector: 'viewReceta',
@@ -7,15 +9,11 @@ import { VariablesGlobalesService } from '../../services/variables-globales.serv
   styleUrls: ['./receta.component.scss']
 })
 export class RecetaComponent {
+  public receta: Receta = {id: 1};
   public minMostrarPulgares: number = 850;
   public isViewportLarge: boolean = window.innerWidth > this.minMostrarPulgares;
-  @Input() nombre: string = "Nombre de la receta";
+  public cargando: boolean = false;
   @Input() esFavorito: boolean = false;
-  @Input() rutaVideo: string = "https://www.youtube.com/embed/9ZnhL3ADyKs";
-  @Input() numComentariosPositivos: number = 27;
-  @Input() numComentariosNeutros: number = 109;
-  @Input() numComentariosNegativos: number = 13;
-  @Input() sentimientoMedio: number = 78;
   @Input() nutriscore: string[1] = "B";
   @Input() precio: number = 3.45;
   @Input() ingredientes: string[] = [
@@ -23,28 +21,43 @@ export class RecetaComponent {
   ];
   @Input() comentarios = [
     {
-      autor: "Pablo González",
-      mensaje: "¡Qué buena pinta!",
-    },
-    {
-      autor: "Ignacio Gil",
-      mensaje: "La probé ayer para cenar. ¡Riquísimo!",
-    },
-    {
-      autor: "Mario Uceda",
-      mensaje: "Pues a mí me parece que tiene mala pinta...",
+      autor: "Alex Tensa",
+      mensaje: "Me quedé sin originalidad, lo siento",
     },
     {
       autor: "Samu",
       mensaje: "Y además es muy fácil de preparar",
     },
     {
-      autor: "Alex Tensa",
-      mensaje: "Me quedé sin originalidad, lo siento",
+      autor: "Mario Uceda",
+      mensaje: "Pues a mí me parece que tiene mala pinta...",
+    },
+    {
+      autor: "Ignacio Gil",
+      mensaje: "La probé ayer para cenar. ¡Riquísimo!",
+    },
+    {
+      autor: "Pablo González",
+      mensaje: "¡Qué buena pinta!",
     }
   ];
 
-  constructor(private variablesGlobalesService: VariablesGlobalesService) { }
+  constructor(
+    private variablesGlobalesService: VariablesGlobalesService,
+    private recetaService: RecetaService) { }
+
+  ngOnInit(): void {
+    this.cargarReceta();
+  }
+
+  private async cargarReceta() {
+    this.cargando = true;
+    this.recetaService.get(1).subscribe(data=> {
+      this.receta = data;
+      this.cargando = false;
+      this.receta.url = (this.receta.url == "") ? "" : this.receta.url!.replace("watch?v=", "embed/");
+    });
+  }
   
   @HostListener('window:resize', ['$event'])
   onResize() {

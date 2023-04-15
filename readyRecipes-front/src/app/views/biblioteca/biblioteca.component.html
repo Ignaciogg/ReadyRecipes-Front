@@ -129,14 +129,14 @@
                     </div>
                 </div>
             </div>
-            <hr>
+        </div>
+        <h1 class="col-lg-8 col-md-10 col-sm-12 col-12">Le recomendamos las siguientes recetas:</h1>
+        <ul class="col-lg-8 col-md-10 col-sm-11 col-11">
             <recetaEncontrada
                 *ngFor="let resultado of resultados"
                 nombre="{{resultado.nombre}}"
                 ruta="/receta"
             />
-        </div>
+        </ul>
     </div>
-    <p *ngFor="let receta of recetas">{{receta.id}} - {{receta.nombre}} - {{receta.precio}}</p>
-    <button (click)="crearReceta()">Refrescar</button>
 </div>
