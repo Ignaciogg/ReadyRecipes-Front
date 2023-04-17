@@ -12,6 +12,10 @@ export class IngredienteService {
   constructor(private httpClient: HttpClient) { }
 
   public getAll(): Observable<Ingrediente[]> {
-    return this.httpClient.get<Ingrediente[]>("http://127.0.0.1:8000/api/ingredientes");
+    return this.httpClient.post<Ingrediente[]>(
+      "http://127.0.0.1:8000/api/ingredientes",
+      null,
+      { responseType:'json' }
+    );
   }
 }
