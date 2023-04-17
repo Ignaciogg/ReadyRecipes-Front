@@ -11,9 +11,9 @@ export class ComentarioService {
   constructor(private httpClient: HttpClient) { }
 
 
-  public getComentariosReceta(id_Receta: number): Observable<Comentario[]> {
+  public getComentariosReceta(_id_receta: number): Observable<Comentario[]> {
     const body = {
-      id_Receta: id_Receta,
+      id_receta: _id_receta,
     }
     return this.httpClient.post<Comentario[]>(
       "http://127.0.0.1:8000/api/comentariosReceta",
@@ -24,8 +24,8 @@ export class ComentarioService {
 
   public nuevoComentario(_contenido: string): Observable<Comentario[]> {
     const body = {
-      id_Receta: 1,
-      id_Usuario: 1,
+      id_receta: 1,
+      id_usuario: 1,
       contenido: _contenido,
     }
     return this.httpClient.post<Comentario[]>(

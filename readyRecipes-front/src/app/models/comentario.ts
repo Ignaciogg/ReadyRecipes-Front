@@ -1,13 +1,21 @@
 export class Comentario {
     id: number;
     contenido: string;
-    id_Receta: number;
-    id_Usuario: number;
+    id_receta: number;
+    id_usuario: number;
+    nombre: string;
 
-    constructor(_id: number, _contenido: string, _id_Receta: number, _id_Usuario: number) {
+    constructor(
+        _id: number,
+        _contenido: string,
+        _id_receta: number,
+        _id_usuario: number,
+        _nombre: string
+    ) {
         this.id = _id;
         this.contenido = _contenido;
-        this.id_Receta = _id_Receta;
-        this.id_Usuario = _id_Usuario;
+        this.id_receta = _id_receta;
+        this.id_usuario = _id_usuario;
+        this.nombre = _nombre;
     }
 }
