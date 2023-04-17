@@ -49,7 +49,7 @@ export class RecetaComponent {
     this.comentarioService.getComentariosReceta(1).subscribe(data=> {
       this.comentarios = [];
       data.forEach(comentario => this.comentarios.push({
-        autor: comentario.nombre,
+        autor: comentario.nombre + " " + comentario.apellidos,
         mensaje: comentario.contenido,
       }));
     });
