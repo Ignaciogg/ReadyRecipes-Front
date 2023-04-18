@@ -52,6 +52,7 @@ export class RecetaComponent {
         autor: comentario.nombre + " " + comentario.apellidos,
         mensaje: comentario.contenido,
       }));
+      this.comentarios = this.comentarios.reverse();
     });
   }
 
