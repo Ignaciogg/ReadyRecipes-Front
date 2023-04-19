@@ -3,6 +3,7 @@ import { VariablesGlobalesService } from '../../services/variables-globales.serv
 import { RecetaService } from '../../services/receta.service';
 import { ComentarioService } from '../../services/comentario.service';
 import { Receta } from '../../models/receta';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'viewReceta',
@@ -29,25 +30,25 @@ export class RecetaComponent {
   constructor(
     private variablesGlobalesService: VariablesGlobalesService,
     private comentarioService: ComentarioService,
-    private recetaService: RecetaService) { }
+    private recetaService: RecetaService,
+    public sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
-    // this.cargando = true;
+    this.cargando = true;
     try {
       this.cargarReceta();
+      this.cargarComentarios();
       console.log("Todo bien");
     } catch(e) {
       console.log("Todo mal");
     }
-    // this.cargarComentarios();
-    // this.cargando = false;
+    this.cargando = false;
   }
 
   private cargarReceta() {
     this.recetaService.post(1).subscribe(data=> {
       this.receta = data;
       console.log(this.receta);
-      // this.receta.url = (this.receta.url == "" || this.receta.url == null || this.receta.url == undefined) ? "" : this.receta.url!.replace("watch?v=", "embed/");
     });
   }
 
