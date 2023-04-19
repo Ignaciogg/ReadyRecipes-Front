@@ -10,6 +10,8 @@ export class Receta {
     comentarios_negativos?: number;
     sentimiento?: number;
     nutriscore?: number;
+    ingredientes?: string[];
+    precio?: number;
 
     constructor(_id: number);
     constructor(_id: number, _titulo: string);
@@ -25,6 +27,8 @@ export class Receta {
         _comentarios_negativos?: number,
         _sentimiento?: number,
         _nutriscore?: number,
+        _precio?: number,
+        _ingredientes?: string[],
     ) {
         this.id = _id;
         this.titulo = _titulo ?? "";
@@ -37,5 +41,7 @@ export class Receta {
         this.comentarios_negativos = _comentarios_negativos ?? -1;
         this.sentimiento = _sentimiento ?? -1;
         this.nutriscore = _nutriscore ?? -1;
+        this.precio = _precio ?? -1;
+        this.ingredientes = _ingredientes ?? [];
     }
 }

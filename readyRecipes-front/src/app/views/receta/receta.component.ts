@@ -18,11 +18,6 @@ export class RecetaComponent {
   transcripcion: string = "Lorem ipsum dolor sit amet.";
   comentarioInput: string = "";
   @Input() esFavorito: boolean = false;
-  @Input() nutriscore: string[1] = "B";
-  @Input() precio: number = 3.45;
-  @Input() ingredientes: string[] = [
-    "Aceite", "Arroz", "Sal", "Orégano"
-  ];
   comentarios = [
     { autor: "", mensaje: "" },
   ];
@@ -52,6 +47,7 @@ export class RecetaComponent {
     const idReceta = this.variablesGlobalesService.getRecetaActual();
     this.recetaService.post(idReceta).subscribe(data=> {
       this.receta = data;
+      console.log(data);
     });
   }
 

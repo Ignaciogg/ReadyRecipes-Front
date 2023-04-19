@@ -34,12 +34,12 @@
         </section>
         <section class="col-lg-3 col-md-4 col-6">
             <h3>Ingredientes</h3>
-            <p class="mb-2">Puntuación nutriscore: {{nutriscore}}</p>
+            <p class="mb-2">Puntuación nutriscore: {{receta.nutriscore}}</p>
             <div class="d-flex flex-wrap align-items-center  mb-2">
-                <p class="m-0">Ingredientes ({{ingredientes.length}}):&nbsp;</p>
-                <p class="m-0" *ngFor="let ingrediente of ingredientes">{{ingrediente}},&nbsp;</p>
+                <p class="m-0">Ingredientes ({{receta.ingredientes?.length}}):&nbsp;</p>
+                <p class="m-0" *ngFor="let ingrediente of receta.ingredientes">{{ingrediente}},&nbsp;</p>
             </div>
-            <p>Precio: {{precio}} €</p>
+            <p>Precio: {{receta.precio}} €</p>
         </section>
     </div>
     <h2>Transcripción</h2>
