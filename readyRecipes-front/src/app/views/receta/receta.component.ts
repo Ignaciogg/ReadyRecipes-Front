@@ -46,7 +46,8 @@ export class RecetaComponent {
   }
 
   private cargarReceta() {
-    this.recetaService.post(1).subscribe(data=> {
+    const idReceta = this.variablesGlobalesService.getRecetaActual();
+    this.recetaService.post(idReceta).subscribe(data=> {
       this.receta = data;
       console.log(this.receta);
     });

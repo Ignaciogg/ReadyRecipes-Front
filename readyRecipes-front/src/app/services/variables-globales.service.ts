@@ -50,4 +50,12 @@ export class VariablesGlobalesService {
     }
     return this.correoUsuario;
   }
+
+  setRecetaActual(_id: number) {
+    localStorage.setItem("recetaActual", _id.toString());
+  }
+
+  getRecetaActual(): number {
+    return Number(localStorage.getItem("recetaActual"));
+  }
 }
