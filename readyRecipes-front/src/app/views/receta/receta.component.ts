@@ -10,7 +10,7 @@ import { Receta } from '../../models/receta';
   styleUrls: ['./receta.component.scss']
 })
 export class RecetaComponent {
-  public receta: Receta = {id: 1};
+  public receta: Receta = {id: 1, titulo: ""};
   public minMostrarPulgares: number = 850;
   public isViewportLarge: boolean = window.innerWidth > this.minMostrarPulgares;
   public cargando: boolean = false;
