@@ -145,17 +145,18 @@
             <cargando *ngIf="respuestaBuscador == -1"></cargando>
         </div>
         <h1 *ngIf="resultados.length >= 1" class="col-lg-8 col-md-10 col-sm-12 col-12">Le recomendamos las siguientes recetas:</h1>
-        <ul *ngIf="resultados.length >= 1" class="col-lg-8 col-md-10 col-sm-11 col-11">
+        <div *ngIf="resultados.length >= 1" class="col-lg-8 col-md-10 col-sm-11 col-11 d-flex flex-row flex-wrap align-items-center justify-content-center">
             <ng-container *ngFor="let resultado of resultados">
                 <recetaEncontrada
                 *ngIf="resultado.id >= 0"
                 nombre="{{resultado.nombre}}"
                 ruta="/receta"
+                class="col-12 col-sm-12 col-md-6 col-lg-4 mb-3"
             />
             </ng-container>
-        </ul>
+        </div>
         <div class="d-flex justify-content-center">
-            <img *ngIf="resultados.length < 1 && respuestaBuscador != -1" src="assets/imagenes/noRecetasEncontradas.png" class="col-1 py-4">
+            <img *ngIf="resultados.length < 1 && respuestaBuscador != -1" src="assets/imagenes/noRecetasEncontradas.png" class="noRecetasEncontradas">
         </div>
         <p *ngIf="resultados.length < 1 && respuestaBuscador != -1" class="col-lg-8 col-md-10 col-sm-12 col-12 text-center">No se han encontrado recetas que cumplan con los filtros indicados.
             <br>Le recomendamos que flexibilice los parámetros de búsqueda y lo intente de nuevo.
