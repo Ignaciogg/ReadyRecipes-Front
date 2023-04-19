@@ -47,7 +47,7 @@
             <li class="nav-item">
                 <a class="nav-link filtro" data-bs-toggle="tab" href="#pr">Precio</a>
             </li>
-            <li class="nav-item">
+            <li *ngIf="estaLogeado()" class="nav-item">
                 <a class="nav-link filtro" data-bs-toggle="tab" href="#fa">Favoritos</a>
             </li>
         </ul>
@@ -58,12 +58,20 @@
             <div class="d-flex flex-wrap ms-0">
                 <div class="d-flex flex-wrap ms-0">
                     <ng-container *ngFor="let filtro of filtros">
-                        <aplicadorFiltro
-                            *ngIf="filtro.activo==true"
-                            titulo={{filtro.nombre}}
-                            [activo]=true
-                            (click)="eliminarFiltro(filtro.nombre)"
-                        />
+                        <ng-container *ngIf="filtro.activo==true">
+                            <aplicadorFiltro
+                                *ngIf="filtro.categoria != 'Precio'"
+                                titulo={{filtro.nombre}}
+                                [activo]=true
+                                (click)="eliminarFiltro(filtro.nombre)"
+                            />
+                            <aplicadorFiltro
+                                *ngIf="filtro.categoria == 'Precio'"
+                                titulo="Hasta {{filtro.nombre}} €"
+                                [activo]=true
+                                (click)="eliminarFiltro(filtro.nombre)"
+                            />
+                        </ng-container>
                     </ng-container>
                 </div>
             </div>
@@ -85,16 +93,20 @@
                     </div>
                 </div>
                 <div class="tab-pane container" id="in">
+                    <div class="d-flex flex-wrap ms-0 align-items-center">
+                        <p class="inputBuscador">Encuentre ingredientes rápidamente</p>
+                        <input class="buscadorIngredientes" (input)="filtrarIngredientes($event)">
+                    </div>
                     <div class="d-flex flex-wrap ms-0">
                         <ng-container *ngFor="let filtro of filtros">
                             <aplicadorFiltro
-                                *ngIf="filtro.categoria=='Ingredientes' && filtro.activo==false"
+                                *ngIf="filtro.categoria=='Ingredientes' && filtro.activo==false && filtro.visible==true" 
                                 titulo={{filtro.nombre}}
                                 (click)="activarFiltro(filtro.nombre)"
                             />
                         </ng-container>
                     </div>
-                </div>
+                </div>
                 <div class="tab-pane container" id="nu">
                     <div class="d-flex flex-wrap ms-0">
                         <ng-container *ngFor="let filtro of filtros">
@@ -111,7 +123,7 @@
                         <ng-container *ngFor="let filtro of filtros">
                             <aplicadorFiltro 
                                 *ngIf="filtro.categoria=='Precio' && filtro.activo==false"
-                                titulo={{filtro.nombre}}
+                                titulo="Hasta {{filtro.nombre}} €"
                                 (click)="activarFiltro(filtro.nombre)"
                             />
                         </ng-container>
@@ -130,13 +142,26 @@
                 </div>
             </div>
         </div>
-        <h1 class="col-lg-8 col-md-10 col-sm-12 col-12">Le recomendamos las siguientes recetas:</h1>
-        <ul class="col-lg-8 col-md-10 col-sm-11 col-11">
-            <recetaEncontrada
-                *ngFor="let resultado of resultados"
+        <div class="col-lg-8 col-md-10 col-sm-12 col-12 d-flex justify-content-center">
+            <cargando *ngIf="respuestaBuscador == -1"></cargando>
+        </div>
+        <h1 *ngIf="resultados.length >= 1" class="col-lg-8 col-md-10 col-sm-12 col-12">Le recomendamos las siguientes recetas:</h1>
+        <div *ngIf="resultados.length >= 1" class="col-lg-8 col-md-10 col-sm-11 col-11 d-flex flex-row flex-wrap align-items-center justify-content-center">
+            <ng-container *ngFor="let resultado of resultados">
+                <recetaEncontrada
+                *ngIf="resultado.id >= 0"
                 nombre="{{resultado.nombre}}"
                 ruta="/receta"
+                idReceta="{{resultado.id}}"
+                class="col-12 col-sm-12 col-md-6 col-lg-4 mb-3"
             />
-        </ul>
+            </ng-container>
+        </div>
+        <div class="d-flex justify-content-center">
+            <img *ngIf="resultados.length < 1 && respuestaBuscador != -1" src="assets/imagenes/noRecetasEncontradas.png" class="noRecetasEncontradas">
+        </div>
+        <p *ngIf="resultados.length < 1 && respuestaBuscador != -1" class="col-lg-8 col-md-10 col-sm-12 col-12 text-center">No se han encontrado recetas que cumplan con los filtros indicados.
+            <br>Le recomendamos que flexibilice los parámetros de búsqueda y lo intente de nuevo.
+        </p>
     </div>
 </div>

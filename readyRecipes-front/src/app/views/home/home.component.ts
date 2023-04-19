@@ -13,12 +13,9 @@ export class HomeComponent implements OnInit {
     { nombre: "Manzana", color: "Roja" },
   ];
   ngOnInit(): void {
-    console.log("OnInit de HomeComponent");
+    
   }
   alternarTexto(): void {
     this.textoVisible = !this.textoVisible;
-  }
-  nuevaFruta(): void {
-    this.frutas.push({ nombre: "Plátano", color: "Amarillo" })
   }
 }

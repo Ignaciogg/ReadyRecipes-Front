@@ -11,8 +11,7 @@
     </div>
     <div class="d-flex flex-wrap ms-0">
         <section class="col-lg-6 col-md-4 col-12">
-            <p>{{receta.url}}</p>
-            <iframe [src]="receta.url" allowfullscreen="true"></iframe>
+            <iframe [src]="sanitizer.bypassSecurityTrustResourceUrl(receta.url!)" allowfullscreen="true"></iframe>
         </section>
         <section class="col-lg-3 col-md-4 col-6">
             <h3>Comentarios ({{receta.comentarios}})</h3>
@@ -45,13 +44,13 @@
     </div>
     <h2>Transcripción</h2>
     <div>
-        <p>{{receta.texto!.charAt(0).toUpperCase() + receta.texto!.slice(1)}}</p>
+        <p>{{receta.texto}}</p>
     </div>
     <h2>Comentarios</h2>
     <p *ngIf="getCorreoUsuario() == ''" style="color: var(--colorPrincipal);">¡Inicie sesión para opinar sobre esta receta!</p>
     <form *ngIf="getCorreoUsuario() != ''" method="POST" action="/ruta/de/destino">
-        <input type="text" name="nombre" placeholder="¿Qué opina sobre esta receta?">
-        <button class="botonEnviar">Enviar</button>
+        <input [(ngModel)]="comentarioInput" type="text" name="nombre" placeholder="¿Qué opina sobre esta receta?" class="px-3 py-1">
+        <button (click)="nuevoComentario(comentarioInput)" class="botonEnviar">Enviar</button>
     </form>
     <comentario
         *ngFor="let comentario of comentarios"
@@ -59,7 +58,7 @@
         mensaje="{{comentario.mensaje}}"
     />
 </div>
-<div *ngIf="receta.titulo == null" class="cargandoGeneral d-flex flex-column justify-content-center align-items-center">
+<div *ngIf="this.cargando == true" class="cargandoGeneral d-flex flex-column justify-content-center align-items-center">
     <cargando class="d-flex justify-content-center align-items-center"/>
     <p class="text-center mt-4">Estamos trabajando para ofrecerle toda la información que necesita</p>
 </div>

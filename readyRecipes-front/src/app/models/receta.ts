@@ -38,5 +38,4 @@ export class Receta {
         this.sentimiento = _sentimiento ?? -1;
         this.nutriscore = _nutriscore ?? -1;
     }
-
 }
