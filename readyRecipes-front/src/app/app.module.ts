@@ -16,6 +16,7 @@ import { LoginComponent } from './views/login/login.component';
 import { RegistroComponent } from './views/registro/registro.component';
 import { RecuperarComponent } from './views/recuperar/recuperar.component';
 import { CargandoComponent } from './components/cargando/cargando.component';
+import { SafePipeModule } from 'safe-pipe';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { CargandoComponent } from './components/cargando/cargando.component';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
+    SafePipeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

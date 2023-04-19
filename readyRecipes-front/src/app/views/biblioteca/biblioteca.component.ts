@@ -15,20 +15,20 @@ export class BibliotecaComponent {
   public respuestaBuscador: number = 0;
 
   filtros = [
-    { nombre: "Verdura", categoria: "Tipo", activo: false, id: -1 },
-    { nombre: "Carne", categoria: "Tipo", activo: false, id: null },
-    { nombre: "Pescado", categoria: "Tipo", activo: false, id: null },
-    { nombre: "Pasta", categoria: "Tipo", activo: false, id: null },
-    { nombre: "Aperitivos", categoria: "Tipo", activo: false, id: null },
-    { nombre: "Nutriscore A", categoria: "Nutriscore", activo: false, id: null },
-    { nombre: "Nutriscore B", categoria: "Nutriscore", activo: false, id: null },
-    { nombre: "Nutriscore C", categoria: "Nutriscore", activo: false, id: null },
-    { nombre: "Nutriscore D", categoria: "Nutriscore", activo: false, id: null },
-    { nombre: "5", categoria: "Precio", activo: false, id: null },
-    { nombre: "10", categoria: "Precio", activo: false, id: null },
-    { nombre: "20", categoria: "Precio", activo: false, id: null},
-    { nombre: "50", categoria: "Precio", activo: false, id: null },
-    { nombre: "Mis favoritos", categoria: "Favoritos", activo: false, id: null },
+    { nombre: "Verdura", categoria: "Tipo", activo: false, id: -1, visible: true },
+    { nombre: "Carne", categoria: "Tipo", activo: false, id: null, visible: true },
+    { nombre: "Pescado", categoria: "Tipo", activo: false, id: null, visible: true },
+    { nombre: "Pasta", categoria: "Tipo", activo: false, id: null, visible: true },
+    { nombre: "Aperitivos", categoria: "Tipo", activo: false, id: null, visible: true },
+    { nombre: "Nutriscore A", categoria: "Nutriscore", activo: false, id: null, visible: true },
+    { nombre: "Nutriscore B", categoria: "Nutriscore", activo: false, id: null, visible: true },
+    { nombre: "Nutriscore C", categoria: "Nutriscore", activo: false, id: null, visible: true },
+    { nombre: "Nutriscore D", categoria: "Nutriscore", activo: false, id: null, visible: true },
+    { nombre: "5", categoria: "Precio", activo: false, id: null, visible: true },
+    { nombre: "10", categoria: "Precio", activo: false, id: null, visible: true },
+    { nombre: "20", categoria: "Precio", activo: false, id: null, visible: true},
+    { nombre: "50", categoria: "Precio", activo: false, id: null, visible: true },
+    { nombre: "Mis favoritos", categoria: "Favoritos", activo: false, id: null, visible: true },
   ];
   resultados = [
     { nombre: "Receta de prueba", id: -1 },
@@ -49,14 +49,28 @@ export class BibliotecaComponent {
   async obtenerIngredientes() {
     this.ingredienteService.getAll().subscribe(data => {
       data.forEach(ingrediente => this.filtros.push({
-          nombre: ingrediente.nombre.concat(" (id ", ingrediente.id.toString(), ")"),
+          nombre: ingrediente.nombre,
           categoria: "Ingredientes",
           activo: false,
           id: ingrediente.id,
+          visible: true,
         }));
     });
     console.log();
   }
+
+  async filtrarIngredientes(event: any) {
+    const valorBuscado = event.target.value.toLowerCase();
+      this.filtros.forEach(ingrediente => {
+        if(ingrediente.categoria=="Ingredientes"){
+          if (ingrediente.nombre.includes(valorBuscado)) {
+            ingrediente.visible = true;
+          }else{
+            ingrediente.visible = false;
+          }
+        }
+      });
+  }
 
   buscarTipo(tipo: string) {
     for(let i=0; i<this.filtros.length; i++) {

@@ -94,15 +94,18 @@
                 </div>
                 <div class="tab-pane container" id="in">
                     <div class="d-flex flex-wrap ms-0">
+                        <input class="buscadorIngredientes" (input)="filtrarIngredientes($event)">
+                    </div>
+                    <div class="d-flex flex-wrap ms-0">
                         <ng-container *ngFor="let filtro of filtros">
                             <aplicadorFiltro
-                                *ngIf="filtro.categoria=='Ingredientes' && filtro.activo==false"
+                                *ngIf="filtro.categoria=='Ingredientes' && filtro.activo==false && filtro.visible==true" 
                                 titulo={{filtro.nombre}}
                                 (click)="activarFiltro(filtro.nombre)"
                             />
                         </ng-container>
                     </div>
-                </div>
+                </div>
                 <div class="tab-pane container" id="nu">
                     <div class="d-flex flex-wrap ms-0">
                         <ng-container *ngFor="let filtro of filtros">

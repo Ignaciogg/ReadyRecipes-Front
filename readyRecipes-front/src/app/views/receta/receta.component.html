@@ -12,7 +12,7 @@
     <div class="d-flex flex-wrap ms-0">
         <section class="col-lg-6 col-md-4 col-12">
             <p>{{receta.url}}</p>
-            <iframe [src]="receta.url" allowfullscreen="true"></iframe>
+            <iframe [src]="'https://www.youtube.com/embed/7Bl9EJI1pEU' | safe: 'url'" allowfullscreen="true"></iframe>
         </section>
         <section class="col-lg-3 col-md-4 col-6">
             <h3>Comentarios ({{receta.comentarios}})</h3>
