@@ -7,7 +7,7 @@ import { Receta } from '../../models/receta';
 @Component({
   selector: 'viewReceta',
   templateUrl: './receta.component.html',
-  styleUrls: ['./receta.component.scss']
+  styleUrls: ['./receta.component.scss'],
 })
 export class RecetaComponent {
   public receta: Receta = {id: 1, titulo: ""};
@@ -32,16 +32,22 @@ export class RecetaComponent {
     private recetaService: RecetaService) { }
 
   ngOnInit(): void {
-    this.cargando = true;
-    this.cargarReceta();
-    this.cargarComentarios();
-    this.cargando = false;
+    // this.cargando = true;
+    try {
+      this.cargarReceta();
+      console.log("Todo bien");
+    } catch(e) {
+      console.log("Todo mal");
+    }
+    // this.cargarComentarios();
+    // this.cargando = false;
   }
 
   private cargarReceta() {
-    this.recetaService.get(1).subscribe(data=> {
+    this.recetaService.post(1).subscribe(data=> {
       this.receta = data;
-      this.receta.url = (this.receta.url == "") ? "" : this.receta.url!.replace("watch?v=", "embed/");
+      console.log(this.receta);
+      // this.receta.url = (this.receta.url == "" || this.receta.url == null || this.receta.url == undefined) ? "" : this.receta.url!.replace("watch?v=", "embed/");
     });
   }
 

@@ -7,5 +7,5 @@ import { Component, Input } from '@angular/core';
 })
 export class RecetaEncontradaComponent {
   @Input() ruta: string = "/receta";
-  @Input() nombre: string = "Ruta no especificada";
+  @Input() nombre: string = "Nombre no especificado";
 }

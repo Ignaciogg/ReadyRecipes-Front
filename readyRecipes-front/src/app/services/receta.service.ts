@@ -20,8 +20,14 @@ export class RecetaService {
     return this.httpClient.post<Receta>("http://127.0.0.1:8000/api/recetas/create", receta);
   }
 
-  public get(id: number): Observable<Receta> {
-    return this.httpClient.get<Receta>("http://127.0.0.1:8000/api/receta/"+id);
+  public post(_id: number): Observable<Receta> {
+    const body = {
+      id_receta: _id
+    }
+    return this.httpClient.post<Receta>(
+      "http://127.0.0.1:8000/api/receta",
+      body,
+    );
   }
 
   public buscador(
@@ -45,8 +51,6 @@ export class RecetaService {
       nutriscore: _nutriscore,
       favorito: _favorito,
       id_usuario: _id_usuario,
-      ingredientes: [],
-      precio: 500,
     };
     if(_ingredientes.length > 0 || _precio > 0) {
       body.ingredientes = _ingredientes;

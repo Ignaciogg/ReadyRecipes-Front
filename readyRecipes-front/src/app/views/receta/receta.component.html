@@ -45,7 +45,7 @@
     </div>
     <h2>Transcripción</h2>
     <div>
-        <p>{{receta.texto!.charAt(0).toUpperCase() + receta.texto!.slice(1)}}</p>
+        <p>{{receta.texto}}</p>
     </div>
     <h2>Comentarios</h2>
     <p *ngIf="getCorreoUsuario() == ''" style="color: var(--colorPrincipal);">¡Inicie sesión para opinar sobre esta receta!</p>
@@ -59,7 +59,7 @@
         mensaje="{{comentario.mensaje}}"
     />
 </div>
-<div *ngIf="receta.titulo == null" class="cargandoGeneral d-flex flex-column justify-content-center align-items-center">
+<div *ngIf="this.cargando == true" class="cargandoGeneral d-flex flex-column justify-content-center align-items-center">
     <cargando class="d-flex justify-content-center align-items-center"/>
     <p class="text-center mt-4">Estamos trabajando para ofrecerle toda la información que necesita</p>
 </div>

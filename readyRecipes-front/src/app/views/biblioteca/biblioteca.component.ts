@@ -77,7 +77,7 @@ export class BibliotecaComponent {
     let precioElegido: number = -1;
     let ingredientesElegidos: number[] = [];
     let categoriaElegida: string = "";
-    let nutriscoreElegido: number = 0;
+    let nutriscoreElegido: number = -1;
     let favoritoElegido: boolean = false;
     this.filtros.forEach(filtro => {
       if(filtro.activo == true) {
@@ -110,11 +110,9 @@ export class BibliotecaComponent {
           this.resultados.push({ nombre: receta.titulo!, id: receta.id });
         });
         console.log("EL ENDPOINT DEVUEVE:", data);
-        this.respuestaBuscador = 0;
       });
     } catch (error) {
       console.log("Error en la llamada al buscador: " + error);
-      this.respuestaBuscador = 0;
     }
     // console.log("Buscando recetas con precio <= " + precioElegido + "€,"
     //  + " con los ingredientes " + ingredientesElegidos + ","
@@ -122,6 +120,7 @@ export class BibliotecaComponent {
     //  + " con nutriscore de " + nutriscoreElegido + " o mas,"
     //  + " que sean favoritas=[" + favoritoElegido + "]"
     //  + " y con id_usuario = " + 1);
+    this.respuestaBuscador = 0;
   }
 
   activarFiltro(elegido: string) {
