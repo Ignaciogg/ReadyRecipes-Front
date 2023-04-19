@@ -1,3 +1,5 @@
+import { Ingrediente } from "./ingrediente";
+
 export class Receta {
     id: number;
     titulo?: string;
@@ -10,7 +12,7 @@ export class Receta {
     comentarios_negativos?: number;
     sentimiento?: number;
     nutriscore?: number;
-    ingredientes?: string[];
+    ingredientes?: Ingrediente[];
     precio?: number;
 
     constructor(_id: number);
@@ -28,7 +30,7 @@ export class Receta {
         _sentimiento?: number,
         _nutriscore?: number,
         _precio?: number,
-        _ingredientes?: string[],
+        _ingredientes?: Ingrediente[],
     ) {
         this.id = _id;
         this.titulo = _titulo ?? "";

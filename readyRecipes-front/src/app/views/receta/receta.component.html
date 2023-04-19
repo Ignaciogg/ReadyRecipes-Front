@@ -37,7 +37,7 @@
             <p class="mb-2">Puntuación nutriscore: {{receta.nutriscore}}</p>
             <div class="d-flex flex-wrap align-items-center  mb-2">
                 <p class="m-0">Ingredientes ({{receta.ingredientes?.length}}):&nbsp;</p>
-                <p class="m-0" *ngFor="let ingrediente of receta.ingredientes">{{ingrediente}},&nbsp;</p>
+                <p class="m-0" *ngFor="let ingrediente of receta.ingredientes">{{ingrediente.nombre}},&nbsp;</p>
             </div>
             <p>Precio: {{receta.precio}} €</p>
         </section>
