@@ -56,7 +56,6 @@ export class RecetaService {
       body.ingredientes = _ingredientes;
       body.precio = _precio;
     }
-    console.log("BODY:", body);
     return this.httpClient.post<Receta[]>(
       "http://127.0.0.1:8000/api/buscador",
       body,

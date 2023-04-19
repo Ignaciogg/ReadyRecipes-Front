@@ -3,7 +3,7 @@ import { VariablesGlobalesService } from '../../services/variables-globales.serv
 import { RecetaService } from '../../services/receta.service';
 import { ComentarioService } from '../../services/comentario.service';
 import { Receta } from '../../models/receta';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'viewReceta',
@@ -38,10 +38,13 @@ export class RecetaComponent {
     try {
       this.cargarReceta();
       this.cargarComentarios();
-      console.log("Todo bien");
     } catch(e) {
-      console.log("Todo mal");
+      console.log("Error cargando la receta: ", e);
     }
+    console.log("LOCALSTORAGE:");
+    console.log("Nombre: ", localStorage.getItem('nombreUsuario'));
+    console.log("Apellidos: ", localStorage.getItem('apellidosUsuario'));
+    console.log("Correo: ", localStorage.getItem('correoUsuario'));
     this.cargando = false;
   }
 
@@ -49,12 +52,12 @@ export class RecetaComponent {
     const idReceta = this.variablesGlobalesService.getRecetaActual();
     this.recetaService.post(idReceta).subscribe(data=> {
       this.receta = data;
-      console.log(this.receta);
     });
   }
 
   private cargarComentarios() {
-    this.comentarioService.getComentariosReceta(1).subscribe(data=> {
+    const id_receta_actual = this.variablesGlobalesService.getRecetaActual();
+    this.comentarioService.getComentariosReceta(id_receta_actual).subscribe(data=> {
       this.comentarios = [];
       data.forEach(comentario => this.comentarios.push({
         autor: comentario.nombre + " " + comentario.apellidos,
@@ -64,7 +67,7 @@ export class RecetaComponent {
     });
   }
 
-  nuevoComentario(_contenido: string) {
+  nuevoComentario(/*_nombre: string, _apellidos: string,*/ _contenido: string) {
     this.comentarioService.nuevoComentario(_contenido).subscribe(data=> {
       this.cargarComentarios();
       this.comentarioInput = "";

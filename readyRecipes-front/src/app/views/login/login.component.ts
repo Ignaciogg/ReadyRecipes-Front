@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Usuario } from 'src/app/models/usuario';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { Router } from '@angular/router';
+import { VariablesGlobalesService } from 'src/app/services/variables-globales.service';
 
 @Component({
   selector: 'login',
@@ -15,7 +16,8 @@ export class LoginComponent {
 
   constructor(
     private usuarioService: UsuarioService,
-    private router: Router,    
+    private router: Router,
+    private variablesGlobalesService: VariablesGlobalesService
     ) { }
 
   public async login(email: string, password: string) {
@@ -26,14 +28,17 @@ export class LoginComponent {
       this.respuesta = -3;
     } else {
       let usuario: Usuario = new Usuario("", "", email, password, false);
-      this.usuarioService.login(usuario).subscribe(data => {
-        if(typeof data == "number") {
-          this.respuesta = data;
-        } else {
-          this.respuesta = 200; // Recuperamos el error. Si no falla, devolvera un objeto vacio
-          localStorage.setItem("correoUsuario", email);
-          this.router.navigate(['/biblioteca']);
-        }
+      this.usuarioService.login(usuario).subscribe(async data => {
+        console.log("Recuperamos del back los datos:", data);
+        this.respuesta = 200;
+        this.router.navigate(['/biblioteca']);
+        console.log("LOCALSTORAGE:");
+        console.log("Nombre: ", localStorage.getItem('nombreUsuario'));
+        console.log("Apellidos: ", localStorage.getItem('apellidosUsuario'));
+        console.log("Correo: ", localStorage.getItem('correoUsuario'));
+        this.variablesGlobalesService.setNombreUsuario(data.nombre);
+        this.variablesGlobalesService.setApellidosUsuario(data.apellidos);
+        this.variablesGlobalesService.setCorreoUsuario(data.email);
       });
     }
   }

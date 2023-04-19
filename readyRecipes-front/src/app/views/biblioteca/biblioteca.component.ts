@@ -56,7 +56,6 @@ export class BibliotecaComponent {
           visible: true,
         }));
     });
-    console.log();
   }
 
   async filtrarIngredientes(event: any) {
@@ -123,17 +122,10 @@ export class BibliotecaComponent {
         data.forEach(receta => {
           this.resultados.push({ nombre: receta.titulo!, id: receta.id });
         });
-        console.log("EL ENDPOINT DEVUEVE:", data);
       });
     } catch (error) {
       console.log("Error en la llamada al buscador: " + error);
     }
-    // console.log("Buscando recetas con precio <= " + precioElegido + "€,"
-    //  + " con los ingredientes " + ingredientesElegidos + ","
-    //  + " de categoría " + categoriaElegida + ","
-    //  + " con nutriscore de " + nutriscoreElegido + " o mas,"
-    //  + " que sean favoritas=[" + favoritoElegido + "]"
-    //  + " y con id_usuario = " + 1);
     this.respuestaBuscador = 0;
   }
 
