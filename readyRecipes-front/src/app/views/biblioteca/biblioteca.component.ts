@@ -19,7 +19,7 @@ export class BibliotecaComponent {
     { nombre: "Carne", categoria: "Tipo", activo: false, id: null, visible: true },
     { nombre: "Pescado", categoria: "Tipo", activo: false, id: null, visible: true },
     { nombre: "Pasta", categoria: "Tipo", activo: false, id: null, visible: true },
-    { nombre: "Aperitivos", categoria: "Tipo", activo: false, id: null, visible: true },
+    { nombre: "Aperitivo", categoria: "Tipo", activo: false, id: null, visible: true },
     { nombre: "Nutriscore A", categoria: "Nutriscore", activo: false, id: null, visible: true },
     { nombre: "Nutriscore B", categoria: "Nutriscore", activo: false, id: null, visible: true },
     { nombre: "Nutriscore C", categoria: "Nutriscore", activo: false, id: null, visible: true },
@@ -68,8 +68,8 @@ export class BibliotecaComponent {
             ingrediente.visible = false;
           }
         }
-      });
-  }
+      });
+  }
 
   buscarTipo(tipo: string) {
     for(let i=0; i<this.filtros.length; i++) {
@@ -81,6 +81,7 @@ export class BibliotecaComponent {
         }
       }
     }
+    this.buscador();
     window.scrollTo(0, document.body.scrollHeight);
   }
   
