@@ -150,9 +150,7 @@
             <ng-container *ngFor="let resultado of resultados">
                 <recetaEncontrada
                 *ngIf="resultado.id >= 0"
-                nombre="{{resultado.nombre}}"
-                ruta="/receta"
-                idReceta="{{resultado.id}}"
+                [receta]="resultado"
                 class="col-12 col-sm-12 col-md-6 col-lg-4 mb-3"
             />
             </ng-container>

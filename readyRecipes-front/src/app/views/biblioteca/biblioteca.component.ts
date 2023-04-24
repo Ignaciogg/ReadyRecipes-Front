@@ -30,9 +30,7 @@ export class BibliotecaComponent {
     { nombre: "50", categoria: "Precio", activo: false, id: null, visible: true },
     { nombre: "Mis favoritos", categoria: "Favoritos", activo: false, id: null, visible: true },
   ];
-  resultados = [
-    { nombre: "Receta de prueba", id: -1 },
-  ];
+  resultados: Receta[] = [];
   
   constructor(
     private ingredienteService: IngredienteService,
@@ -120,8 +118,9 @@ export class BibliotecaComponent {
         favoritoElegido,
         1
       ).subscribe(data => {
+        console.log("Buscando recetas con precio < " + precioElegido + ", ingredientes: " + ingredientesElegidos + ", categoria: " + categoriaElegida + ", nutriscore > " + nutriscoreElegido + ", favorito: " + favoritoElegido);
         data.forEach(receta => {
-          this.resultados.push({ nombre: receta.titulo!, id: receta.id });
+          this.resultados.push(receta);
         });
       });
     } catch (error) {
