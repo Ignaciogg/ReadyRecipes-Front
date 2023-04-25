@@ -47,6 +47,7 @@ export class RecetaComponent {
     const idReceta = this.variablesGlobalesService.getRecetaActual();
     this.recetaService.post(idReceta).subscribe(data=> {
       this.receta = data;
+      this.receta.precio ? this.receta.precio = Number(this.receta.precio?.toFixed(2)) : 0;
       console.log(data);
     });
   }
