@@ -51,11 +51,9 @@ export class RecetaService {
       nutriscore: _nutriscore,
       favorito: _favorito,
       id_usuario: _id_usuario,
+      precio: _precio,
+      ingredientes: _ingredientes,
     };
-    if(_ingredientes.length > 0 || _precio > 0) {
-      body.ingredientes = _ingredientes;
-      body.precio = _precio;
-    }
     return this.httpClient.post<Receta[]>(
       "http://127.0.0.1:8000/api/buscador",
       body,
