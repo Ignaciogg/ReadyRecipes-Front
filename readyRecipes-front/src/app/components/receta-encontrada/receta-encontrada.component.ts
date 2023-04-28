@@ -18,11 +18,17 @@ export class RecetaEncontradaComponent {
     this.variablesGlobales.setRecetaActual(Number(this.receta.id));
   }
 
-  redondearBajo(numero: number): number {
-    if(numero == 5) {
+  redondearNutriscore(numero: number): number {
+    if(4.5 < numero) {
       return 5;
+    } else if(3.5 < numero && numero <= 4.5) {
+      return 4;
+    } else if(2.5 < numero && numero <= 3.5) {
+      return 3;
+    } else if(1.5 < numero && numero <= 2.5) {
+      return 2;
     } else {
-      return Math.floor(numero);
+      return 1;
     }
   }
 

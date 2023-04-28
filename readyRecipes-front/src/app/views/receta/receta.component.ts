@@ -15,7 +15,7 @@ export class RecetaComponent {
   public minMostrarPulgares: number = 850;
   public isViewportLarge: boolean = window.innerWidth > this.minMostrarPulgares;
   public cargando: boolean = false;
-  transcripcion: string = "Lorem ipsum dolor sit amet.";
+  public letraNutriscore = "";
   comentarioInput: string = "";
   @Input() esFavorito: boolean = false;
   comentarios = [
@@ -36,20 +36,31 @@ export class RecetaComponent {
     } catch(e) {
       console.log("Error cargando la receta: ", e);
     }
-    console.log("LOCALSTORAGE:");
-    console.log("Nombre: ", localStorage.getItem('nombreUsuario'));
-    console.log("Apellidos: ", localStorage.getItem('apellidosUsuario'));
-    console.log("Correo: ", localStorage.getItem('correoUsuario'));
     this.cargando = false;
   }
-
+  
   private cargarReceta() {
     const idReceta = this.variablesGlobalesService.getRecetaActual();
     this.recetaService.post(idReceta).subscribe(data=> {
       this.receta = data;
       this.receta.precio ? this.receta.precio = Number(this.receta.precio?.toFixed(2)) : 0;
+      this.letraNutriscore = this.nutriscoreEnLetra(this.receta.nutriscore!);
       console.log(data);
     });
+  }
+
+  nutriscoreEnLetra(numero: number): string {
+    if(4.5 < numero) {
+      return "A";
+    } else if(3.5 < numero && numero <= 4.5) {
+      return "B";
+    } else if(2.5 < numero && numero <= 3.5) {
+      return "C";
+    } else if(1.5 < numero && numero <= 2.5) {
+      return "D";
+    } else {
+      return "E";
+    }
   }
 
   private cargarComentarios() {

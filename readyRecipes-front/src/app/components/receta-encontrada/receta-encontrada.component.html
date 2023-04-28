@@ -9,12 +9,12 @@
                 <img *ngSwitchCase="'Pasta'" src="/assets/imagenes/iconos/pasta.png" class="iconoCategoria"/>
                 <img *ngSwitchCase="'Verdura'" src="/assets/imagenes/iconos/verdura.png" class="iconoCategoria"/>
             </ng-container>
-            <ng-container [ngSwitch]="redondearBajo(receta.nutriscore!)">
-                <img *ngSwitchCase=0 src="/assets/imagenes/nutriscoreE.png" class="iconoNutriscore"/>
-                <img *ngSwitchCase=1 src="/assets/imagenes/nutriscoreD.png" class="iconoNutriscore"/>
-                <img *ngSwitchCase=2 src="/assets/imagenes/nutriscoreC.png" class="iconoNutriscore"/>
-                <img *ngSwitchCase=3 src="/assets/imagenes/nutriscoreB.png" class="iconoNutriscore"/>
-                <img *ngSwitchCase=4 src="/assets/imagenes/nutriscoreA.png" class="iconoNutriscore"/>
+            <ng-container [ngSwitch]="redondearNutriscore(receta.nutriscore!)">
+                <img *ngSwitchCase=1 src="/assets/imagenes/nutriscoreE.png" class="iconoNutriscore"/>
+                <img *ngSwitchCase=2 src="/assets/imagenes/nutriscoreD.png" class="iconoNutriscore"/>
+                <img *ngSwitchCase=3 src="/assets/imagenes/nutriscoreC.png" class="iconoNutriscore"/>
+                <img *ngSwitchCase=4 src="/assets/imagenes/nutriscoreB.png" class="iconoNutriscore"/>
+                <img *ngSwitchCase=5 src="/assets/imagenes/nutriscoreA.png" class="iconoNutriscore"/>
             </ng-container>
             <ng-container [ngSwitch]="aproximarPrecio(receta.precio!)">
                 <img *ngSwitchCase=5 src="/assets/imagenes/euro5.png" class="iconoCategoria"/>
@@ -23,5 +23,6 @@
                 <img *ngSwitchCase=50 src="/assets/imagenes/euro50.png" class="iconoCategoria"/>
             </ng-container>
         </div>
+        <p>{{receta.nutriscore}}</p>
     </a>
 </div>
