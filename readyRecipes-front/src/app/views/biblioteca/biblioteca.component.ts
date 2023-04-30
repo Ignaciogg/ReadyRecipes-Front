@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./biblioteca.component.scss']
 })
 export class BibliotecaComponent {
+  public esAdministrador: boolean = true;
   public respuestaBuscador: number = 0;
   filtros = [
     { nombre: "Verdura", categoria: "Tipo", activo: false, id: -1, visible: true },
@@ -107,10 +108,10 @@ export class BibliotecaComponent {
           case "Tipo": categoriaElegida = filtro.nombre; break;
           case "Nutriscore":
             switch(filtro.nombre) {
-              case "Nutriscore A": nutriscoreElegido = 1; break;
-              case "Nutriscore B": nutriscoreElegido = 2; break;
-              case "Nutriscore C": nutriscoreElegido = 3; break;
-              case "Nutriscore D": nutriscoreElegido = 4; break;
+              case "Nutriscore A": nutriscoreElegido = 4.51; break;
+              case "Nutriscore B": nutriscoreElegido = 3.51; break;
+              case "Nutriscore C": nutriscoreElegido = 2.51; break;
+              case "Nutriscore D": nutriscoreElegido = 1.51; break;
             }
           break;
           case "Favoritos": favoritoElegido = true; break;

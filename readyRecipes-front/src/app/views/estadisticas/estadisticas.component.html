@@ -1,0 +1,12 @@
+<div class="pagina">
+    <h1>Privilegios de administrador</h1>
+<h2>Eliminar usuario</h2>
+<form>
+    <label for="email">Id del usuario a eliminar:</label>
+    <div class="d-flex align-items-center">
+    <input [(ngModel)]="usuarioBorrarInput" type="name" name="email" class="form-control inputLog" placeholder="Id del usuario">
+        <input *ngIf="usuarioBorrarInput != ''" (click)="solicitarEliminarUsuario(usuarioBorrarInput)" class="botonEnviar" type="submit" value="Eliminar">
+    </div>
+</form>
+<h2>Modificar receta generada</h2>
+</div>
