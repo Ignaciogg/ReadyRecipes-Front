@@ -1,12 +1,37 @@
 <div class="pagina">
     <h1>Privilegios de administrador</h1>
-<h2>Eliminar usuario</h2>
-<form>
+    <h2>Eliminar usuario</h2>
     <label for="email">Id del usuario a eliminar:</label>
     <div class="d-flex align-items-center">
-    <input [(ngModel)]="usuarioBorrarInput" type="name" name="email" class="form-control inputLog" placeholder="Id del usuario">
-        <input *ngIf="usuarioBorrarInput != ''" (click)="solicitarEliminarUsuario(usuarioBorrarInput)" class="botonEnviar" type="submit" value="Eliminar">
+        <input [(ngModel)]="usuarioBorrarInput" class="form-control inputLog" placeholder="Id del usuario">
+        <button *ngIf="idValido(usuarioBorrarInput) == true && usuario != undefined" (click)="recibirUsuario(usuarioBorrarInput)" class="botonEnviar">Eliminar</button>
+        <cargando *ngIf="usuario == undefined"/>
     </div>
-</form>
-<h2>Modificar receta generada</h2>
+    <p *ngIf="idValido(usuarioBorrarInput) == false && usuarioBorrarInput != ''">El id tiene que ser un número!</p>
+    <h2>Modificar receta generada</h2>
+    <label for="email">Id de la receta a modificar:</label>
+    <div class="d-flex align-items-center">
+        <input [(ngModel)]="recetaModificarInput" class="form-control inputLog" placeholder="Id de la receta">
+        <button *ngIf="idValido(recetaModificarInput) == true && receta != undefined" (click)="recibirReceta(recetaModificarInput)" class="botonEnviar">Buscar</button>
+        <cargando *ngIf="receta == undefined"/>
+    </div>
+    <p *ngIf="idValido(recetaModificarInput) == false && recetaModificarInput != ''">El id tiene que ser un número!</p>
+    <div *ngIf="receta!.titulo != undefined">
+        <p class="mt-3">Video de la receta: <a href="{{receta!.url}}" target="blank">{{receta!.url}}</a></p>
+        <div class="filaRellenar">
+            <label>Título:</label>
+            <textarea [(ngModel)]="receta!.titulo" name="titulo" rows="1" cols="1000"></textarea>
+        </div>
+        <div class="filaRellenar">
+            <label>Texto:</label>
+            <textarea [(ngModel)]="receta!.texto" name="texto" rows="8" cols="1000"></textarea>
+        </div>
+        <div class="filaRellenar">
+            <label>Categoría:</label>
+            <textarea [(ngModel)]="receta!.categoria" rows="1" cols="1000"></textarea>
+        </div>
+        <div class="d-flex justify-content-center mt-4">
+            <button (click)="recibirReceta(recetaModificarInput)" class="botonEnviar">Actualizar</button>
+        </div>
+    </div>
 </div>
