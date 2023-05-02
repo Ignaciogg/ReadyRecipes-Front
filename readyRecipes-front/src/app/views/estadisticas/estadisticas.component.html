@@ -7,7 +7,7 @@
         <button *ngIf="idValido(usuarioBorrarInput) == true && usuario != undefined" (click)="recibirUsuario(usuarioBorrarInput)" class="botonEnviar">Eliminar</button>
         <cargando *ngIf="usuario == undefined"/>
     </div>
-    <p *ngIf="idValido(usuarioBorrarInput) == false && usuarioBorrarInput != ''">El id tiene que ser un número!</p>
+    <p *ngIf="idValido(usuarioBorrarInput) == false && usuarioBorrarInput != ''" class="text-danger">El id tiene que ser un número!</p>
     <h2>Modificar receta generada</h2>
     <label for="email">Id de la receta a modificar:</label>
     <div class="d-flex align-items-center">
@@ -15,8 +15,8 @@
         <button *ngIf="idValido(recetaModificarInput) == true && receta != undefined" (click)="recibirReceta(recetaModificarInput)" class="botonEnviar">Buscar</button>
         <cargando *ngIf="receta == undefined"/>
     </div>
-    <p *ngIf="idValido(recetaModificarInput) == false && recetaModificarInput != ''">El id tiene que ser un número!</p>
-    <div *ngIf="receta">
+    <p *ngIf="idValido(recetaModificarInput) == false && recetaModificarInput != ''" class="text-danger">El id tiene que ser un número!</p>
+    <div *ngIf="receta && enviandoReceta == false">
         <div *ngIf="receta!.titulo != undefined">
             <p class="mt-3">Video de la receta: <a href="{{receta!.url}}" target="blank">{{receta!.url}}</a></p>
             <div class="filaRellenar">
@@ -71,4 +71,23 @@
             </div>
         </div>
     </div>
+    <div *ngIf=" enviandoReceta == true" class="d-flex justify-content-center p-5">
+        <cargando/>
+    </div>
+</div>
+<div *ngIf="alerta == true" class="divAlerta">
+    <div (click)="cerrarAlerta()"></div>
+    <section *ngIf="esperandoEliminar == false">
+        <img (click)="cerrarAlerta()" src="assets/imagenes/iconos/cancelar.png">
+        <p><b>¡Atención!</b> Compruebe los datos del usuario que va a eliminar</p>
+        <p>Nombre: {{usuario!.nombre}}</p>
+        <p>Apellidos: {{usuario!.apellidos}}</p>
+        <p>Correo: {{usuario!.email}}</p>
+        <div class="d-flex justify-content-center mt-5">
+            <button (click)="eliminarUsuario()" class="botonEnviar">Confirmar</button>
+        </div>
+    </section>
+    <section *ngIf="esperandoEliminar == true" class="d-flex justify-content-center align-items-center">
+        <cargando/>
+    </section>
 </div>

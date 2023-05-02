@@ -17,8 +17,14 @@ export class EstadisticasComponent {
   categoriaOriginal: string = "";
   receta?: Receta = { id: -1 };
   usuario?: Usuario = { nombre: "", apellidos: "", email: "", pass: "", administrador: false };
+  alerta: boolean = false;
+  esperandoEliminar: boolean = false;
+  enviandoReceta: boolean = false;
 
-  constructor(private recetaService: RecetaService) {}
+  constructor(
+    private recetaService: RecetaService,
+    private usuarioService: UsuarioService
+  ) {}
 
   idValido(_id: string): boolean {
     return !isNaN(Number(_id)) && _id != "";
@@ -26,8 +32,25 @@ export class EstadisticasComponent {
 
   recibirUsuario(_id: string): void {
     this.usuario = undefined;
-    // usuarioService -> getUsuario(id) -> subscribe(data => this.usuario = data)
-    // Rellenar datos del usuario
+    this.usuarioService.infoUsuario(Number(this.usuarioBorrarInput)).subscribe(data => {
+      this.usuario = data;
+      this.alerta = true;
+    });
+  }
+
+  eliminarUsuario(): void {
+    this.esperandoEliminar = true;
+    this.usuarioService.eliminarUsuario(this.usuario!.email).subscribe(data => {
+      console.log("Eliminando usuario con correo: " + this.usuario!.email);
+      this.esperandoEliminar = false;
+      this.receta = { id: -1 };;
+      this.usuarioBorrarInput = "";
+      this.alerta = false;
+    });
+  }
+
+  cerrarAlerta() {
+    this.alerta = false;
   }
 
   async recibirReceta(_id: string): Promise<void> {
@@ -37,7 +60,6 @@ export class EstadisticasComponent {
       this.tituloOriginal = this.receta.titulo!;
       this.textoOriginal = this.receta.texto!;
       this.categoriaOriginal = this.receta.categoria!;
-      console.log(this.receta);
     });
   }
 
@@ -52,7 +74,12 @@ export class EstadisticasComponent {
   }
 
   async modificarReceta(): Promise<void> {
-    this.recetaService.modificarReceta(this.receta!).subscribe();
+    this.enviandoReceta = true;
+    this.recetaService.modificarReceta(this.receta!).subscribe(data => {
+      this.receta = { id: -1 };
+      this.recetaModificarInput = "";
+      this.enviandoReceta = false;
+    });
   }
 
   cambiarCategoria(_categoria: string): void {

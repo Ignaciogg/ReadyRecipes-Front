@@ -5,7 +5,7 @@ import { catchError } from 'rxjs/operators';
 import { Usuario } from '../models/usuario';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UsuarioService {
   private respuestaSubject: Subject<number> = new Subject<number>();
@@ -33,6 +33,26 @@ export class UsuarioService {
     }
     return this.httpClient.post<Usuario>(
       "http://127.0.0.1:8000/api/login",
+      body,
+    );
+  }
+
+  public infoUsuario(_id: number): Observable<Usuario> {
+    const body = {
+      id: _id,
+    }
+    return this.httpClient.post<Usuario>(
+      "http://127.0.0.1:8000/api/infoUsuario",
+      body,
+    );
+  }
+
+  public eliminarUsuario(_correo: string): Observable<void> {
+    const body = {
+      email: _correo,
+    }
+    return this.httpClient.post<void>(
+      "http://127.0.0.1:8000/api/eliminarUsuario",
       body,
     );
   }

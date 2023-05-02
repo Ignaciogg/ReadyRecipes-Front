@@ -22,10 +22,13 @@ h2 {
 
 .filaRellenar {
     display: flex;
+    align-items: center;
     margin-top: 30px;
     margin-bottom: 10px;
     textArea {
         margin-left: 20px;
+        padding: 7px 10px;
+        border-radius: 10px;
     }
 }
 
@@ -40,11 +43,10 @@ p {
 }
 
 .botonCategoriaSi, .botonCategoriaNo {
-    margin-left: 20px;
-    margin-right: 20px;
-    width: 150px;
+    margin-left: 10px;
     height: 40px;
-    border-radius: 4px;
+    padding: 0px 20px;
+    border-radius: 999999px;
     border: 1px solid #999;
 }
 
@@ -55,5 +57,45 @@ p {
 
 .botonCategoriaNo {
     background-color: var(--colorSecundarioClaro);
-    color: #444;
+    color: #777;
+    border: 0.5px solid #DDD;
+}
+
+.divAlerta {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    div {
+        width: 100%;
+        height: 100%;
+        opacity: 50%;
+        background-color: black; 
+    }
+    section {
+        position: fixed;
+        background-color: white;
+        border-radius: 15px;
+        width: min(90%, 800px);
+        padding: 20px;
+        padding-right: 50px;
+        div {
+            opacity: 100%;
+            background-color: unset;
+        }
+        img {
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            width: 60px;
+            height: 60px;
+            padding: 20px;
+            cursor: pointer;
+        }
+    }
 }
