@@ -12,10 +12,13 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 export class EstadisticasComponent {
   usuarioBorrarInput: string = "";
   recetaModificarInput: string = "";
+  tituloOriginal: string = "";
+  textoOriginal: string = "";
+  categoriaOriginal: string = "";
   receta?: Receta = { id: -1 };
   usuario?: Usuario = { nombre: "", apellidos: "", email: "", pass: "", administrador: false };
 
-  constructor(private recetaService: RecetaService) { }
+  constructor(private recetaService: RecetaService) {}
 
   idValido(_id: string): boolean {
     return !isNaN(Number(_id)) && _id != "";
@@ -31,7 +34,28 @@ export class EstadisticasComponent {
     this.receta = undefined;
     this.recetaService.post(Number(this.recetaModificarInput)).subscribe(data => {
       this.receta = data;
+      this.tituloOriginal = this.receta.titulo!;
+      this.textoOriginal = this.receta.texto!;
+      this.categoriaOriginal = this.receta.categoria!;
       console.log(this.receta);
     });
+  }
+
+  mostrarBotonActualizarReceta() {
+    if(this.tituloOriginal != this.receta!.titulo ||
+      this.textoOriginal != this.receta!.texto ||
+      this.categoriaOriginal != this.receta!.categoria) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  async modificarReceta(): Promise<void> {
+    this.recetaService.modificarReceta(this.receta!).subscribe();
+  }
+
+  cambiarCategoria(_categoria: string): void {
+    this.receta!.categoria = _categoria;
   }
 }

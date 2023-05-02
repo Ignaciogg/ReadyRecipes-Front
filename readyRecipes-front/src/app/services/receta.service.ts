@@ -59,4 +59,17 @@ export class RecetaService {
       body,
     );
   }
+
+  public modificarReceta(_receta: Receta): Observable<void> {
+    const body = {
+      id: _receta.id,
+      titulo: _receta.titulo,
+      texto: _receta.texto,
+      categoria: _receta.categoria,
+    };
+    return this.httpClient.post<void>(
+      "http://127.0.0.1:8000/api/modificarReceta",
+      body,
+    );
+  }
 }

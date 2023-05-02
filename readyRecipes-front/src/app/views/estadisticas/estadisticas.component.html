@@ -16,22 +16,59 @@
         <cargando *ngIf="receta == undefined"/>
     </div>
     <p *ngIf="idValido(recetaModificarInput) == false && recetaModificarInput != ''">El id tiene que ser un número!</p>
-    <div *ngIf="receta!.titulo != undefined">
-        <p class="mt-3">Video de la receta: <a href="{{receta!.url}}" target="blank">{{receta!.url}}</a></p>
-        <div class="filaRellenar">
-            <label>Título:</label>
-            <textarea [(ngModel)]="receta!.titulo" name="titulo" rows="1" cols="1000"></textarea>
-        </div>
-        <div class="filaRellenar">
-            <label>Texto:</label>
-            <textarea [(ngModel)]="receta!.texto" name="texto" rows="8" cols="1000"></textarea>
-        </div>
-        <div class="filaRellenar">
-            <label>Categoría:</label>
-            <textarea [(ngModel)]="receta!.categoria" rows="1" cols="1000"></textarea>
-        </div>
-        <div class="d-flex justify-content-center mt-4">
-            <button (click)="recibirReceta(recetaModificarInput)" class="botonEnviar">Actualizar</button>
+    <div *ngIf="receta">
+        <div *ngIf="receta!.titulo != undefined">
+            <p class="mt-3">Video de la receta: <a href="{{receta!.url}}" target="blank">{{receta!.url}}</a></p>
+            <div class="filaRellenar">
+                <label>Título:</label>
+                <textarea [(ngModel)]="receta!.titulo" name="titulo" rows="1" cols="1000"></textarea>
+            </div>
+            <div class="filaRellenar">
+                <label>Texto:</label>
+                <textarea [(ngModel)]="receta!.texto" name="texto" rows="8" cols="1000"></textarea>
+            </div>
+            <div class="filaRellenar align-items-center">
+                <label>Categoría:</label>
+                <div *ngIf="receta.categoria == 'Carne'" class="d-flex">
+                    <button class="botonCategoriaSi">Carne</button>
+                    <button (click)="cambiarCategoria('Pescado')" class="botonCategoriaNo">Pescado</button>
+                    <button (click)="cambiarCategoria('Verdura')" class="botonCategoriaNo">Verdura</button>
+                    <button (click)="cambiarCategoria('Pasta')" class="botonCategoriaNo">Pasta</button>
+                    <button (click)="cambiarCategoria('Aperitivo')" class="botonCategoriaNo">Aperitivo</button>
+                </div>
+                <div *ngIf="receta.categoria == 'Pescado'" class="d-flex">
+                    <button (click)="cambiarCategoria('Carne')" class="botonCategoriaNo">Carne</button>
+                    <button class="botonCategoriaSi">Pescado</button>
+                    <button (click)="cambiarCategoria('Verdura')" class="botonCategoriaNo">Verdura</button>
+                    <button (click)="cambiarCategoria('Pasta')" class="botonCategoriaNo">Pasta</button>
+                    <button (click)="cambiarCategoria('Aperitivo')" class="botonCategoriaNo">Aperitivo</button>
+                </div>
+                <div *ngIf="receta.categoria == 'Verdura'" class="d-flex">
+                    <button (click)="cambiarCategoria('Carne')" class="botonCategoriaNo">Carne</button>
+                    <button (click)="cambiarCategoria('Pescado')" class="botonCategoriaNo">Pescado</button>
+                    <button class="botonCategoriaSi">Verdura</button>
+                    <button (click)="cambiarCategoria('Pasta')" class="botonCategoriaNo">Pasta</button>
+                    <button (click)="cambiarCategoria('Aperitivo')" class="botonCategoriaNo">Aperitivo</button>
+                </div>
+                <div *ngIf="receta.categoria == 'Pasta'" class="d-flex">
+                    <button (click)="cambiarCategoria('Carne')" class="botonCategoriaNo">Carne</button>
+                    <button (click)="cambiarCategoria('Pescado')" class="botonCategoriaNo">Pescado</button>
+                    <button (click)="cambiarCategoria('Verdura')" class="botonCategoriaNo">Verdura</button>
+                    <button class="botonCategoriaSi">Pasta</button>
+                    <button (click)="cambiarCategoria('Aperitivo')" class="botonCategoriaNo">Aperitivo</button>
+                </div>
+                <div *ngIf="receta.categoria == 'Aperitivo'" class="d-flex">
+                    <button (click)="cambiarCategoria('Carne')" class="botonCategoriaNo">Carne</button>
+                    <button (click)="cambiarCategoria('Pescado')" class="botonCategoriaNo">Pescado</button>
+                    <button (click)="cambiarCategoria('Verdura')" class="botonCategoriaNo">Verdura</button>
+                    <button (click)="cambiarCategoria('Pasta')" class="botonCategoriaNo">Pasta</button>
+                    <button class="botonCategoriaSi">Aperitivo</button>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center mt-4">
+                <button *ngIf="mostrarBotonActualizarReceta() == true" (click)="modificarReceta()" class="botonEnviar">Actualizar</button>
+                <p *ngIf="mostrarBotonActualizarReceta() == false">Modifique algún parámetro para actualizar la receta</p>
+            </div>
         </div>
     </div>
 </div>

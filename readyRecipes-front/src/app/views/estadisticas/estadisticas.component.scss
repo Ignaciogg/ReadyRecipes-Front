@@ -38,3 +38,22 @@ p {
         cursor: pointer;
     }
 }
+
+.botonCategoriaSi, .botonCategoriaNo {
+    margin-left: 20px;
+    margin-right: 20px;
+    width: 150px;
+    height: 40px;
+    border-radius: 4px;
+    border: 1px solid #999;
+}
+
+.botonCategoriaSi {
+    background-color: var(--colorPrincipalClaro);
+    font-weight: 600;
+}
+
+.botonCategoriaNo {
+    background-color: var(--colorSecundarioClaro);
+    color: #444;
+}
