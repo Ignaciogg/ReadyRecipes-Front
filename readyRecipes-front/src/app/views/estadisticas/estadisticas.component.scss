@@ -1,3 +1,19 @@
+.flechaVolver {
+    height: 40px;
+    width: auto;
+    margin-right: 20px;
+}
+
+.flechaVolver:hover {
+    animation: flechaVolverHover 0.2s;
+}
+
+@keyframes flechaVolverHover {
+    50% {
+        transform: translateX(-10px);
+    }
+}
+
 h1 {
     margin-top: 20px;
     margin-bottom: 20px;
