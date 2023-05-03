@@ -1,4 +1,8 @@
 <div class="pagina">
+    <a *ngIf="esAdministrador == true" class="botonAdmin" routerLink="/estadisticas" title="Ir a funciones de administrador">
+        <img src="assets/imagenes/iconos/stats.png">
+        <p>Ir a funciones de administrador</p>
+    </a>
     <h1 class="text-center">Elija el tipo de plato que desea encontrar</h1>
     <div class="row justify-content-center">
         <categoria
@@ -54,8 +58,8 @@
     </div>
     <div class="row justify-content-center">
         <div class="resultadoBuscador col-lg-8 col-md-10 col-sm-12 col-12">
-            <p>Filtros seleccionados:</p>
-            <div class="d-flex flex-wrap ms-0">
+            <p *ngIf="numFiltrosActivos() > 0">Filtros seleccionados:</p>
+            <div *ngIf="numFiltrosActivos() > 0" class="d-flex flex-wrap ms-0 mb-4">
                 <div class="d-flex flex-wrap ms-0">
                     <ng-container *ngFor="let filtro of filtros">
                         <ng-container *ngIf="filtro.activo==true">
@@ -75,7 +79,6 @@
                     </ng-container>
                 </div>
             </div>
-            <hr>
             <p>Elija el filtro que desea añadir a la búsqueda:</p>
             <div class="tab-content">
                 <div class="tab-pane container active" id="ca">
@@ -123,7 +126,7 @@
                         <ng-container *ngFor="let filtro of filtros">
                             <aplicadorFiltro 
                                 *ngIf="filtro.categoria=='Precio' && filtro.activo==false"
-                                titulo="Hasta {{filtro.nombre}} €"
+                                titulo="Menos de {{filtro.nombre}} €"
                                 (click)="activarFiltro(filtro.nombre)"
                             />
                         </ng-container>
@@ -142,10 +145,12 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-8 col-md-10 col-sm-12 col-12 d-flex justify-content-center">
-            <cargando *ngIf="respuestaBuscador == -1"></cargando>
+        <div *ngIf="respuestaBuscador == -1" class="col-lg-8 col-md-10 col-sm-12 col-12 d-flex flex-column justify-content-center align-items-center">
+            <cargando/>
+            <p class="mt-3">Estamos preguntando a nuestros chefs por sus mejores recetas. Denos un segundo...</p>
         </div>
-        <h1 *ngIf="resultados.length >= 1" class="col-lg-8 col-md-10 col-sm-12 col-12">Le recomendamos las siguientes recetas:</h1>
+        <h1 *ngIf="resultados.length > 1" class="col-lg-8 col-md-10 col-sm-12 col-12">Le recomendamos las siguientes {{resultados.length}} recetas:</h1>
+        <h1 *ngIf="resultados.length == 1" class="col-lg-8 col-md-10 col-sm-12 col-12">Le recomendamos la siguiente receta:</h1>
         <div *ngIf="resultados.length >= 1" class="col-lg-8 col-md-10 col-sm-11 col-11 d-flex flex-row flex-wrap align-items-center justify-content-center">
             <ng-container *ngFor="let resultado of resultados">
                 <recetaEncontrada

@@ -31,6 +31,7 @@ export class RecetaService {
   }
 
   public buscador(
+    _id_receta: number,
     _precio: number,
     _ingredientes: number[],
     _categoria: string,
@@ -39,6 +40,7 @@ export class RecetaService {
     _id_usuario: number,
   ): Observable<Receta[]> {
     type Parametros = {
+      id_receta: number,
       precio?: number,
       ingredientes?: number[],
       categoria: string,
@@ -47,17 +49,29 @@ export class RecetaService {
       id_usuario: number,
     }
     const body: Parametros = {
+      id_receta: _id_receta,
       categoria: _categoria,
       nutriscore: _nutriscore,
       favorito: _favorito,
       id_usuario: _id_usuario,
+      precio: _precio,
+      ingredientes: _ingredientes,
     };
-    if(_ingredientes.length > 0 || _precio > 0) {
-      body.ingredientes = _ingredientes;
-      body.precio = _precio;
-    }
     return this.httpClient.post<Receta[]>(
       "http://127.0.0.1:8000/api/buscador",
+      body,
+    );
+  }
+
+  public modificarReceta(_receta: Receta): Observable<void> {
+    const body = {
+      id: _receta.id,
+      titulo: _receta.titulo,
+      texto: _receta.texto,
+      categoria: _receta.categoria,
+    };
+    return this.httpClient.post<void>(
+      "http://127.0.0.1:8000/api/modificarReceta",
       body,
     );
   }

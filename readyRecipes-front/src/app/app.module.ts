@@ -17,6 +17,7 @@ import { RegistroComponent } from './views/registro/registro.component';
 import { RecuperarComponent } from './views/recuperar/recuperar.component';
 import { CargandoComponent } from './components/cargando/cargando.component';
 import { SafePipeModule } from 'safe-pipe';
+import { EstadisticasComponent } from './views/estadisticas/estadisticas.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { SafePipeModule } from 'safe-pipe';
     RegistroComponent,
     RecuperarComponent,
     CargandoComponent,
+    EstadisticasComponent,
   ],
   imports: [
     BrowserModule,

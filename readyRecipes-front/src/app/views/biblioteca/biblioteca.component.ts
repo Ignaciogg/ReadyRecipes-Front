@@ -3,6 +3,7 @@ import { Receta } from 'src/app/models/receta';
 import { IngredienteService } from 'src/app/services/ingrediente.service';
 import { RecetaService } from 'src/app/services/receta.service';
 import { VariablesGlobalesService } from 'src/app/services/variables-globales.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-biblioteca',
@@ -10,10 +11,8 @@ import { VariablesGlobalesService } from 'src/app/services/variables-globales.se
   styleUrls: ['./biblioteca.component.scss']
 })
 export class BibliotecaComponent {
-
-  recetas: Receta[] = [];
+  public esAdministrador: boolean = true;
   public respuestaBuscador: number = 0;
-
   filtros = [
     { nombre: "Verdura", categoria: "Tipo", activo: false, id: -1, visible: true },
     { nombre: "Carne", categoria: "Tipo", activo: false, id: null, visible: true },
@@ -24,10 +23,10 @@ export class BibliotecaComponent {
     { nombre: "Nutriscore B", categoria: "Nutriscore", activo: false, id: null, visible: true },
     { nombre: "Nutriscore C", categoria: "Nutriscore", activo: false, id: null, visible: true },
     { nombre: "Nutriscore D", categoria: "Nutriscore", activo: false, id: null, visible: true },
+    { nombre: "2", categoria: "Precio", activo: false, id: null, visible: true },
     { nombre: "5", categoria: "Precio", activo: false, id: null, visible: true },
     { nombre: "10", categoria: "Precio", activo: false, id: null, visible: true },
-    { nombre: "20", categoria: "Precio", activo: false, id: null, visible: true},
-    { nombre: "50", categoria: "Precio", activo: false, id: null, visible: true },
+    { nombre: "15", categoria: "Precio", activo: false, id: null, visible: true},
     { nombre: "Mis favoritos", categoria: "Favoritos", activo: false, id: null, visible: true },
   ];
   resultados: Receta[] = [];
@@ -58,15 +57,25 @@ export class BibliotecaComponent {
 
   async filtrarIngredientes(event: any) {
     const valorBuscado = event.target.value.toLowerCase();
-      this.filtros.forEach(ingrediente => {
-        if(ingrediente.categoria=="Ingredientes"){
-          if (ingrediente.nombre.includes(valorBuscado)) {
-            ingrediente.visible = true;
-          }else{
-            ingrediente.visible = false;
-          }
+    this.filtros.forEach(ingrediente => {
+      if(ingrediente.categoria=="Ingredientes"){
+        if(ingrediente.nombre.includes(valorBuscado)) {
+          ingrediente.visible = true;
+        } else{
+          ingrediente.visible = false;
         }
-      });
+      }
+    });
+  }
+
+  numFiltrosActivos(): number {
+    let activos = 0;
+    this.filtros.forEach(filtro => {
+      if(filtro.activo == true) {
+        activos++;
+      }
+    });
+    return activos;
   }
 
   buscarTipo(tipo: string) {
@@ -86,7 +95,8 @@ export class BibliotecaComponent {
   buscador() {
     this.respuestaBuscador = -1;
     this.resultados = [];
-    let precioElegido: number = -1;
+    let id_receta: number = 0;
+    let precioElegido: number = 1000;
     let ingredientesElegidos: number[] = [];
     let categoriaElegida: string = "";
     let nutriscoreElegido: number = -1;
@@ -99,34 +109,42 @@ export class BibliotecaComponent {
           case "Tipo": categoriaElegida = filtro.nombre; break;
           case "Nutriscore":
             switch(filtro.nombre) {
-              case "Nutriscore A": nutriscoreElegido = 1; break;
-              case "Nutriscore B": nutriscoreElegido = 2; break;
-              case "Nutriscore C": nutriscoreElegido = 3; break;
-              case "Nutriscore D": nutriscoreElegido = 4; break;
+              case "Nutriscore A": nutriscoreElegido = 4.51; break;
+              case "Nutriscore B": nutriscoreElegido = 3.51; break;
+              case "Nutriscore C": nutriscoreElegido = 2.51; break;
+              case "Nutriscore D": nutriscoreElegido = 1.51; break;
             }
           break;
           case "Favoritos": favoritoElegido = true; break;
         }
       }
     });
-    try {
-      this.recetaService.buscador(
-        precioElegido,
-        ingredientesElegidos,
-        categoriaElegida,
-        nutriscoreElegido,
-        favoritoElegido,
-        1
-      ).subscribe(data => {
-        console.log("Buscando recetas con precio < " + precioElegido + ", ingredientes: " + ingredientesElegidos + ", categoria: " + categoriaElegida + ", nutriscore > " + nutriscoreElegido + ", favorito: " + favoritoElegido);
-        data.forEach(receta => {
+    this.recetaService.buscador(
+      id_receta,
+      precioElegido,
+      ingredientesElegidos,
+      categoriaElegida,
+      nutriscoreElegido,
+      favoritoElegido,
+      1
+    ).subscribe((data: Receta[]) => { 
+      data.forEach(receta => {
+        let esUnico = true;
+        for (let i = 0; i < this.resultados.length; i++) {
+          if (receta.id === this.resultados[i].id) {
+            esUnico = false;
+            break;
+          }
+        }
+        if (esUnico) {
           this.resultados.push(receta);
-        });
+        }
+        
       });
-    } catch (error) {
-      console.log("Error en la llamada al buscador: " + error);
-    }
-    this.respuestaBuscador = 0;
+      this.respuestaBuscador = 0;
+    }, error => {
+      this.respuestaBuscador = 0;
+    });
   }
 
   activarFiltro(elegido: string) {

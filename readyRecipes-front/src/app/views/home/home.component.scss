@@ -1,6 +1,7 @@
 .main {
     height: 100vh;
     background-color: black;
+    text-align: center;
 }
 
 .home {
@@ -9,6 +10,7 @@
     background-position: top left;
     animation: animacionDeFondo 3600s infinite;
     animation-timing-function: linear;
+    margin-bottom: 5px;
 }
 
 @keyframes animacionDeFondo {
@@ -29,6 +31,7 @@
     justify-content: space-between;
     align-items: center;
     padding-top: 10vh;
+    padding-bottom: 8vh;
 }
 
 .logo {
