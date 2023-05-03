@@ -31,6 +31,7 @@ export class RecetaService {
   }
 
   public buscador(
+    _id_receta: number,
     _precio: number,
     _ingredientes: number[],
     _categoria: string,
@@ -39,6 +40,7 @@ export class RecetaService {
     _id_usuario: number,
   ): Observable<Receta[]> {
     type Parametros = {
+      id_receta: number,
       precio?: number,
       ingredientes?: number[],
       categoria: string,
@@ -47,6 +49,7 @@ export class RecetaService {
       id_usuario: number,
     }
     const body: Parametros = {
+      id_receta: _id_receta,
       categoria: _categoria,
       nutriscore: _nutriscore,
       favorito: _favorito,

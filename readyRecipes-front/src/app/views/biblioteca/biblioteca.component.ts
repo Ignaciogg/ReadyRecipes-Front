@@ -95,6 +95,7 @@ export class BibliotecaComponent {
   buscador() {
     this.respuestaBuscador = -1;
     this.resultados = [];
+    let id_receta: number = 0;
     let precioElegido: number = 1000;
     let ingredientesElegidos: number[] = [];
     let categoriaElegida: string = "";
@@ -119,15 +120,26 @@ export class BibliotecaComponent {
       }
     });
     this.recetaService.buscador(
+      id_receta,
       precioElegido,
       ingredientesElegidos,
       categoriaElegida,
       nutriscoreElegido,
       favoritoElegido,
       1
-    ).subscribe((data: Receta[]) => {
+    ).subscribe((data: Receta[]) => { 
       data.forEach(receta => {
-        this.resultados.push(receta);
+        let esUnico = true;
+        for (let i = 0; i < this.resultados.length; i++) {
+          if (receta.id === this.resultados[i].id) {
+            esUnico = false;
+            break;
+          }
+        }
+        if (esUnico) {
+          this.resultados.push(receta);
+        }
+        
       });
       this.respuestaBuscador = 0;
     }, error => {
