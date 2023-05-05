@@ -1,0 +1,115 @@
+:root {
+    --colorPrincipal-r: 0;
+    --colorPrincipal-g: 150;
+    --colorPrincipal-b: 150;
+
+    --colorPrincipal: rgb(
+        var(--colorPrincipal-r),
+        var(--colorPrincipal-g),
+        var(--colorPrincipal-b)
+    );
+    --colorPrincipalMedioClaro: rgba(
+        var(--colorPrincipal-r),
+        var(--colorPrincipal-g),
+        var(--colorPrincipal-b),
+        0.5
+    );
+    --colorPrincipalClaro: rgba(
+        var(--colorPrincipal-r),
+        var(--colorPrincipal-g),
+        var(--colorPrincipal-b),
+        0.15
+    );
+    --colorPrincipalDegradado: rgb(
+        var(--colorPrincipal-r),
+        calc(var(--colorPrincipal-g) + 30),
+        var(--colorPrincipal-b)
+    );
+    --colorPrincipalSobreNegro: rgb(
+        var(--colorPrincipal-r),
+        calc(var(--colorPrincipal-g) + 60),
+        calc(var(--colorPrincipal-b) + 60)
+    );
+
+    --colorSecundario-r: 190;
+    --colorSecundario-g: 100;
+    --colorSecundario-b: 20;
+
+    --colorSecundario: rgb(
+        var(--colorSecundario-r),
+        var(--colorSecundario-g),
+        var(--colorSecundario-b)
+    );
+    --colorSecundarioClaro: rgba(
+        var(--colorSecundario-r),
+        var(--colorSecundario-g),
+        var(--colorSecundario-b),
+        0.15
+    );
+}
+
+.pagina {
+    margin-left: 5vw;
+    margin-right: 5vw;
+    margin-bottom: 20px;
+}
+
+.botonEnviar {
+    padding: 5px 20px;
+    background-color: var(--colorPrincipalClaro);
+    border-radius: 8px;
+}
+
+////////////////////// PANTALLAS DE GESTION DE CUENTA //////////////////////
+
+.pageLog {
+    margin: 0px 10%;
+    color: var(--colorPrincipal);
+}
+
+.h1Log {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.inputLog {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    padding-left: 20px;
+    border: 2px solid var(--colorPrincipalClaro);
+    border-radius: 50px;
+}
+
+.labelLog {
+    margin-top: 10px;
+}
+
+.aLog {
+    color: var(--colorSecundario);
+    cursor: pointer;
+}
+
+.textoError {
+    color: red;
+    font-size: x-large;
+    font-weight: bold;
+}
+
+.infoErrorLog {
+    color: var(--colorSecundario);
+    margin-top: -10px;
+}
+
+.cargandoGeneral {
+    background-color: #F7F7F7;
+    padding: 30px;
+    margin: auto;
+    margin-top: 25vh;
+    width: 75vw;
+    border: 1px solid #DDD;
+    border-radius: 20px;
+    p {
+        color: var(--colorPrincipal);
+        margin: 0px;
+    }
+}

@@ -1,0 +1,28 @@
+<div class="contenedor">
+    <div>
+        <header *ngIf="router.url !== '/'">
+            <div class="d-flex align-items-center justify-content-center">
+                <a routerLink="/biblioteca">
+                    <img class="logo" src="assets/imagenes/logoBlanco.png">
+                </a>
+                <p *ngIf="getNombreUsuario() != '' && getNombreUsuario() && undefined" class="m-0 p-0 text-white">¡Hola de nuevo, {{getNombreUsuario()}}!</p>
+            </div>
+            <div *ngIf="!router.url.includes('registr') && !router.url.includes('recuperar') && !router.url.includes('login')" class="d-flex align-items-center">
+                <a *ngIf="getCorreoUsuario() == ''" class="login d-flex align-items-center" routerLink="/login" routerLinkActive="oculto">
+                    <img src="assets/imagenes/iconos/perfil.png">
+                    <p *ngIf="getCorreoUsuario() == ''" class="m-0">Login</p>
+                    <p *ngIf="getCorreoUsuario() != ''" class="m-0">Logout {{getCorreoUsuario()}}</p>
+                </a>
+                <a *ngIf="getCorreoUsuario() != ''" class="login d-flex align-items-center" (click)="logout()" routerLink="/" routerLinkActive="oculto">
+                    <img src="assets/imagenes/iconos/perfil.png">
+                    <p *ngIf="getCorreoUsuario() == ''" class="m-0">Login</p>
+                    <p *ngIf="getCorreoUsuario() != ''" class="m-0">Logout {{getCorreoUsuario()}}</p>
+                </a>
+            </div>
+        </header>
+        <router-outlet/>
+    </div>
+    <footer *ngIf="router.url !== '/'">
+        <p>ReadyRecipes - 2023</p>
+    </footer>
+</div>

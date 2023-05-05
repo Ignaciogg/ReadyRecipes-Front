@@ -1,0 +1,76 @@
+.main {
+    height: 100vh;
+    background-color: black;
+    text-align: center;
+}
+
+.home {
+    background-image: linear-gradient(rgba(0,0,0,0) 30%, rgba(0,0,0,1) 100%), url("/assets/imagenes/fondoHome.png");
+    background-size: cover;
+    background-position: top left;
+    animation: animacionDeFondo 3600s infinite;
+    animation-timing-function: linear;
+    margin-bottom: 5px;
+}
+
+@keyframes animacionDeFondo {
+    0% {
+        background-position: 0%;
+    }
+    100% {
+        background-position: 50000px;
+    }
+}
+
+.container {
+    padding: 0px;
+    width: 100vw;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 10vh;
+    padding-bottom: 8vh;
+}
+
+.logo {
+    width: min(50vw, 400px);
+}
+
+h1 {
+    color: white;
+    margin-left: 70px;
+    margin-right: 70px;
+    margin-top: 50px;
+    text-align: center;
+    text-shadow:
+        2px 0 3px black,
+        -2px 0 3px black,
+        0 2px 3px black,
+        0 -2px 3px black,
+        2px 2px 3px black,
+        -2px -2px 3px black,
+        2px -2px 3px black,
+        -2px 2px 3px black;
+}
+
+.contenidoInferior{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+button {
+    border-radius: 200px;
+    padding: 5px 20px;
+    margin-bottom: 20px;
+}
+
+p {
+    color: white;
+    a {
+        color: var(--colorPrincipalSobreNegro);
+    }
+}
