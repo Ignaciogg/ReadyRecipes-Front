@@ -115,3 +115,8 @@ p {
         }
     }
 }
+
+canvas {
+    width: min(40vw, 500px) !important;
+    height: min(40vw, 500px) !important;
+}

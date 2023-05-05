@@ -80,6 +80,9 @@
         <cargando/>
     </div>
 </div>
+<div>
+    <canvas class="myChart" id="myChart">{{myChart}}</canvas>
+</div>
 <div *ngIf="alerta == true" class="divAlerta">
     <div (click)="cerrarAlerta()"></div>
     <section *ngIf="esperandoEliminar == false">

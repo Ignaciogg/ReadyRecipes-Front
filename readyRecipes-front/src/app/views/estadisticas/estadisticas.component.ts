@@ -3,6 +3,7 @@ import { Receta } from 'src/app/models/receta';
 import { RecetaService } from 'src/app/services/receta.service';
 import { Usuario } from 'src/app/models/usuario';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import { Chart } from 'chart.js/auto';
 
 @Component({
   selector: 'estadisticas',
@@ -10,6 +11,8 @@ import { UsuarioService } from 'src/app/services/usuario.service';
   styleUrls: ['./estadisticas.component.scss']
 })
 export class EstadisticasComponent {
+
+  myChart: any;
   usuarioBorrarInput: string = "";
   recetaModificarInput: string = "";
   tituloOriginal: string = "";
@@ -84,5 +87,24 @@ export class EstadisticasComponent {
 
   cambiarCategoria(_categoria: string): void {
     this.receta!.categoria = _categoria;
+  }
+
+  ngAfterViewInit() {
+    this.myChart = new Chart("myChart", {
+      type: 'pie',
+      data: {
+        labels: ['Aperitivos', 'Carnes', 'Pastas', 'Pescados', 'Verduras',],
+        datasets: [{
+          data: [5, 8, 3, 9, 20],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.7)',
+            'rgba(54, 162, 235, 0.7)',
+            'rgba(255, 206, 86, 0.7)',
+            'rgba(75, 192, 192, 0.7)',
+            'rgba(54, 192, 86, 0.7)'
+          ]
+        }]
+      }
+    });
   }
 }
