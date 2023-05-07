@@ -79,9 +79,15 @@
     <div *ngIf=" enviandoReceta == true" class="d-flex justify-content-center p-5">
         <cargando/>
     </div>
-</div>
-<div>
-    <canvas class="myChart" id="myChart">{{myChart}}</canvas>
+    <h2>Estadísticas de la web</h2>
+    <div class="d-flex flex-wrap justify-content-around">
+        <div>
+            <canvas id="myChartCategorias">{{myChartCategorias}}</canvas>
+        </div>
+        <div>
+            <canvas id="myChartUsuarios">{{myChartUsuarios}}</canvas>
+        </div>
+    </div>
 </div>
 <div *ngIf="alerta == true" class="divAlerta">
     <div (click)="cerrarAlerta()"></div>

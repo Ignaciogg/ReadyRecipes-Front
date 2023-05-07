@@ -11,8 +11,8 @@ import { Chart } from 'chart.js/auto';
   styleUrls: ['./estadisticas.component.scss']
 })
 export class EstadisticasComponent {
-
-  myChart: any;
+  myChartCategorias: any;
+  myChartUsuarios: any;
   usuarioBorrarInput: string = "";
   recetaModificarInput: string = "";
   tituloOriginal: string = "";
@@ -23,11 +23,45 @@ export class EstadisticasComponent {
   alerta: boolean = false;
   esperandoEliminar: boolean = false;
   enviandoReceta: boolean = false;
+  nombresCategorias: string[] = [];
+  cantidadesCategorias: number[] = [];
+  fechasUsuarios: string[] = [];
+  cantidadesUsuarios: number[] = [];
+  numUsuarios: number = 0;
+  numRecetas: number = 0;
+  numComentarios: number = 0;
 
   constructor(
     private recetaService: RecetaService,
     private usuarioService: UsuarioService
   ) {}
+
+  ngOnInit(): void {
+    this.recibirCategorias();
+    this.recibirUsuarios();
+  }
+
+  recibirCategorias(): void {
+    this.recetaService.recetasPorCategoria().subscribe(data => {
+      data.forEach((n: {categoria: string, total: number}) => {
+        this.nombresCategorias.push(n.categoria);
+        this.cantidadesCategorias.push(n.total);
+      });
+      this.myChartCategorias.update();
+    });
+  }
+
+  recibirUsuarios(): void {
+    this.usuarioService.numeroUsuarios().subscribe(data => {
+      for(const fecha in data) {
+        if (data.hasOwnProperty(fecha)) {
+          this.fechasUsuarios.push(fecha);
+          this.cantidadesUsuarios.push(data[fecha]);
+        }
+      }
+      this.myChartUsuarios.update();
+    });
+  }
 
   idValido(_id: string): boolean {
     return !isNaN(Number(_id)) && _id != "";
@@ -90,20 +124,32 @@ export class EstadisticasComponent {
   }
 
   ngAfterViewInit() {
-    this.myChart = new Chart("myChart", {
+    this.myChartCategorias = new Chart("myChartCategorias", {
       type: 'pie',
       data: {
-        labels: ['Aperitivos', 'Carnes', 'Pastas', 'Pescados', 'Verduras',],
+        labels: this.nombresCategorias,
         datasets: [{
-          data: [5, 8, 3, 9, 20],
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.7)',
-            'rgba(54, 162, 235, 0.7)',
-            'rgba(255, 206, 86, 0.7)',
-            'rgba(75, 192, 192, 0.7)',
-            'rgba(54, 192, 86, 0.7)'
-          ]
-        }]
+          data: this.cantidadesCategorias,
+          backgroundColor: [ "#E7E", "#EA7", "#EE7", "#7AE", "#7EA" ],
+          hoverOffset: 30,
+        }],
+      },
+    });
+    this.myChartUsuarios = new Chart("myChartUsuarios", {
+      type: 'line',
+      data: {
+        labels: this.fechasUsuarios as unknown as Date[],
+        datasets: [{
+          label: "Número de usuarios",
+          data: this.cantidadesUsuarios
+        }],
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
       }
     });
   }

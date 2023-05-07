@@ -117,6 +117,11 @@ p {
 }
 
 canvas {
-    width: min(40vw, 500px) !important;
-    height: min(40vw, 500px) !important;
+    margin: auto;
+    width: min(70vw, 450px) !important;
+    height: min(70vw, 450px) !important;
+    margin-top: 20px;
+    margin-bottom: 50px;
+    margin-left: 20px;
+    margin-right: 20px;
 }

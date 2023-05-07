@@ -75,4 +75,12 @@ export class RecetaService {
       body,
     );
   }
+
+  public recetasPorCategoria(): Observable<any> {
+    const body = {};
+    return this.httpClient.post<any>(
+      "http://127.0.0.1:8000/api/recetasPorCategoria",
+      body,
+    );
+  }
 }
