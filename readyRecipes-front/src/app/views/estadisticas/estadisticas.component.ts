@@ -3,6 +3,7 @@ import { Receta } from 'src/app/models/receta';
 import { RecetaService } from 'src/app/services/receta.service';
 import { Usuario } from 'src/app/models/usuario';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import { ComentarioService } from 'src/app/services/comentario.service';
 import { Chart } from 'chart.js/auto';
 
 @Component({
@@ -11,8 +12,9 @@ import { Chart } from 'chart.js/auto';
   styleUrls: ['./estadisticas.component.scss']
 })
 export class EstadisticasComponent {
-  myChartCategorias: any;
-  myChartUsuarios: any;
+  chartCategorias: any;
+  chartUsuarios: any;
+  chartComentarios: any;
   usuarioBorrarInput: string = "";
   recetaModificarInput: string = "";
   tituloOriginal: string = "";
@@ -26,19 +28,20 @@ export class EstadisticasComponent {
   nombresCategorias: string[] = [];
   cantidadesCategorias: number[] = [];
   fechasUsuarios: string[] = [];
+  fechasComentarios: string[] = [];
   cantidadesUsuarios: number[] = [];
-  numUsuarios: number = 0;
-  numRecetas: number = 0;
-  numComentarios: number = 0;
+  cantidadesComentarios: number[] = [];
 
   constructor(
     private recetaService: RecetaService,
-    private usuarioService: UsuarioService
+    private usuarioService: UsuarioService,
+    private comentarioService: ComentarioService,
   ) {}
 
   ngOnInit(): void {
     this.recibirCategorias();
     this.recibirUsuarios();
+    this.recibirComentarios();
   }
 
   recibirCategorias(): void {
@@ -47,19 +50,31 @@ export class EstadisticasComponent {
         this.nombresCategorias.push(n.categoria);
         this.cantidadesCategorias.push(n.total);
       });
-      this.myChartCategorias.update();
+      this.chartCategorias.update();
     });
   }
 
   recibirUsuarios(): void {
     this.usuarioService.numeroUsuarios().subscribe(data => {
       for(const fecha in data) {
-        if (data.hasOwnProperty(fecha)) {
+        if(data.hasOwnProperty(fecha)) {
           this.fechasUsuarios.push(fecha);
           this.cantidadesUsuarios.push(data[fecha]);
         }
       }
-      this.myChartUsuarios.update();
+      this.chartUsuarios.update();
+    });
+  }
+
+  recibirComentarios(): void {
+    this.comentarioService.numeroComentarios().subscribe(data => {
+      for(const fecha in data) {
+        if(data.hasOwnProperty(fecha)) {
+          this.fechasComentarios.push(fecha);
+          this.cantidadesComentarios.push(data[fecha]);
+        }
+      }
+      this.chartComentarios.update();
     });
   }
 
@@ -124,7 +139,7 @@ export class EstadisticasComponent {
   }
 
   ngAfterViewInit() {
-    this.myChartCategorias = new Chart("myChartCategorias", {
+    this.chartCategorias = new Chart("chartCategorias", {
       type: 'pie',
       data: {
         labels: this.nombresCategorias,
@@ -135,13 +150,30 @@ export class EstadisticasComponent {
         }],
       },
     });
-    this.myChartUsuarios = new Chart("myChartUsuarios", {
+    this.chartUsuarios = new Chart("chartUsuarios", {
       type: 'line',
       data: {
         labels: this.fechasUsuarios as unknown as Date[],
         datasets: [{
-          label: "Número de usuarios",
-          data: this.cantidadesUsuarios
+          label: "",
+          data: this.cantidadesUsuarios,
+        }],
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+    this.chartComentarios = new Chart("chartComentarios", {
+      type: 'line',
+      data: {
+        labels: this.fechasComentarios as unknown as Date[],
+        datasets: [{
+          label: "",
+          data: this.cantidadesComentarios,
         }],
       },
       options: {

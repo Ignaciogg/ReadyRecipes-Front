@@ -21,9 +21,16 @@ h1 {
 }
 
 h2 {
-    margin-top: 20px;
+    margin-top: 50px;
     margin-bottom: 20px;
     font-size: x-large;
+}
+
+h3 {
+    margin-bottom: 20px;
+    font-size: larger;
+    font-weight: bold;
+    letter-spacing: 0.75px;
 }
 
 .botonEnviar {
@@ -116,12 +123,38 @@ p {
     }
 }
 
+.contenedorGraficas {
+    margin: auto;
+    max-width: 1000px;
+}
+
+.bloqueGraficas {
+    margin-bottom: 20px;
+}
+
 canvas {
     margin: auto;
-    width: min(70vw, 450px) !important;
-    height: min(70vw, 450px) !important;
+    width: min(40vw, 450px) !important;
+    height: min(40vw, 450px) !important;
     margin-top: 20px;
     margin-bottom: 50px;
-    margin-left: 20px;
-    margin-right: 20px;
+}
+
+.myLinechart {
+    width: min(40vw, 600px) !important;
+    height: min(30vw, 450px) !important;
+}
+
+.infoGraficaIzquierda, .infoGraficaDerecha {
+    align-self: center;
+    width: 50vw;
+    margin-right: 5vw;
+}
+
+.infoGraficaDerecha {
+    margin-left: 5vw;
+}
+
+.infoGraficaIzquierda {
+    margin-right: 5vw;
 }
