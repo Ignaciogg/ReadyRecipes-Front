@@ -84,23 +84,30 @@
         <div class="d-flex flex-row justify-content-around mb-5">
             <div class="d-flex flex-column justify-content-center infoGraficaIzquierda">
                 <h3>Recetas por categoría</h3>
-                <p>Recuento de las recetas de la base de datos, en función de la categoría a la que pertenecen</p>
+                <p>Recuento de las recetas de la base de datos, en función de la categoría a la que pertenecen. Número total de recetas: {{numRecetas}}</p>
             </div>
             <canvas id="chartCategorias">{{chartCategorias}}</canvas>
         </div>
         <div class="d-flex flex-row justify-content-around mb-5">
-            <canvas id="chartUsuarios" class="myLinechart">{{chartUsuarios}}</canvas>
+            <canvas id="chartNutriscore" class="myLinechart">{{chartNutriscore}}</canvas>
             <div class="d-flex flex-column justify-content-center infoGraficaDerecha">
-                <h3>Cantidad de usuarios</h3>
-                <p>Cantidad de usuarios dados de alta en nuestro sitio web. Contempla también las dadas de baja</p>
+                <h3>Recetas por nutriscore</h3>
+                <p>Recuento de las recetas de la puntuación Nutriscore de sus ingredientes, siendo 5 la puntuación máxima, y 0 la puntuación mínima</p>
             </div>
         </div>
         <div class="d-flex flex-row justify-content-around mb-5">
             <div class="d-flex flex-column justify-content-center infoGraficaIzquierda">
+                <h3>Cantidad de usuarios</h3>
+                <p>Cantidad de usuarios dados de alta en nuestro sitio web. Contempla también las dadas de baja</p>
+            </div>
+            <canvas id="chartUsuarios" class="myLinechart">{{chartUsuarios}}</canvas>
+        </div>
+        <div class="d-flex flex-row justify-content-around mb-5">
+            <canvas id="chartComentarios" class="myLinechart">{{chartComentarios}}</canvas>
+            <div class="d-flex flex-column justify-content-center infoGraficaDerecha">
                 <h3>Cantidad de comentarios</h3>
                 <p>Recuento de los comentarios escritos por nuestros usuarios en cualquier receta. Perfecto para conocer si nuestra aplicación está realmente proporcionando valor a sus usuarios</p>
             </div>
-            <canvas id="chartComentarios" class="myLinechart">{{chartComentarios}}</canvas>
         </div>
     </div>
 </div>

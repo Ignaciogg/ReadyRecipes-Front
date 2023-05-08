@@ -15,6 +15,7 @@ export class EstadisticasComponent {
   chartCategorias: any;
   chartUsuarios: any;
   chartComentarios: any;
+  chartNutriscore: any;
   usuarioBorrarInput: string = "";
   recetaModificarInput: string = "";
   tituloOriginal: string = "";
@@ -31,6 +32,9 @@ export class EstadisticasComponent {
   fechasComentarios: string[] = [];
   cantidadesUsuarios: number[] = [];
   cantidadesComentarios: number[] = [];
+  ratingsNutriscore: number[] = [];
+  cantidadesNutriscore: number[] = [];
+  numRecetas: number = 0;
 
   constructor(
     private recetaService: RecetaService,
@@ -40,17 +44,29 @@ export class EstadisticasComponent {
 
   ngOnInit(): void {
     this.recibirCategorias();
+    this.recibirNutriscore();
     this.recibirUsuarios();
     this.recibirComentarios();
   }
-
+  
   recibirCategorias(): void {
     this.recetaService.recetasPorCategoria().subscribe(data => {
       data.forEach((n: {categoria: string, total: number}) => {
         this.nombresCategorias.push(n.categoria);
         this.cantidadesCategorias.push(n.total);
+        this.numRecetas += n.total;
       });
       this.chartCategorias.update();
+    });
+  }
+
+  recibirNutriscore(): void {
+    this.recetaService.recetasPorNutriscore().subscribe(data => {
+      data.forEach((n: {nutriscore_rounded: number, total: number}) => {
+        this.ratingsNutriscore.push(n.nutriscore_rounded);
+        this.cantidadesNutriscore.push(n.total);
+      });
+      this.chartNutriscore.update();
     });
   }
 
@@ -65,7 +81,7 @@ export class EstadisticasComponent {
       this.chartUsuarios.update();
     });
   }
-
+  
   recibirComentarios(): void {
     this.comentarioService.numeroComentarios().subscribe(data => {
       for(const fecha in data) {
@@ -95,7 +111,7 @@ export class EstadisticasComponent {
     this.usuarioService.eliminarUsuario(this.usuario!.email).subscribe(data => {
       console.log("Eliminando usuario con correo: " + this.usuario!.email);
       this.esperandoEliminar = false;
-      this.receta = { id: -1 };;
+      this.receta = { id: -1 };
       this.usuarioBorrarInput = "";
       this.alerta = false;
     });
@@ -149,6 +165,23 @@ export class EstadisticasComponent {
           hoverOffset: 30,
         }],
       },
+    });
+    this.chartNutriscore = new Chart("chartNutriscore", {
+      type: 'bar',
+      data: {
+        labels: this.ratingsNutriscore as unknown as Date[],
+        datasets: [{
+          label: "",
+          data: this.cantidadesNutriscore,
+        }],
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
     });
     this.chartUsuarios = new Chart("chartUsuarios", {
       type: 'line',
