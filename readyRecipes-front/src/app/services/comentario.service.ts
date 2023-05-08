@@ -33,4 +33,11 @@ export class ComentarioService {
       body,
     );
   }
+
+  public numeroComentarios(): Observable<any[]> {
+    return this.httpClient.post<any>(
+      "http://127.0.0.1:8000/api/numeroComentarios",
+      {},
+    );
+  }
 }

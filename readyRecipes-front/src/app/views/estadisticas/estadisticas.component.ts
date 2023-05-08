@@ -3,6 +3,7 @@ import { Receta } from 'src/app/models/receta';
 import { RecetaService } from 'src/app/services/receta.service';
 import { Usuario } from 'src/app/models/usuario';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import { ComentarioService } from 'src/app/services/comentario.service';
 import { Chart } from 'chart.js/auto';
 
 @Component({
@@ -11,8 +12,10 @@ import { Chart } from 'chart.js/auto';
   styleUrls: ['./estadisticas.component.scss']
 })
 export class EstadisticasComponent {
-
-  myChart: any;
+  chartCategorias: any;
+  chartUsuarios: any;
+  chartComentarios: any;
+  chartNutriscore: any;
   usuarioBorrarInput: string = "";
   recetaModificarInput: string = "";
   tituloOriginal: string = "";
@@ -23,11 +26,73 @@ export class EstadisticasComponent {
   alerta: boolean = false;
   esperandoEliminar: boolean = false;
   enviandoReceta: boolean = false;
+  nombresCategorias: string[] = [];
+  cantidadesCategorias: number[] = [];
+  fechasUsuarios: string[] = [];
+  fechasComentarios: string[] = [];
+  cantidadesUsuarios: number[] = [];
+  cantidadesComentarios: number[] = [];
+  ratingsNutriscore: number[] = [];
+  cantidadesNutriscore: number[] = [];
+  numRecetas: number = 0;
 
   constructor(
     private recetaService: RecetaService,
-    private usuarioService: UsuarioService
+    private usuarioService: UsuarioService,
+    private comentarioService: ComentarioService,
   ) {}
+
+  ngOnInit(): void {
+    this.recibirCategorias();
+    this.recibirNutriscore();
+    this.recibirUsuarios();
+    this.recibirComentarios();
+  }
+  
+  recibirCategorias(): void {
+    this.recetaService.recetasPorCategoria().subscribe(data => {
+      data.forEach((n: {categoria: string, total: number}) => {
+        this.nombresCategorias.push(n.categoria);
+        this.cantidadesCategorias.push(n.total);
+        this.numRecetas += n.total;
+      });
+      this.chartCategorias.update();
+    });
+  }
+
+  recibirNutriscore(): void {
+    this.recetaService.recetasPorNutriscore().subscribe(data => {
+      data.forEach((n: {nutriscore_rounded: number, total: number}) => {
+        this.ratingsNutriscore.push(n.nutriscore_rounded);
+        this.cantidadesNutriscore.push(n.total);
+      });
+      this.chartNutriscore.update();
+    });
+  }
+
+  recibirUsuarios(): void {
+    this.usuarioService.numeroUsuarios().subscribe(data => {
+      for(const fecha in data) {
+        if(data.hasOwnProperty(fecha)) {
+          this.fechasUsuarios.push(fecha);
+          this.cantidadesUsuarios.push(data[fecha]);
+        }
+      }
+      this.chartUsuarios.update();
+    });
+  }
+  
+  recibirComentarios(): void {
+    this.comentarioService.numeroComentarios().subscribe(data => {
+      for(const fecha in data) {
+        if(data.hasOwnProperty(fecha)) {
+          this.fechasComentarios.push(fecha);
+          this.cantidadesComentarios.push(data[fecha]);
+        }
+      }
+      this.chartComentarios.update();
+    });
+  }
 
   idValido(_id: string): boolean {
     return !isNaN(Number(_id)) && _id != "";
@@ -46,7 +111,7 @@ export class EstadisticasComponent {
     this.usuarioService.eliminarUsuario(this.usuario!.email).subscribe(data => {
       console.log("Eliminando usuario con correo: " + this.usuario!.email);
       this.esperandoEliminar = false;
-      this.receta = { id: -1 };;
+      this.receta = { id: -1 };
       this.usuarioBorrarInput = "";
       this.alerta = false;
     });
@@ -90,20 +155,66 @@ export class EstadisticasComponent {
   }
 
   ngAfterViewInit() {
-    this.myChart = new Chart("myChart", {
+    this.chartCategorias = new Chart("chartCategorias", {
       type: 'pie',
       data: {
-        labels: ['Aperitivos', 'Carnes', 'Pastas', 'Pescados', 'Verduras',],
+        labels: this.nombresCategorias,
         datasets: [{
-          data: [5, 8, 3, 9, 20],
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.7)',
-            'rgba(54, 162, 235, 0.7)',
-            'rgba(255, 206, 86, 0.7)',
-            'rgba(75, 192, 192, 0.7)',
-            'rgba(54, 192, 86, 0.7)'
-          ]
-        }]
+          data: this.cantidadesCategorias,
+          backgroundColor: [ "#E7E", "#EA7", "#EE7", "#7AE", "#7EA" ],
+          hoverOffset: 30,
+        }],
+      },
+    });
+    this.chartNutriscore = new Chart("chartNutriscore", {
+      type: 'bar',
+      data: {
+        labels: this.ratingsNutriscore as unknown as Date[],
+        datasets: [{
+          label: "",
+          data: this.cantidadesNutriscore,
+        }],
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+    this.chartUsuarios = new Chart("chartUsuarios", {
+      type: 'line',
+      data: {
+        labels: this.fechasUsuarios as unknown as Date[],
+        datasets: [{
+          label: "",
+          data: this.cantidadesUsuarios,
+        }],
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+    this.chartComentarios = new Chart("chartComentarios", {
+      type: 'line',
+      data: {
+        labels: this.fechasComentarios as unknown as Date[],
+        datasets: [{
+          label: "",
+          data: this.cantidadesComentarios,
+        }],
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
       }
     });
   }
