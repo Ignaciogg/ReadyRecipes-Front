@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Usuario } from 'src/app/models/usuario';
-import { UsuarioService } from 'src/app/services/usuario.service';
+import { AutenticacionService } from 'src/app/services/autenticacion.service';
 import { Router } from '@angular/router';
-import { VariablesGlobalesService } from 'src/app/services/variables-globales.service';
+import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
   selector: 'login',
@@ -15,9 +15,9 @@ export class LoginComponent {
   passwordInput: string = "";
 
   constructor(
+    private autenticacionService: AutenticacionService,
     private usuarioService: UsuarioService,
     private router: Router,
-    private variablesGlobalesService: VariablesGlobalesService
     ) { }
 
   public async login(email: string, password: string) {
@@ -28,17 +28,10 @@ export class LoginComponent {
       this.respuesta = -3;
     } else {
       let usuario: Usuario = new Usuario("", "", email, password, false);
-      this.usuarioService.login(usuario).subscribe(async data => {
-        console.log("Recuperamos del back los datos:", data);
+      this.autenticacionService.login(usuario).subscribe(async data => {
         this.respuesta = 200;
+        localStorage.setItem("token", data.access_token);
         this.router.navigate(['/biblioteca']);
-        console.log("LOCALSTORAGE:");
-        console.log("Nombre: ", localStorage.getItem('nombreUsuario'));
-        console.log("Apellidos: ", localStorage.getItem('apellidosUsuario'));
-        console.log("Correo: ", localStorage.getItem('correoUsuario'));
-        this.variablesGlobalesService.setNombreUsuario(data.nombre);
-        this.variablesGlobalesService.setApellidosUsuario(data.apellidos);
-        this.variablesGlobalesService.setCorreoUsuario(data.email);
       });
     }
   }

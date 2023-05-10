@@ -1,5 +1,5 @@
 <div class="pagina">
-    <a *ngIf="esAdministrador == true" class="botonAdmin" routerLink="/estadisticas" title="Ir a funciones de administrador">
+    <a *ngIf="usuarioLogeado.administrador == true" class="botonAdmin" routerLink="/estadisticas" title="Ir a funciones de administrador">
         <img src="assets/imagenes/iconos/stats.png">
         <p>Ir a funciones de administrador</p>
     </a>

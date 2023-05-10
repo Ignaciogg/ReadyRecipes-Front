@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Comentario } from '../models/comentario';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class ComentarioService {
       id_receta: _id_receta,
     }
     return this.httpClient.post<Comentario[]>(
-      "http://127.0.0.1:8000/api/comentariosReceta",
+      environment.apiUrl + "comentariosReceta",
       body,
       { responseType:'json' }
     );

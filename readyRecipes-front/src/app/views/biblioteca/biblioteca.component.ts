@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { Receta } from 'src/app/models/receta';
 import { IngredienteService } from 'src/app/services/ingrediente.service';
 import { RecetaService } from 'src/app/services/receta.service';
-import { VariablesGlobalesService } from 'src/app/services/variables-globales.service';
-import { Observable } from 'rxjs';
+import { AutenticacionService } from 'src/app/services/autenticacion.service';
+import { UsuarioService } from 'src/app/services/usuario.service';
+import { Usuario } from 'src/app/models/usuario';
 
 @Component({
   selector: 'app-biblioteca',
@@ -11,7 +12,6 @@ import { Observable } from 'rxjs';
   styleUrls: ['./biblioteca.component.scss']
 })
 export class BibliotecaComponent {
-  public esAdministrador: boolean = true;
   public respuestaBuscador: number = 0;
   filtros = [
     { nombre: "Verdura", categoria: "Tipo", activo: false, id: -1, visible: true },
@@ -30,17 +30,20 @@ export class BibliotecaComponent {
     { nombre: "Mis favoritos", categoria: "Favoritos", activo: false, id: null, visible: true },
   ];
   resultados: Receta[] = [];
-  
+  usuarioLogeado: Usuario = new Usuario("", "", "", "", false);
+
   constructor(
     private ingredienteService: IngredienteService,
     private recetaService: RecetaService,
-    private variablesGlobales: VariablesGlobalesService,
-  ) { }
+    private autenticacionService: AutenticacionService,
+    private usuarioService: UsuarioService,
+  ) {}
 
   ngOnInit(): void {
     this.obtenerIngredientes();
     this.resultados = [];
     this.buscador();
+    this.recuperarUsuario();
   }
 
   async obtenerIngredientes() {
@@ -188,7 +191,13 @@ export class BibliotecaComponent {
     this.buscador();
   }
 
+  recuperarUsuario(): void {
+    this.usuarioService.infoUsuarioActual().subscribe(data => {
+      this.usuarioLogeado = data;
+    });
+  }
+
   estaLogeado() {
-    return (this.variablesGlobales.getCorreoUsuario());
+    return this.autenticacionService.estaLogeado();
   }
 }

@@ -1,5 +1,4 @@
 import { Component, Input, HostListener } from '@angular/core';
-import { VariablesGlobalesService } from '../../services/variables-globales.service';
 import { RecetaService } from '../../services/receta.service';
 import { ComentarioService } from '../../services/comentario.service';
 import { Receta } from '../../models/receta';
@@ -23,7 +22,6 @@ export class RecetaComponent {
   ];
 
   constructor(
-    private variablesGlobalesService: VariablesGlobalesService,
     private comentarioService: ComentarioService,
     private recetaService: RecetaService,
     public sanitizer: DomSanitizer) { }
@@ -40,12 +38,11 @@ export class RecetaComponent {
   }
   
   private cargarReceta() {
-    const idReceta = this.variablesGlobalesService.getRecetaActual();
+    const idReceta = Number(localStorage.getItem("recetaActual")) || -1;
     this.recetaService.post(idReceta).subscribe(data=> {
       this.receta = data;
       this.receta.precio ? this.receta.precio = Number(this.receta.precio?.toFixed(2)) : 0;
       this.letraNutriscore = this.nutriscoreEnLetra(this.receta.nutriscore!);
-      console.log(data);
     });
   }
 
@@ -64,7 +61,7 @@ export class RecetaComponent {
   }
 
   private cargarComentarios() {
-    const id_receta_actual = this.variablesGlobalesService.getRecetaActual();
+    const id_receta_actual = Number(localStorage.getItem("recetaActual"));
     this.comentarioService.getComentariosReceta(id_receta_actual).subscribe(data=> {
       this.comentarios = [];
       data.forEach(comentario => this.comentarios.push({
@@ -92,6 +89,6 @@ export class RecetaComponent {
   }
 
   getCorreoUsuario(): string {
-    return this.variablesGlobalesService.getCorreoUsuario();
+    return localStorage.getItem("correo") || "";
   }
 }

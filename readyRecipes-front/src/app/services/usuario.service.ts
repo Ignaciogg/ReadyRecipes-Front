@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError, Subject } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Usuario } from '../models/usuario';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +14,7 @@ export class UsuarioService {
   constructor(private httpClient: HttpClient) { }
 
   public registrar(usuario: Usuario): Observable<number> {
-    const endpoint: string = "http://127.0.0.1:8000/api/registro";
+    const endpoint: string = environment.apiUrl + "registro";
     this.httpClient.post<number>(endpoint, usuario).pipe(
       catchError((error: HttpErrorResponse) => {
         console.log('Error en el registro:', error);
@@ -26,14 +27,10 @@ export class UsuarioService {
     return this.respuestaSubject.asObservable();
   }
 
-  public login(usuario: Usuario): Observable<Usuario> {
-    const body = {
-      email: usuario.email,
-      pass: usuario.pass,
-    }
+  public infoUsuarioActual(): Observable<Usuario> {
     return this.httpClient.post<Usuario>(
-      "http://127.0.0.1:8000/api/login",
-      body,
+      environment.apiUrl + "me",
+      {},
     );
   }
 
@@ -42,7 +39,7 @@ export class UsuarioService {
       id: _id,
     }
     return this.httpClient.post<Usuario>(
-      "http://127.0.0.1:8000/api/infoUsuario",
+      environment.apiUrl + "infoUsuario",
       body,
     );
   }
@@ -52,14 +49,14 @@ export class UsuarioService {
       email: _correo,
     }
     return this.httpClient.post<void>(
-      "http://127.0.0.1:8000/api/eliminarUsuario",
+      environment.apiUrl + "eliminarUsuario",
       body,
     );
   }
 
   public numeroUsuarios(): Observable<any> {
     return this.httpClient.post<any>(
-      "http://127.0.0.1:8000/api/numeroUsuarios",
+      environment.apiUrl + "numeroUsuarios",
       {},
     );
   }

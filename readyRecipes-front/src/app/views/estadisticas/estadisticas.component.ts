@@ -109,7 +109,6 @@ export class EstadisticasComponent {
   eliminarUsuario(): void {
     this.esperandoEliminar = true;
     this.usuarioService.eliminarUsuario(this.usuario!.email).subscribe(data => {
-      console.log("Eliminando usuario con correo: " + this.usuario!.email);
       this.esperandoEliminar = false;
       this.receta = { id: -1 };
       this.usuarioBorrarInput = "";

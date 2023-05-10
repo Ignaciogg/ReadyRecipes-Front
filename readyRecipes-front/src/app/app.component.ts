@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { VariablesGlobalesService } from './services/variables-globales.service';
+import { Usuario } from './models/usuario';
+import { UsuarioService } from './services/usuario.service';
 
 @Component({
   selector: 'app-root',
@@ -10,21 +11,21 @@ import { VariablesGlobalesService } from './services/variables-globales.service'
 export class AppComponent {
   title = 'readyRecipes-front';
 
+  usuario: Usuario = new Usuario("", "", "", "", false);
+
   constructor(
     public router: Router,
-    private variablesGlobalesService: VariablesGlobalesService) { }
+    private usuarioService: UsuarioService,
+  ) { }
 
-  getNombreUsuario(): string {
-    return this.variablesGlobalesService.getNombreUsuario();
-  }
-
-  getCorreoUsuario(): string {
-    return this.variablesGlobalesService.getCorreoUsuario();
+  ngOnInit(): void {
+    this.usuarioService.infoUsuarioActual().subscribe(data => {
+      this.usuario = data;
+    });
   }
 
   logout(): void {
-    this.variablesGlobalesService.setNombreUsuario("");
-    this.variablesGlobalesService.setApellidosUsuario("");
-    this.variablesGlobalesService.setCorreoUsuario("");
+    localStorage.setItem("token", "");
+    this.usuario = new Usuario("", "", "", "", false);
   }
 }
