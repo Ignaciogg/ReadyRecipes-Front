@@ -3,6 +3,7 @@ import { Receta } from 'src/app/models/receta';
 import { IngredienteService } from 'src/app/services/ingrediente.service';
 import { RecetaService } from 'src/app/services/receta.service';
 import { VariablesGlobalesService } from 'src/app/services/variables-globales.service';
+import selectPure from 'select-pure';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -19,15 +20,16 @@ export class BibliotecaComponent {
     { nombre: "Pescado", categoria: "Tipo", activo: false, id: null, visible: true },
     { nombre: "Pasta", categoria: "Tipo", activo: false, id: null, visible: true },
     { nombre: "Aperitivo", categoria: "Tipo", activo: false, id: null, visible: true },
-    { nombre: "Nutriscore A", categoria: "Nutriscore", activo: false, id: null, visible: true },
-    { nombre: "Nutriscore B", categoria: "Nutriscore", activo: false, id: null, visible: true },
-    { nombre: "Nutriscore C", categoria: "Nutriscore", activo: false, id: null, visible: true },
-    { nombre: "Nutriscore D", categoria: "Nutriscore", activo: false, id: null, visible: true },
+    { nombre: "A", categoria: "Nutriscore", activo: false, id: null, visible: true },
+    { nombre: "B", categoria: "Nutriscore", activo: false, id: null, visible: true },
+    { nombre: "C", categoria: "Nutriscore", activo: false, id: null, visible: true },
+    { nombre: "D", categoria: "Nutriscore", activo: false, id: null, visible: true },
     { nombre: "2", categoria: "Precio", activo: false, id: null, visible: true },
     { nombre: "5", categoria: "Precio", activo: false, id: null, visible: true },
     { nombre: "10", categoria: "Precio", activo: false, id: null, visible: true },
     { nombre: "15", categoria: "Precio", activo: false, id: null, visible: true},
     { nombre: "Mis favoritos", categoria: "Favoritos", activo: false, id: null, visible: true },
+    { nombre: "No favoritos", categoria: "Favoritos", activo: false, id: null, visible: true },
   ];
   resultados: Receta[] = [];
   
@@ -35,6 +37,7 @@ export class BibliotecaComponent {
     private ingredienteService: IngredienteService,
     private recetaService: RecetaService,
     private variablesGlobales: VariablesGlobalesService,
+    private selectPure: selectPure,
   ) { }
 
   ngOnInit(): void {
