@@ -8,9 +8,11 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-biblioteca',
   templateUrl: './biblioteca.component.html',
-  styleUrls: ['./biblioteca.component.scss']
+  styleUrls: ['./biblioteca.component.scss'],
 })
+
 export class BibliotecaComponent {
+
   public esAdministrador: boolean = true;
   public respuestaBuscador: number = 0;
   filtros = [
@@ -18,11 +20,11 @@ export class BibliotecaComponent {
     { nombre: "Carne", categoria: "Tipo", activo: false, id: null, visible: true },
     { nombre: "Pescado", categoria: "Tipo", activo: false, id: null, visible: true },
     { nombre: "Pasta", categoria: "Tipo", activo: false, id: null, visible: true },
-    { nombre: "Aperitivo", categoria: "Tipo", activo: false, id: null, visible: true },
-    { nombre: "Nutriscore A", categoria: "Nutriscore", activo: false, id: null, visible: true },
-    { nombre: "Nutriscore B", categoria: "Nutriscore", activo: false, id: null, visible: true },
-    { nombre: "Nutriscore C", categoria: "Nutriscore", activo: false, id: null, visible: true },
-    { nombre: "Nutriscore D", categoria: "Nutriscore", activo: false, id: null, visible: true },
+    { nombre: "Aperitivos", categoria: "Tipo", activo: false, id: null, visible: true },
+    { nombre: "A", categoria: "Nutriscore", activo: false, id: null, visible: true },
+    { nombre: "B", categoria: "Nutriscore", activo: false, id: null, visible: true },
+    { nombre: "C", categoria: "Nutriscore", activo: false, id: null, visible: true },
+    { nombre: "D", categoria: "Nutriscore", activo: false, id: null, visible: true },
     { nombre: "2", categoria: "Precio", activo: false, id: null, visible: true },
     { nombre: "5", categoria: "Precio", activo: false, id: null, visible: true },
     { nombre: "10", categoria: "Precio", activo: false, id: null, visible: true },
