@@ -3,8 +3,7 @@ import { Receta } from 'src/app/models/receta';
 import { IngredienteService } from 'src/app/services/ingrediente.service';
 import { RecetaService } from 'src/app/services/receta.service';
 import { VariablesGlobalesService } from 'src/app/services/variables-globales.service';
-import selectPure from 'select-pure';
-import { Observable } from 'rxjs';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-biblioteca',
@@ -37,13 +36,23 @@ export class BibliotecaComponent {
     private ingredienteService: IngredienteService,
     private recetaService: RecetaService,
     private variablesGlobales: VariablesGlobalesService,
-    private selectPure: selectPure,
+    private fb:FormBuilder,
   ) { }
+
+  isSubmitted=false;
+  
+  onPost= ()=>this.isSubmitted=true;
+
+  frm!:FormGroup;
 
   ngOnInit(): void {
     this.obtenerIngredientes();
     this.resultados = [];
     this.buscador();
+
+    this.frm = this.fb.group({
+      'selectedIngredient':[]
+   })
   }
 
   async obtenerIngredientes() {

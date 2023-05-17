@@ -19,7 +19,6 @@ export class RecetaEncontradaComponent {
   }
   
   redondearNutriscore(numero: number): number {
-    console.log(this.receta);
     if(4.5 < numero) {
       return 5;
     } else if(3.5 < numero && numero <= 4.5) {
