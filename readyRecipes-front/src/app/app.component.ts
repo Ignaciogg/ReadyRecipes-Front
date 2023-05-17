@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Usuario } from './models/usuario';
-import { UsuarioService } from './services/usuario.service';
+import { AutenticacionService } from 'src/app/services/autenticacion.service';
+
 
 @Component({
   selector: 'app-root',
@@ -11,21 +11,24 @@ import { UsuarioService } from './services/usuario.service';
 export class AppComponent {
   title = 'readyRecipes-front';
 
-  usuario: Usuario = new Usuario("", "", "", "", false);
-
   constructor(
     public router: Router,
-    private usuarioService: UsuarioService,
+    private autenticacionService: AutenticacionService
   ) { }
 
-  ngOnInit(): void {
-    this.usuarioService.infoUsuarioActual().subscribe(data => {
-      this.usuario = data;
-    });
+  getNombre(): string {
+    return localStorage.getItem("nombre") ?? "";
+  }
+
+  getEmail(): string {
+    return localStorage.getItem("email") ?? "";
+  }
+
+  estaLogeado(): boolean {
+    return this.autenticacionService.estaLogeado();
   }
 
   logout(): void {
-    localStorage.setItem("token", "");
-    this.usuario = new Usuario("", "", "", "", false);
+    this.autenticacionService.logout();
   }
 }

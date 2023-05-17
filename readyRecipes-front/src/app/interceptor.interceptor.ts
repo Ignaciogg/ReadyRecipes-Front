@@ -19,7 +19,6 @@ export class InterceptorInterceptor implements HttpInterceptor {
     const newRequest = request.clone({
       setHeaders: { "Authorization": `Bearer ${localStorage.getItem("token") ?? "No-token-found"}` },
     });
-    console.log("Enviada la petición:", newRequest);
     return next.handle(newRequest);
   }
 }

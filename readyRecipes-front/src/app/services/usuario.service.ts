@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core'; 
 import { Observable, throwError, Subject } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Usuario } from '../models/usuario';
@@ -27,7 +27,7 @@ export class UsuarioService {
     return this.respuestaSubject.asObservable();
   }
 
-  public infoUsuarioActual(): Observable<Usuario> {
+  public me(): Observable<Usuario> {
     return this.httpClient.post<Usuario>(
       environment.apiUrl + "me",
       {},

@@ -1,22 +1,20 @@
 <div class="contenedor">
     <div>
-        <header *ngIf="router.url !== '/'">
-            <div class="d-flex align-items-center justify-content-center">
+        <header *ngIf="router.url !== '/'"> 
+            <div>
                 <a routerLink="/biblioteca">
                     <img class="logo" src="assets/imagenes/logoBlanco.png">
                 </a>
-                <p *ngIf="usuario.nombre != ''" class="m-0 p-0 text-white">¡Hola de nuevo, {{usuario.nombre}}!</p>
             </div>
+            <p *ngIf="estaLogeado() && router.url == '/biblioteca'" class="d-flex m-0 text-white align-items-center">¡Hola de nuevo, {{getNombre()}}!</p>
             <div *ngIf="!router.url.includes('registr') && !router.url.includes('recuperar') && !router.url.includes('login')" class="d-flex align-items-center">
-                <a *ngIf="usuario.nombre == ''" class="login d-flex align-items-center" routerLink="/login" routerLinkActive="oculto">
+                <a *ngIf="!estaLogeado()" class="login d-flex align-items-center" routerLink="/login" routerLinkActive="oculto">
                     <img src="assets/imagenes/iconos/perfil.png">
-                    <p *ngIf="usuario.email == ''" class="m-0">Login</p>
-                    <p *ngIf="usuario.email != ''" class="m-0">Logout {{usuario.email}}</p>
+                    <p class="m-0">Login</p>
                 </a>
-                <a *ngIf="usuario.email != ''" class="login d-flex align-items-center" (click)="logout()" routerLink="/" routerLinkActive="oculto">
+                <a *ngIf="estaLogeado()"class="login d-flex align-items-center" (click)="logout()" routerLink="/" routerLinkActive="oculto">
                     <img src="assets/imagenes/iconos/perfil.png">
-                    <p *ngIf="usuario.email == ''" class="m-0">Login</p>
-                    <p *ngIf="usuario.email != ''" class="m-0">Logout {{usuario.email}}</p>
+                    <p class="m-0">Logout {{getEmail()}}</p>
                 </a>
             </div>
         </header>

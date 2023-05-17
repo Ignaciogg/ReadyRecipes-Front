@@ -122,7 +122,7 @@ export class EstadisticasComponent {
 
   async recibirReceta(_id: string): Promise<void> {
     this.receta = undefined;
-    this.recetaService.post(Number(this.recetaModificarInput)).subscribe(data => {
+    this.recetaService.get(Number(this.recetaModificarInput)).subscribe(data => {
       this.receta = data;
       this.tituloOriginal = this.receta.titulo!;
       this.textoOriginal = this.receta.texto!;

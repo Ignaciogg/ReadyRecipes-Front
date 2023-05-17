@@ -15,7 +15,7 @@ const routes: Routes = [
   {path: "recuperar", component: RecuperarComponent},
   {path: "registro", component: RegistroComponent},
   {path: "biblioteca", component: BibliotecaComponent},
-  {path: "receta", component: RecetaComponent},
+  {path: "receta/:id", component: RecetaComponent},
   {path: "estadisticas", component: EstadisticasComponent}
 ];
 

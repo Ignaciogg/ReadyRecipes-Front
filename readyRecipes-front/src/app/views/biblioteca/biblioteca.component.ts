@@ -192,7 +192,7 @@ export class BibliotecaComponent {
   }
 
   recuperarUsuario(): void {
-    this.usuarioService.infoUsuarioActual().subscribe(data => {
+    this.usuarioService.me().subscribe(data => {
       this.usuarioLogeado = data;
     });
   }

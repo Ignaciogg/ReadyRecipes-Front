@@ -12,10 +12,6 @@ export class RecetaEncontradaComponent {
   constructor(
   ) { }
   
-  setearIdReceta() {
-    localStorage.setItem("recetaActual", this.receta.id.toString());
-  }
-  
   redondearNutriscore(numero: number): number {
     if(4.5 < numero) {
       return 5;

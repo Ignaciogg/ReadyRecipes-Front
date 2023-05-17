@@ -21,13 +21,9 @@ export class RecetaService {
     return this.httpClient.post<Receta>(environment.apiUrl + "create", receta);
   }
 
-  public post(_id: number): Observable<Receta> {
-    const body = {
-      id_receta: _id
-    }
-    return this.httpClient.post<Receta>(
-      environment.apiUrl + "receta",
-      body,
+  public get(_id: number): Observable<Receta> {
+    return this.httpClient.get<Receta>(
+      environment.apiUrl + "receta/" + _id,
     );
   }
 
