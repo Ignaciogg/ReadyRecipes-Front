@@ -37,7 +37,7 @@
             <p class="mb-2"><b>Nutriscore: </b>{{letraNutriscore}}</p>
             <div class="d-flex flex-wrap align-items-center  mb-2">
                 <p class="m-0"><b>Ingredientes ({{receta.ingredientes?.length}}):&nbsp;</b></p>
-                <p class="m-0" *ngFor="let ingrediente of receta.ingredientes">{{ingrediente.nombre}},&nbsp;</p>
+                <p class="m-0" *ngFor="let ingrediente of receta.ingredientes">{{ingrediente}},&nbsp;</p>
             </div>
             <p><b>Precio: </b>{{receta.precio}} €</p>
         </section>
@@ -47,8 +47,8 @@
         <p>{{receta.texto}}</p>
     </div>
     <h2>Comentarios</h2>
-    <p *ngIf="getCorreoUsuario() == ''" style="color: var(--colorPrincipal);">¡Inicie sesión para opinar sobre esta receta!</p>
-    <form *ngIf="getCorreoUsuario() != ''" method="POST" action="/ruta/de/destino">
+    <p *ngIf="!estaLogeado()" style="color: var(--colorPrincipal);">¡Inicie sesión para opinar sobre esta receta!</p>
+    <form *ngIf="estaLogeado()" method="POST" action="/ruta/de/destino">
         <input [(ngModel)]="comentarioInput" type="text" name="nombre" placeholder="¿Qué opina sobre esta receta?" class="px-3 py-1">
         <button (click)="nuevoComentario(comentarioInput)" class="botonEnviar">Enviar</button>
     </form>

@@ -1,9 +1,10 @@
 import { Component, Input, HostListener } from '@angular/core';
-import { VariablesGlobalesService } from '../../services/variables-globales.service';
 import { RecetaService } from '../../services/receta.service';
+import { AutenticacionService } from '../../services/autenticacion.service';
 import { ComentarioService } from '../../services/comentario.service';
 import { Receta } from '../../models/receta';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'viewReceta',
@@ -11,6 +12,9 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./receta.component.scss'],
 })
 export class RecetaComponent {
+
+  public id: number = -1;
+
   public receta: Receta = {id: 1, titulo: ""};
   public minMostrarPulgares: number = 850;
   public isViewportLarge: boolean = window.innerWidth > this.minMostrarPulgares;
@@ -23,12 +27,15 @@ export class RecetaComponent {
   ];
 
   constructor(
-    private variablesGlobalesService: VariablesGlobalesService,
     private comentarioService: ComentarioService,
     private recetaService: RecetaService,
-    public sanitizer: DomSanitizer) { }
+    private autenticacionService: AutenticacionService,
+    public sanitizer: DomSanitizer,
+    private route: ActivatedRoute,
+    ) { }
 
   ngOnInit(): void {
+    this.id = Number(this.route.snapshot.paramMap.get("id") || "");
     this.cargando = true;
     try {
       this.cargarReceta();
@@ -40,12 +47,10 @@ export class RecetaComponent {
   }
   
   private cargarReceta() {
-    const idReceta = this.variablesGlobalesService.getRecetaActual();
-    this.recetaService.post(idReceta).subscribe(data=> {
+    this.recetaService.get(this.id).subscribe(data=> {
       this.receta = data;
       this.receta.precio ? this.receta.precio = Number(this.receta.precio?.toFixed(2)) : 0;
       this.letraNutriscore = this.nutriscoreEnLetra(this.receta.nutriscore!);
-      console.log(data);
     });
   }
 
@@ -64,7 +69,7 @@ export class RecetaComponent {
   }
 
   private cargarComentarios() {
-    const id_receta_actual = this.variablesGlobalesService.getRecetaActual();
+    const id_receta_actual = Number(localStorage.getItem("recetaActual"));
     this.comentarioService.getComentariosReceta(id_receta_actual).subscribe(data=> {
       this.comentarios = [];
       data.forEach(comentario => this.comentarios.push({
@@ -91,7 +96,11 @@ export class RecetaComponent {
     this.esFavorito = !this.esFavorito;
   }
 
+  estaLogeado(): boolean {
+    return this.autenticacionService.estaLogeado();
+  }
+
   getCorreoUsuario(): string {
-    return this.variablesGlobalesService.getCorreoUsuario();
+    return this.autenticacionService.getEmail() || "";
   }
 }

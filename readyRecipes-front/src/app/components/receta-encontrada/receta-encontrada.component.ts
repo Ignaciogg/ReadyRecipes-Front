@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { VariablesGlobalesService } from 'src/app/services/variables-globales.service';
 import { Receta } from 'src/app/models/receta';
 
 @Component({
@@ -11,12 +10,7 @@ export class RecetaEncontradaComponent {
   @Input() receta: Receta = new Receta(0, "");
 
   constructor(
-    private variablesGlobales: VariablesGlobalesService
   ) { }
-  
-  setearIdReceta() {
-    this.variablesGlobales.setRecetaActual(Number(this.receta.id));
-  }
   
   redondearNutriscore(numero: number): number {
     if(4.5 < numero) {

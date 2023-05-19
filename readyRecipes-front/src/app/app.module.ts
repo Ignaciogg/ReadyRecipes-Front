@@ -3,6 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule , FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { FormsModule } from '@angular/forms';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -19,6 +21,7 @@ import { RecuperarComponent } from './views/recuperar/recuperar.component';
 import { CargandoComponent } from './components/cargando/cargando.component';
 import { SafePipeModule } from 'safe-pipe';
 import { EstadisticasComponent } from './views/estadisticas/estadisticas.component';
+import { InterceptorInterceptor } from './interceptor.interceptor';
 
 @NgModule({
   declarations: [
@@ -45,7 +48,9 @@ import { EstadisticasComponent } from './views/estadisticas/estadisticas.compone
     ReactiveFormsModule,
     NgSelectModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: InterceptorInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -3,7 +3,7 @@
 </head>
 
 <div class="pagina">
-    <a *ngIf="esAdministrador == true" class="botonAdmin" routerLink="/estadisticas" title="Ir a funciones de administrador">
+    <a *ngIf="usuarioLogeado.administrador == true" class="botonAdmin" routerLink="/estadisticas" title="Ir a funciones de administrador">
         <img src="assets/imagenes/iconos/stats.png">
         <p>Ir a funciones de administrador</p>
     </a>
@@ -37,7 +37,7 @@
             class="col-lg-2 col-md-4 col-sm-4 col-6"
             nombre="APERITIVOS"
             imagen="assets/imagenes/aperitivos.png"
-            (click)="buscarTipo('Aperitivo')"
+            (click)="buscarTipo('Aperitivos')"
         />
     </div>
     

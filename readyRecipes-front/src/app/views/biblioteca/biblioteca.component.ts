@@ -4,14 +4,17 @@ import { IngredienteService } from 'src/app/services/ingrediente.service';
 import { RecetaService } from 'src/app/services/receta.service';
 import { VariablesGlobalesService } from 'src/app/services/variables-globales.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { AutenticacionService } from 'src/app/services/autenticacion.service';
+import { UsuarioService } from 'src/app/services/usuario.service';
+import { Usuario } from 'src/app/models/usuario';
 
 @Component({
   selector: 'app-biblioteca',
   templateUrl: './biblioteca.component.html',
-  styleUrls: ['./biblioteca.component.scss']
+  styleUrls: ['./biblioteca.component.scss'],
 })
+
 export class BibliotecaComponent {
-  public esAdministrador: boolean = true;
   public respuestaBuscador: number = 0;
   filtros = [
     { nombre: "Verdura", categoria: "Tipo", activo: false, id: -1, visible: true },
@@ -31,13 +34,16 @@ export class BibliotecaComponent {
     { nombre: "No favoritos", categoria: "Favoritos", activo: false, id: null, visible: true },
   ];
   resultados: Receta[] = [];
-  
+  usuarioLogeado: Usuario = new Usuario("", "", "", "", false);
+
   constructor(
     private ingredienteService: IngredienteService,
     private recetaService: RecetaService,
     private variablesGlobales: VariablesGlobalesService,
     private fb:FormBuilder,
-  ) { }
+    private autenticacionService: AutenticacionService,
+    private usuarioService: UsuarioService,
+  ) {}
 
   isSubmitted=false;
   
@@ -53,6 +59,7 @@ export class BibliotecaComponent {
     this.frm = this.fb.group({
       'selectedIngredient':[]
    })
+    this.recuperarUsuario();
   }
 
   async obtenerIngredientes() {
@@ -200,7 +207,13 @@ export class BibliotecaComponent {
     this.buscador();
   }
 
+  recuperarUsuario(): void {
+    this.usuarioService.me().subscribe(data => {
+      this.usuarioLogeado = data;
+    });
+  }
+
   estaLogeado() {
-    return (this.variablesGlobales.getCorreoUsuario());
+    return this.autenticacionService.estaLogeado();
   }
 }
