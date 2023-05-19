@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Receta } from 'src/app/models/receta';
 import { IngredienteService } from 'src/app/services/ingrediente.service';
 import { RecetaService } from 'src/app/services/receta.service';
-import { VariablesGlobalesService } from 'src/app/services/variables-globales.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AutenticacionService } from 'src/app/services/autenticacion.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
@@ -21,7 +20,7 @@ export class BibliotecaComponent {
     { nombre: "Carne", categoria: "Tipo", activo: false, id: null, visible: true },
     { nombre: "Pescado", categoria: "Tipo", activo: false, id: null, visible: true },
     { nombre: "Pasta", categoria: "Tipo", activo: false, id: null, visible: true },
-    { nombre: "Aperitivo", categoria: "Tipo", activo: false, id: null, visible: true },
+    { nombre: "Aperitivos", categoria: "Tipo", activo: false, id: null, visible: true },
     { nombre: "A", categoria: "Nutriscore", activo: false, id: null, visible: true },
     { nombre: "B", categoria: "Nutriscore", activo: false, id: null, visible: true },
     { nombre: "C", categoria: "Nutriscore", activo: false, id: null, visible: true },
@@ -39,7 +38,6 @@ export class BibliotecaComponent {
   constructor(
     private ingredienteService: IngredienteService,
     private recetaService: RecetaService,
-    private variablesGlobales: VariablesGlobalesService,
     private fb:FormBuilder,
     private autenticacionService: AutenticacionService,
     private usuarioService: UsuarioService,
