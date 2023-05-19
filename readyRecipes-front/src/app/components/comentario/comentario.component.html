@@ -1,4 +1,7 @@
 <div *ngIf="autor != ''" class="contenedor">
-    <p class="autor">{{autor}}</p>
-    <p>{{mensaje}}</p>
+    <img src="/assets/imagenes/iconos/perfil.png" alt="imagen">
+    <div>
+        <p class="autor">{{formatearTexto(autor)}}</p>
+        <p>{{formatearTexto(mensaje)}}</p>
+    </div>
 </div>

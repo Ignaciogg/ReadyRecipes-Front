@@ -1,8 +1,17 @@
 .contenedor {
-    border: 1px solid;
+    display: flex;
+    border: 1px solid #AAA;
     border-radius: 10px;
     padding: 10px 20px;
     margin-bottom: 10px;
+    align-items: center;
+}
+
+img {
+    margin-right: 15px;
+    filter: invert(50%);
+    width: 40px;
+    height: 40px;
 }
 
 p {

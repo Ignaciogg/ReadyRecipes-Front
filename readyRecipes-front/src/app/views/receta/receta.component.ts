@@ -5,6 +5,7 @@ import { ComentarioService } from '../../services/comentario.service';
 import { Receta } from '../../models/receta';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
+import { Comentario } from 'src/app/models/comentario';
 
 @Component({
   selector: 'viewReceta',
@@ -22,9 +23,7 @@ export class RecetaComponent {
   public letraNutriscore = "";
   comentarioInput: string = "";
   @Input() esFavorito: boolean = false;
-  comentarios = [
-    { autor: "", mensaje: "" },
-  ];
+  comentarios: Comentario[] = [];
 
   constructor(
     private comentarioService: ComentarioService,
@@ -68,15 +67,11 @@ export class RecetaComponent {
     }
   }
 
-  private cargarComentarios() {
-    const id_receta_actual = Number(localStorage.getItem("recetaActual"));
-    this.comentarioService.getComentariosReceta(id_receta_actual).subscribe(data=> {
-      this.comentarios = [];
-      data.forEach(comentario => this.comentarios.push({
-        autor: comentario.nombre + " " + comentario.apellidos,
-        mensaje: comentario.contenido,
-      }));
+  private cargarComentarios() { 
+    this.comentarioService.getComentariosReceta(this.id).subscribe(data => {
+      this.comentarios = data;
       this.comentarios = this.comentarios.reverse();
+      console.log(this.comentarios);
     });
   }
 

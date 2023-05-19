@@ -11,14 +11,9 @@ export class ComentarioService {
 
   constructor(private httpClient: HttpClient) { }
 
-
-  public getComentariosReceta(_id_receta: number): Observable<Comentario[]> {
-    const body = {
-      id_receta: _id_receta,
-    }
-    return this.httpClient.post<Comentario[]>(
-      environment.apiUrl + "comentariosReceta",
-      body,
+  public getComentariosReceta(_id: number): Observable<Comentario[]> {
+    return this.httpClient.get<Comentario[]>(
+      environment.apiUrl + "comentariosReceta/" + _id,
       { responseType:'json' }
     );
   }
@@ -30,14 +25,14 @@ export class ComentarioService {
       contenido: _contenido,
     }
     return this.httpClient.post<Comentario[]>(
-      "http://127.0.0.1:8000/api/nuevoComentario",
+      environment.apiUrl + "nuevoComentario",
       body,
     );
   }
 
   public numeroComentarios(): Observable<any[]> {
     return this.httpClient.post<any>(
-      "http://127.0.0.1:8000/api/numeroComentarios",
+      environment.apiUrl + "numeroComentarios",
       {},
     );
   }

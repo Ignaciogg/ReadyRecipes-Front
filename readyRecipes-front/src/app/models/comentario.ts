@@ -1,24 +1,14 @@
+import { Usuario } from "./usuario";
+
 export class Comentario {
-    id: number;
     contenido: string;
-    id_receta: number;
-    id_usuario: number;
-    nombre: string;
-    apellidos: string;
+    usuario: Usuario[];
 
     constructor(
-        _id: number,
         _contenido: string,
-        _id_receta: number,
-        _id_usuario: number,
-        _nombre: string,
-        _apellidos: string,
+        _usuario: Usuario[],
     ) {
-        this.id = _id;
         this.contenido = _contenido;
-        this.id_receta = _id_receta;
-        this.id_usuario = _id_usuario;
-        this.nombre = _nombre;
-        this.apellidos = _apellidos;
+        this.usuario = _usuario;
     }
 }
