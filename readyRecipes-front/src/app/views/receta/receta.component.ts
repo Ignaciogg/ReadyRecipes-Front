@@ -2,7 +2,7 @@ import { Component, Input, HostListener } from '@angular/core';
 import { RecetaService } from '../../services/receta.service';
 import { AutenticacionService } from '../../services/autenticacion.service';
 import { ComentarioService } from '../../services/comentario.service';
-import { UsuarioService } from 'src/app/services/usuario.service';
+import { FavoritoService } from 'src/app/services/favorito.service';
 import { Receta } from '../../models/receta';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
@@ -16,7 +16,6 @@ import { Comentario } from 'src/app/models/comentario';
 export class RecetaComponent {
 
   public id: number = -1;
-
   public receta: Receta = {id: 1, titulo: ""};
   public minMostrarPulgares: number = 850;
   public isViewportLarge: boolean = window.innerWidth > this.minMostrarPulgares;
@@ -30,7 +29,7 @@ export class RecetaComponent {
     private comentarioService: ComentarioService,
     private recetaService: RecetaService,
     private autenticacionService: AutenticacionService,
-    private usuarioService: UsuarioService,
+    private favoritoService: FavoritoService,
     public sanitizer: DomSanitizer,
     private route: ActivatedRoute,
     ) { }
@@ -75,7 +74,7 @@ export class RecetaComponent {
       this.comentarios = this.comentarios.reverse();
     });
   }
-  
+
   nuevoComentario(_contenido: string) {
     const idReceta = this.id;
     const idUsuario = Number(this.autenticacionService.getId());
@@ -91,6 +90,17 @@ export class RecetaComponent {
   }
 
   cambiarFavorito() {
+    if(this.esFavorito) {
+      this.favoritoService.removeFavoritos(
+        this.id,
+        Number(this.autenticacionService.getId()),
+      ).subscribe();
+    } else {
+      this.favoritoService.addFavoritos(
+        this.id,
+        Number(this.autenticacionService.getId()),
+      ).subscribe();
+    }
     this.esFavorito = !this.esFavorito;
   }
 

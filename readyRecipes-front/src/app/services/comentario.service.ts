@@ -29,14 +29,7 @@ export class ComentarioService {
       body,
     );
   }
-
-  /*
-    "SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key
-    constraint fails (`pc2_grupo4`.`comentarios`, CONSTRAINT `comentarios_id_usuario_foreign` FOREIGN KEY
-    (`id_Usuario`) REFERENCES `usuarios` (`id`)) (SQL: insert into `comentarios` (`id_Receta`, `id_Usuario`,
-    `contenido`, `updated_at`, `created_at`) values (2, 0, grege, 2023-05-19 21:16:51, 2023-05-19 21:16:51))"
-  */
-
+  
   public numeroComentarios(): Observable<any[]> {
     return this.httpClient.post<any>(
       environment.apiUrl + "numeroComentarios",
