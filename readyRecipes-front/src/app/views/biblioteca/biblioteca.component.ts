@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Receta } from 'src/app/models/receta';
 import { IngredienteService } from 'src/app/services/ingrediente.service';
 import { RecetaService } from 'src/app/services/receta.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { AutenticacionService } from 'src/app/services/autenticacion.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { Usuario } from 'src/app/models/usuario';
@@ -14,7 +14,9 @@ import { Usuario } from 'src/app/models/usuario';
 })
 
 export class BibliotecaComponent {
+  public esAdministrador: boolean = true;
   public respuestaBuscador: number = 0;
+
   filtros = [
     { nombre: "Verdura", categoria: "Tipo", activo: false, id: -1, visible: true },
     { nombre: "Carne", categoria: "Tipo", activo: false, id: null, visible: true },
@@ -34,6 +36,7 @@ export class BibliotecaComponent {
   ];
   resultados: Receta[] = [];
   usuarioLogeado: Usuario = new Usuario("", "", "", "", false);
+  public ingredientes = this.filtros.filter(filtro => filtro.categoria == "Ingredientes"); 
 
   constructor(
     private ingredienteService: IngredienteService,
@@ -55,8 +58,8 @@ export class BibliotecaComponent {
     this.buscador();
 
     this.frm = this.fb.group({
-      'selectedIngredient':[]
-   })
+      'selectedIngredient': this.fb.array([])
+    });
     this.recuperarUsuario();
   }
 
@@ -72,15 +75,25 @@ export class BibliotecaComponent {
     });
   }
 
-  async filtrarIngredientes(event: any) {
-    const valorBuscado = event.target.value.toLowerCase();
-    this.filtros.forEach(ingrediente => {
-      if(ingrediente.categoria=="Ingredientes"){
-        if(ingrediente.nombre.includes(valorBuscado)) {
-          ingrediente.visible = true;
-        } else{
-          ingrediente.visible = false;
-        }
+  filtrarIngredientes(valorBuscado: any) {
+    const selectedIngredients = this.frm.get('selectedIngredient') as FormArray;
+  
+    // Reiniciar el FormArray para volver a agregar los ingredientes seleccionados
+    selectedIngredients.clear();
+  
+    // Agregar los ingredientes seleccionados al FormArray
+    if (valorBuscado && valorBuscado.length) {
+      valorBuscado.forEach((filtro: any) => {
+        selectedIngredients.push(this.fb.control(filtro));
+      });
+    }
+  
+    // Restringir los ingredientes visibles según la selección
+    this.ingredientes.forEach(ingrediente => {
+      if (ingrediente.nombre.includes(valorBuscado)) {
+        ingrediente.visible = true;
+      } else {
+        ingrediente.visible = false;
       }
     });
   }
@@ -126,10 +139,10 @@ export class BibliotecaComponent {
           case "Tipo": categoriaElegida = filtro.nombre; break;
           case "Nutriscore":
             switch(filtro.nombre) {
-              case "Nutriscore A": nutriscoreElegido = 4.51; break;
-              case "Nutriscore B": nutriscoreElegido = 3.51; break;
-              case "Nutriscore C": nutriscoreElegido = 2.51; break;
-              case "Nutriscore D": nutriscoreElegido = 1.51; break;
+              case "A": nutriscoreElegido = 4.51; break;
+              case "B": nutriscoreElegido = 3.51; break;
+              case "C": nutriscoreElegido = 2.51; break;
+              case "D": nutriscoreElegido = 1.51; break;
             }
           break;
           case "Favoritos": favoritoElegido = true; break;
@@ -191,15 +204,6 @@ export class BibliotecaComponent {
           break;
         }
         this.filtros[i].activo = true;
-      }
-    }
-    this.buscador();
-  }
-
-  eliminarFiltro(elegido: string) {
-    for(let i=0; i<this.filtros.length; i++) {
-      if(this.filtros[i].nombre == elegido) {
-        this.filtros[i].activo = false;
       }
     }
     this.buscador();

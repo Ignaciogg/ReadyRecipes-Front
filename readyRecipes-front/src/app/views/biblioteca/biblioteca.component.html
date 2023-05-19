@@ -3,7 +3,7 @@
 </head>
 
 <div class="pagina">
-    <a *ngIf="usuarioLogeado.administrador == true" class="botonAdmin" routerLink="/estadisticas" title="Ir a funciones de administrador">
+    <a *ngIf="esAdministrador == true" class="botonAdmin" routerLink="/estadisticas" title="Ir a funciones de administrador">
         <img src="assets/imagenes/iconos/stats.png">
         <p>Ir a funciones de administrador</p>
     </a>
@@ -37,7 +37,7 @@
             class="col-lg-2 col-md-4 col-sm-4 col-6"
             nombre="APERITIVOS"
             imagen="assets/imagenes/aperitivos.png"
-            (click)="buscarTipo('Aperitivos')"
+            (click)="buscarTipo('Aperitivo')"
         />
     </div>
     
@@ -74,35 +74,17 @@
             </div>
             <div class="tab-pane container" id="in">
                 <div class="d-flex flex-wrap ms-0 align-items-center buscadorIngredientes">
-                  <p class="inputBuscador">Encuentre ingredientes rápidamente</p>
-                  <ng-container *ngFor="let filtro of filtros">
-                    <aplicadorFiltro
-                      *ngIf="filtro.categoria=='Ingredientes' && filtro.activo==true" 
-                      titulo={{filtro.nombre}}
-                      (click)="activarFiltro(filtro.nombre)"
-                    />
-                  </ng-container>
+                    <p class="inputBuscador">Encuentre ingredientes rápidamente</p>
+                    
                     <form [formGroup]="frm" (ngSubmit)="onPost()">
-                        <ng-select formControlName="selectedFruit">
-                            <ng-container *ngFor="let filtro of filtros">
-                                <aplicadorFiltro
-                                    *ngIf="filtro.categoria=='Ingredientes' && filtro.activo==false && filtro.visible==true" 
-                                    titulo= filtro.nombre
-                                    (click)="activarFiltro(filtro.nombre)"
-                                />
-                            </ng-container>
+                        <ng-select *ngIf="frm instanceof FormGroup" formControlName="selectedIngredient" [multiple]="true" (ngModelChange)="filtrarIngredientes($event)">
+                          <ng-container *ngFor="let filtro of filtros">
+                            <ng-option *ngIf="filtro.categoria=='Ingredientes' && !filtro.activo && filtro.visible" [value]="filtro">{{filtro.nombre}}</ng-option>
+                          </ng-container>
                         </ng-select>
                     </form>
+                      
                 </div>
-            </div>
-            <div class="d-flex flex-wrap ms-0">
-                <ng-container *ngFor="let filtro of filtros">
-                  <aplicadorFiltro
-                    *ngIf="filtro.categoria=='Ingredientes' && filtro.activo==false && filtro.visible==true" 
-                    titulo={{filtro.nombre}}
-                    (click)="activarFiltro(filtro.nombre)"
-                  />
-                </ng-container>
             </div>
         </div>
 
