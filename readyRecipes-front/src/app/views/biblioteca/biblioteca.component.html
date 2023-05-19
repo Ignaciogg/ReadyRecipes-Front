@@ -1,3 +1,7 @@
+<head>
+    <script src="../../../../node_modules/select-pure/dist/index.js"></script>
+</head>
+
 <div class="pagina">
     <a *ngIf="usuarioLogeado.administrador == true" class="botonAdmin" routerLink="/estadisticas" title="Ir a funciones de administrador">
         <img src="assets/imagenes/iconos/stats.png">
@@ -36,82 +40,14 @@
             (click)="buscarTipo('Aperitivos')"
         />
     </div>
-    <h1 class="text-center">O filtre según otros parámetros</h1>
-    <div class="row justify-content-center filtros">
-        <ul class="nav nav-tabs col-lg-8 col-md-10 col-sm-12 col-12">
-            <li class="nav-item">
-                <a class="nav-link filtro active" data-bs-toggle="tab" href="#ca">Categoría</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link filtro" data-bs-toggle="tab" href="#in">Ingredientes</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link filtro" data-bs-toggle="tab" href="#nu">Nutriscore</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link filtro" data-bs-toggle="tab" href="#pr">Precio</a>
-            </li>
-            <li *ngIf="estaLogeado()" class="nav-item">
-                <a class="nav-link filtro" data-bs-toggle="tab" href="#fa">Favoritos</a>
-            </li>
-        </ul>
-    </div>
+    
     <div class="row justify-content-center">
-        <div class="resultadoBuscador col-lg-8 col-md-10 col-sm-12 col-12">
-            <p *ngIf="numFiltrosActivos() > 0">Filtros seleccionados:</p>
-            <div *ngIf="numFiltrosActivos() > 0" class="d-flex flex-wrap ms-0 mb-4">
-                <div class="d-flex flex-wrap ms-0">
-                    <ng-container *ngFor="let filtro of filtros">
-                        <ng-container *ngIf="filtro.activo==true">
-                            <aplicadorFiltro
-                                *ngIf="filtro.categoria != 'Precio'"
-                                titulo={{filtro.nombre}}
-                                [activo]=true
-                                (click)="eliminarFiltro(filtro.nombre)"
-                            />
-                            <aplicadorFiltro
-                                *ngIf="filtro.categoria == 'Precio'"
-                                titulo="Hasta {{filtro.nombre}} €"
-                                [activo]=true
-                                (click)="eliminarFiltro(filtro.nombre)"
-                            />
-                        </ng-container>
-                    </ng-container>
-                </div>
-            </div>
-            <p>Elija el filtro que desea añadir a la búsqueda:</p>
-            <div class="tab-content">
-                <div class="tab-pane container active" id="ca">
-                    <div class="d-flex flex-wrap ms-0">
-                        <ng-container *ngFor="let filtro of filtros">
-                            <aplicadorFiltro
-                                *ngIf="filtro.categoria=='Tipo' && filtro.activo==false"
-                                titulo={{filtro.nombre}}
-                                (click)="activarFiltro(filtro.nombre)"
-                            />
-                        </ng-container>
-                        <div *ngIf="filtros.length == 0">
-                            <p>¡Todos los filtros seleccionados!</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-pane container" id="in">
-                    <div class="d-flex flex-wrap ms-0 align-items-center">
-                        <p class="inputBuscador">Encuentre ingredientes rápidamente</p>
-                        <input class="buscadorIngredientes" (input)="filtrarIngredientes($event)">
-                    </div>
-                    <div class="d-flex flex-wrap ms-0">
-                        <ng-container *ngFor="let filtro of filtros">
-                            <aplicadorFiltro
-                                *ngIf="filtro.categoria=='Ingredientes' && filtro.activo==false && filtro.visible==true" 
-                                titulo={{filtro.nombre}}
-                                (click)="activarFiltro(filtro.nombre)"
-                            />
-                        </ng-container>
-                    </div>
-                </div>
+
+        <div class="container justify-content-center">
+            <div class="justify-content-center">
                 <div class="tab-pane container" id="nu">
                     <div class="d-flex flex-wrap ms-0">
+                        <p>Nutriscore: </p>
                         <ng-container *ngFor="let filtro of filtros">
                             <aplicadorFiltro
                                 *ngIf="filtro.categoria=='Nutriscore' && filtro.activo==false"
@@ -121,19 +57,11 @@
                         </ng-container>
                     </div>
                 </div>
-                <div class="tab-pane container" id="pr">
-                    <div class="d-flex flex-wrap ms-0">
-                        <ng-container *ngFor="let filtro of filtros">
-                            <aplicadorFiltro 
-                                *ngIf="filtro.categoria=='Precio' && filtro.activo==false"
-                                titulo="Menos de {{filtro.nombre}} €"
-                                (click)="activarFiltro(filtro.nombre)"
-                            />
-                        </ng-container>
-                    </div>
-                </div>
+            </div>
+            <div class="justify-content-center">
                 <div class="tab-pane container" id="fa">
                     <div class="d-flex flex-wrap ms-0">
+                        <p>Favoritos: </p>
                         <ng-container *ngFor="let filtro of filtros">
                             <aplicadorFiltro 
                                 *ngIf="filtro.categoria=='Favoritos' && filtro.activo==false"
@@ -144,7 +72,40 @@
                     </div>
                 </div>
             </div>
+            <div class="tab-pane container" id="in">
+                <div class="d-flex flex-wrap ms-0 align-items-center buscadorIngredientes">
+                  <p class="inputBuscador">Encuentre ingredientes rápidamente</p>
+                  <ng-container *ngFor="let filtro of filtros">
+                    <aplicadorFiltro
+                      *ngIf="filtro.categoria=='Ingredientes' && filtro.activo==true" 
+                      titulo={{filtro.nombre}}
+                      (click)="activarFiltro(filtro.nombre)"
+                    />
+                  </ng-container>
+                    <form [formGroup]="frm" (ngSubmit)="onPost()">
+                        <ng-select formControlName="selectedFruit">
+                            <ng-container *ngFor="let filtro of filtros">
+                                <aplicadorFiltro
+                                    *ngIf="filtro.categoria=='Ingredientes' && filtro.activo==false && filtro.visible==true" 
+                                    titulo= filtro.nombre
+                                    (click)="activarFiltro(filtro.nombre)"
+                                />
+                            </ng-container>
+                        </ng-select>
+                    </form>
+                </div>
+            </div>
+            <div class="d-flex flex-wrap ms-0">
+                <ng-container *ngFor="let filtro of filtros">
+                  <aplicadorFiltro
+                    *ngIf="filtro.categoria=='Ingredientes' && filtro.activo==false && filtro.visible==true" 
+                    titulo={{filtro.nombre}}
+                    (click)="activarFiltro(filtro.nombre)"
+                  />
+                </ng-container>
+            </div>
         </div>
+
         <div *ngIf="respuestaBuscador == -1" class="col-lg-8 col-md-10 col-sm-12 col-12 d-flex flex-column justify-content-center align-items-center">
             <cargando/>
             <p class="mt-3">Estamos preguntando a nuestros chefs por sus mejores recetas. Denos un segundo...</p>

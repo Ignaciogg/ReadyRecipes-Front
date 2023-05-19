@@ -37,6 +37,7 @@
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/@popperjs/core/dist/umd/popper.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
+              "node_modules/select-pure/dist/index.js",
               "node_modules/chart.js/dist/chart.js"
             ]
           },
@@ -105,7 +106,9 @@
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/@popperjs/core/dist/umd/popper.min.js",
-              "node_modules/bootstrap/dist/js/bootstrap.min.js"
+              "node_modules/bootstrap/dist/js/bootstrap.min.js",
+              "node_modules/select-pure/dist/index.js",
+              "node_modules/chart.js/dist/chart.js"
             ]
           }
         }

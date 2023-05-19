@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { ReactiveFormsModule , FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { FormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
@@ -41,7 +44,9 @@ import { InterceptorInterceptor } from './interceptor.interceptor';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    SafePipeModule
+    SafePipeModule,
+    ReactiveFormsModule,
+    NgSelectModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorInterceptor, multi: true },
