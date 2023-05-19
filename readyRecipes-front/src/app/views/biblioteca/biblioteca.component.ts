@@ -33,7 +33,7 @@ export class BibliotecaComponent {
     { nombre: "No favoritos", categoria: "Favoritos", activo: false, id: null, visible: true },
   ];
   resultados: Receta[] = [];
-  usuarioLogeado: Usuario = new Usuario("", "", "", "", false);
+  usuarioLogeado: Usuario = new Usuario();
 
   constructor(
     private ingredienteService: IngredienteService,

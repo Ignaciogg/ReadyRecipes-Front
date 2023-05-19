@@ -2,6 +2,7 @@ import { Component, Input, HostListener } from '@angular/core';
 import { RecetaService } from '../../services/receta.service';
 import { AutenticacionService } from '../../services/autenticacion.service';
 import { ComentarioService } from '../../services/comentario.service';
+import { UsuarioService } from 'src/app/services/usuario.service';
 import { Receta } from '../../models/receta';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
@@ -29,6 +30,7 @@ export class RecetaComponent {
     private comentarioService: ComentarioService,
     private recetaService: RecetaService,
     private autenticacionService: AutenticacionService,
+    private usuarioService: UsuarioService,
     public sanitizer: DomSanitizer,
     private route: ActivatedRoute,
     ) { }
@@ -71,12 +73,13 @@ export class RecetaComponent {
     this.comentarioService.getComentariosReceta(this.id).subscribe(data => {
       this.comentarios = data;
       this.comentarios = this.comentarios.reverse();
-      console.log(this.comentarios);
     });
   }
-
-  nuevoComentario(/*_nombre: string, _apellidos: string,*/ _contenido: string) {
-    this.comentarioService.nuevoComentario(_contenido).subscribe(data=> {
+  
+  nuevoComentario(_contenido: string) {
+    const idReceta = this.id;
+    const idUsuario = Number(this.autenticacionService.getId());
+    this.comentarioService.nuevoComentario(idReceta, idUsuario, _contenido).subscribe(data => {
       this.cargarComentarios();
       this.comentarioInput = "";
     });

@@ -22,7 +22,7 @@ export class EstadisticasComponent {
   textoOriginal: string = "";
   categoriaOriginal: string = "";
   receta?: Receta = { id: -1 };
-  usuario?: Usuario = { nombre: "", apellidos: "", email: "", pass: "", administrador: false };
+  usuario?: Usuario = new Usuario();
   alerta: boolean = false;
   esperandoEliminar: boolean = false;
   enviandoReceta: boolean = false;
@@ -108,7 +108,7 @@ export class EstadisticasComponent {
 
   eliminarUsuario(): void {
     this.esperandoEliminar = true;
-    this.usuarioService.eliminarUsuario(this.usuario!.email).subscribe(data => {
+    this.usuarioService.eliminarUsuario(this.usuario!.email!).subscribe(data => {
       this.esperandoEliminar = false;
       this.receta = { id: -1 };
       this.usuarioBorrarInput = "";

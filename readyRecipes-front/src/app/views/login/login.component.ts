@@ -27,13 +27,14 @@ export class LoginComponent {
     } else if(password == "") {
       this.respuesta = -3;
     } else {
-      let usuario: Usuario = new Usuario("", "", email, password, false);
-      this.autenticacionService.login(usuario).subscribe(async dataLogin => {
+      this.autenticacionService.login(email, password).subscribe(async dataLogin => {
         this.respuesta = 200;
         this.autenticacionService.setToken(dataLogin.access_token);
         this.usuarioService.me().subscribe(dataMe => {
-          this.autenticacionService.setNombre(dataMe.nombre);
-          this.autenticacionService.setEmail(dataMe.email);
+          this.autenticacionService.setId(dataMe.id!.toString());
+          this.autenticacionService.setNombre(dataMe.nombre!);
+          this.autenticacionService.setApellidos(dataMe.apellidos!);
+          this.autenticacionService.setEmail(dataMe.email!);
           this.router.navigate(['/biblioteca']);
         });
       });
