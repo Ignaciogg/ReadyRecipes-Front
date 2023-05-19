@@ -22,7 +22,7 @@ export class RecetaComponent {
   public cargando: boolean = false;
   public letraNutriscore = "";
   comentarioInput: string = "";
-  @Input() esFavorito: boolean = false;
+  esFavorito: boolean = false;
   comentarios: Comentario[] = [];
 
   constructor(
@@ -37,6 +37,7 @@ export class RecetaComponent {
   ngOnInit(): void {
     this.id = Number(this.route.snapshot.paramMap.get("id") || "");
     this.cargando = true;
+    this.getEsFavorito();
     try {
       this.cargarReceta();
       this.cargarComentarios();
@@ -91,17 +92,17 @@ export class RecetaComponent {
 
   cambiarFavorito() {
     if(this.esFavorito) {
-      this.favoritoService.removeFavoritos(
-        this.id,
-        Number(this.autenticacionService.getId()),
-      ).subscribe();
+      this.favoritoService.removeFavoritos(this.id, Number(this.autenticacionService.getId())).subscribe();
     } else {
-      this.favoritoService.addFavoritos(
-        this.id,
-        Number(this.autenticacionService.getId()),
-      ).subscribe();
+      this.favoritoService.addFavoritos(this.id, Number(this.autenticacionService.getId())).subscribe();
     }
     this.esFavorito = !this.esFavorito;
+  }
+
+  getEsFavorito() {
+    this.favoritoService.esFavorito(this.id, Number(this.autenticacionService.getId())).subscribe(data => {
+      this.esFavorito = (data == 1);
+    });
   }
 
   estaLogeado(): boolean {

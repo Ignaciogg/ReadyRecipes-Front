@@ -26,4 +26,10 @@ export class FavoritoService {
       environment.apiUrl + "removeFavoritos/" + _id_receta + "/" + _id_usuario,
     );
   }
+
+  public esFavorito(_id_receta: number, _id_usuario: number): Observable<number> {
+    return this.httpClient.get<number>(
+      environment.apiUrl + "esFavorito/" + _id_receta + "/" + _id_usuario,
+    );
+  }
 }
