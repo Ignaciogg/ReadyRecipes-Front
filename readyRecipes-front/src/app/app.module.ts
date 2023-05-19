@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,6 +18,7 @@ import { RecuperarComponent } from './views/recuperar/recuperar.component';
 import { CargandoComponent } from './components/cargando/cargando.component';
 import { SafePipeModule } from 'safe-pipe';
 import { EstadisticasComponent } from './views/estadisticas/estadisticas.component';
+import { InterceptorInterceptor } from './interceptor.interceptor';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,9 @@ import { EstadisticasComponent } from './views/estadisticas/estadisticas.compone
     HttpClientModule,
     SafePipeModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: InterceptorInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

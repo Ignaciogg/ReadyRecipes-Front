@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Receta } from '../models/receta';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -13,20 +14,16 @@ export class RecetaService {
   }
 
   public getAll(): Observable<Receta[]> {
-    return this.httpClient.get<Receta[]>("http://127.0.0.1:8000/api/recetas/getAll");
+    return this.httpClient.get<Receta[]>(environment.apiUrl + "recetas/getAll");
   }
 
   public create(receta: Receta): Observable<Receta> {
-    return this.httpClient.post<Receta>("http://127.0.0.1:8000/api/recetas/create", receta);
+    return this.httpClient.post<Receta>(environment.apiUrl + "create", receta);
   }
 
-  public post(_id: number): Observable<Receta> {
-    const body = {
-      id_receta: _id
-    }
-    return this.httpClient.post<Receta>(
-      "http://127.0.0.1:8000/api/receta",
-      body,
+  public get(_id: number): Observable<Receta> {
+    return this.httpClient.get<Receta>(
+      environment.apiUrl + "receta/" + _id,
     );
   }
 
@@ -58,7 +55,7 @@ export class RecetaService {
       ingredientes: _ingredientes,
     };
     return this.httpClient.post<Receta[]>(
-      "http://127.0.0.1:8000/api/buscador",
+      environment.apiUrl + "buscador",
       body,
     );
   }
@@ -71,7 +68,7 @@ export class RecetaService {
       categoria: _receta.categoria,
     };
     return this.httpClient.post<void>(
-      "http://127.0.0.1:8000/api/modificarReceta",
+      environment.apiUrl + "modificarReceta",
       body,
     );
   }
@@ -79,7 +76,7 @@ export class RecetaService {
   public recetasPorCategoria(): Observable<any> {
     const body = {};
     return this.httpClient.post<any>(
-      "http://127.0.0.1:8000/api/recetasPorCategoria",
+      environment.apiUrl + "recetasPorCategoria",
       body,
     );
   }
@@ -87,7 +84,7 @@ export class RecetaService {
   public recetasPorNutriscore(): Observable<any> {
     const body = {};
     return this.httpClient.post<any>(
-      "http://127.0.0.1:8000/api/recetasPorNutriscore",
+      environment.apiUrl + "recetasPorNutriscore",
       body,
     );
   }

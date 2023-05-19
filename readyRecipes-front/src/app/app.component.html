@@ -1,22 +1,20 @@
 <div class="contenedor">
     <div>
-        <header *ngIf="router.url !== '/'">
-            <div class="d-flex align-items-center justify-content-center">
+        <header *ngIf="router.url !== '/'"> 
+            <div>
                 <a routerLink="/biblioteca">
                     <img class="logo" src="assets/imagenes/logoBlanco.png">
                 </a>
-                <p *ngIf="getNombreUsuario() != '' && getNombreUsuario() && undefined" class="m-0 p-0 text-white">¡Hola de nuevo, {{getNombreUsuario()}}!</p>
             </div>
+            <p *ngIf="estaLogeado() && router.url == '/biblioteca'" class="d-flex m-0 text-white align-items-center">¡Hola de nuevo, {{getNombre()}}!</p>
             <div *ngIf="!router.url.includes('registr') && !router.url.includes('recuperar') && !router.url.includes('login')" class="d-flex align-items-center">
-                <a *ngIf="getCorreoUsuario() == ''" class="login d-flex align-items-center" routerLink="/login" routerLinkActive="oculto">
+                <a *ngIf="!estaLogeado()" class="login d-flex align-items-center" routerLink="/login" routerLinkActive="oculto">
                     <img src="assets/imagenes/iconos/perfil.png">
-                    <p *ngIf="getCorreoUsuario() == ''" class="m-0">Login</p>
-                    <p *ngIf="getCorreoUsuario() != ''" class="m-0">Logout {{getCorreoUsuario()}}</p>
+                    <p class="m-0">Login</p>
                 </a>
-                <a *ngIf="getCorreoUsuario() != ''" class="login d-flex align-items-center" (click)="logout()" routerLink="/" routerLinkActive="oculto">
+                <a *ngIf="estaLogeado()"class="login d-flex align-items-center" (click)="logout()" routerLink="/" routerLinkActive="oculto">
                     <img src="assets/imagenes/iconos/perfil.png">
-                    <p *ngIf="getCorreoUsuario() == ''" class="m-0">Login</p>
-                    <p *ngIf="getCorreoUsuario() != ''" class="m-0">Logout {{getCorreoUsuario()}}</p>
+                    <p class="m-0">Logout {{getEmail()}}</p>
                 </a>
             </div>
         </header>

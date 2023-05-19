@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { VariablesGlobalesService } from './services/variables-globales.service';
+import { AutenticacionService } from 'src/app/services/autenticacion.service';
+
 
 @Component({
   selector: 'app-root',
@@ -12,19 +13,22 @@ export class AppComponent {
 
   constructor(
     public router: Router,
-    private variablesGlobalesService: VariablesGlobalesService) { }
+    private autenticacionService: AutenticacionService
+  ) { }
 
-  getNombreUsuario(): string {
-    return this.variablesGlobalesService.getNombreUsuario();
+  getNombre(): string {
+    return localStorage.getItem("nombre") ?? "";
   }
 
-  getCorreoUsuario(): string {
-    return this.variablesGlobalesService.getCorreoUsuario();
+  getEmail(): string {
+    return localStorage.getItem("email") ?? "";
+  }
+
+  estaLogeado(): boolean {
+    return this.autenticacionService.estaLogeado();
   }
 
   logout(): void {
-    this.variablesGlobalesService.setNombreUsuario("");
-    this.variablesGlobalesService.setApellidosUsuario("");
-    this.variablesGlobalesService.setCorreoUsuario("");
+    this.autenticacionService.logout();
   }
 }

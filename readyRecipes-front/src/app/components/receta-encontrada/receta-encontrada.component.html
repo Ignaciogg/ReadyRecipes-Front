@@ -1,5 +1,5 @@
 <div class="ruta">
-    <a (click)="setearIdReceta()" href="/receta">
+    <a [routerLink]="['/receta', receta.id]">
         <p>{{receta.titulo}}</p>
         <div class="d-flex justify-content-start mt-4 justify-content-center">
             <ng-container [ngSwitch]="receta.categoria">
