@@ -18,7 +18,6 @@ export class RecetaComponent {
   public id: number = -1;
   public receta: Receta = {id: 1, titulo: ""};
   public minMostrarPulgares: number = 850;
-  public isViewportLarge: boolean = window.innerWidth > this.minMostrarPulgares;
   public cargando: number = 0;
   public letraNutriscore = "";
   comentarioInput: string = "";
@@ -84,11 +83,6 @@ export class RecetaComponent {
       this.cargarComentarios();
       this.comentarioInput = "";
     });
-  }
-  
-  @HostListener('window:resize', ['$event'])
-  onResize() {
-    this.isViewportLarge = window.innerWidth > this.minMostrarPulgares;
   }
 
   cambiarFavorito() {

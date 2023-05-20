@@ -28,34 +28,28 @@
     background: url("/assets/imagenes/pensando.png");
     background-size: contain;
     background-repeat: no-repeat;
-    /* p {
-        position: relative;
-        width: 100%;
-        margin: auto;
-        padding: 20px 10px;
-        background-color: rgba(255, 255, 255, 0.5);
-        text-align: center;
-        z-index: 0;
-    } */
+    margin-top: 20px;
+    aspect-ratio: 16/9;
     iframe {
-        aspect-ratio: 16/9;
-        position: relative;
         height: 100%;
         width: 100%;
+        border-radius: 10px;
     }
 }
 
-section {
-    padding-left: 10px;
-    padding-right: 10px;
-    margin-top: 5px;
-    margin-bottom: 10px;
+.ficha {
+    margin-top: 15px;
+    margin-left: 2vw;
 }
-
-.cara {
-    align-self: center;
-    height: 20px;
-    margin-right: 10px;
+.filaCara {
+    display: flex;
+    margin-bottom: 10px;
+    margin-right: 14px;
+    .cara {
+        align-self: center;
+        height: 20px;
+        margin-right: 6px;
+    }
 }
 
 .numComentarios {

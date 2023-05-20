@@ -3,7 +3,7 @@
     <p class="text-center mt-4">Estamos trabajando para ofrecerle toda la información que necesita</p> 
 </div>
 <div *ngIf="cargando == 3" class="pagina">
-    <div class="d-flex my-3 mr-3 align-items-center">
+    <div class="d-flex mt-3 mr-3 align-items-center">
         <a href="/biblioteca">
             <img class="iconoSuperior flechaVolver" src="assets/imagenes/iconos/flechaIzquierda.png">
         </a>
@@ -14,41 +14,37 @@
         <img class="iconoSuperior favoritoNo" (click)="cambiarFavorito()" *ngIf="esFavorito==false" src="assets/imagenes/iconos/favoritoNo.png">
     </div>
     <div class="d-flex flex-wrap ms-0">
-        <section class="col-lg-6 col-md-4 col-12 seccionIframe">
-            <!-- <p *ngIf="cargandoIframe">Estamos negociando con YouTube los secretos de la receta. Denos unos segundos más</p> -->
-            <iframe
-                [src]="sanitizer.bypassSecurityTrustResourceUrl(receta.url!)"
-                allowfullscreen="true"
-            ></iframe>
+        <section class="seccionIframe col-xl-5 col-md-6 col-12">
+            <iframe [src]="sanitizer.bypassSecurityTrustResourceUrl(receta.url!)" allowfullscreen="true"></iframe>
         </section>
-        <section class="col-lg-3 col-md-4 col-6">
-            <h3>Comentarios ({{receta.comentarios}})</h3>
-            <div class="d-flex mb-2">
-                <img *ngIf="isViewportLarge && receta.comentarios_positivos != 0" class="cara" src="assets/imagenes/iconos/caras/felizRellena.png">
-                <img *ngIf="isViewportLarge && receta.comentarios_positivos == 0" class="cara" src="assets/imagenes/iconos/caras/felizVacia.png">
-                <p class="numComentarios"><b>Comentarios positivos: </b>{{receta.comentarios_positivos}}</p>
+        <div class="col-md-5 col-12 ficha">
+            <h3>Ficha de la receta</h3>
+            <div class="d-flex flex-wrap align-items-center">
+                <p class="m-0 my-1 p-0"><b>Ingredientes ({{receta.ingredientes?.length}}):&nbsp;</b></p>
+                <p class="m-0 mb-1 p-0" *ngFor="let ingrediente of receta.ingredientes">{{ingrediente}},&nbsp;</p>
             </div>
-            <div class="d-flex mb-2">
-                <img *ngIf="isViewportLarge && receta.comentarios_neutros != 0" class="cara" src="assets/imagenes/iconos/caras/neutraRellena.png">
-                <img *ngIf="isViewportLarge && receta.comentarios_neutros == 0" class="cara" src="assets/imagenes/iconos/caras/neutraVacia.png">
-                <p class="numComentarios"><b>Comentarios neutros: </b>{{receta.comentarios_neutros}}</p>
+            <p class="m-0 mb-1 p-0"><b>Nutriscore: </b>{{letraNutriscore}}</p>
+            <p class="m-0 mb-1 p-0"><b>Precio: </b>{{receta.precio}} €</p>
+            <p class="m-0 mb-1 p-0"><b>Comentarios de YouTube ({{receta.comentarios}}):</b></p>
+            <div class="d-flex flex-row flex-sm-row flex-lg-column flex-wrap">
+                <div class="filaCara">
+                    <img *ngIf="receta.comentarios_positivos != 0" class="cara" src="assets/imagenes/iconos/caras/felizRellena.png">
+                    <img *ngIf="receta.comentarios_positivos == 0" class="cara" src="assets/imagenes/iconos/caras/felizVacia.png">
+                    <p class="numComentarios">Positivos:{{receta.comentarios_positivos}}</p>
+                </div>
+                <div class="filaCara">
+                    <img *ngIf="receta.comentarios_neutros != 0" class="cara" src="assets/imagenes/iconos/caras/neutraRellena.png">
+                    <img *ngIf="receta.comentarios_neutros == 0" class="cara" src="assets/imagenes/iconos/caras/neutraVacia.png">
+                    <p class="numComentarios">Neutros: {{receta.comentarios_neutros}}</p>
+                </div>
+                <div class="filaCara">
+                    <img *ngIf="receta.comentarios_negativos != 0" class="cara" src="assets/imagenes/iconos/caras/tristeRellena.png">
+                    <img *ngIf="receta.comentarios_negativos == 0" class="cara" src="assets/imagenes/iconos/caras/tristeVacia.png">
+                    <p class="numComentarios">Negativos: {{receta.comentarios_negativos}}</p>
+                </div>
             </div>
-            <div class="d-flex mb-2">
-                <img *ngIf="isViewportLarge && receta.comentarios_negativos != 0" class="cara" src="assets/imagenes/iconos/caras/tristeRellena.png">
-                <img *ngIf="isViewportLarge && receta.comentarios_negativos == 0" class="cara" src="assets/imagenes/iconos/caras/tristeVacia.png">
-                <p class="numComentarios"><b>Comentarios negativos: </b>{{receta.comentarios_negativos}}</p>
-            </div>
-            <p><b>Sentimiento medio: </b>{{receta.sentimiento?.toFixed(2)}} %</p>
-        </section>
-        <section class="col-lg-3 col-md-4 col-6">
-            <h3>Ingredientes</h3>
-            <p class="mb-2"><b>Nutriscore: </b>{{letraNutriscore}}</p>
-            <div class="d-flex flex-wrap align-items-center  mb-2">
-                <p class="m-0"><b>Ingredientes ({{receta.ingredientes?.length}}):&nbsp;</b></p>
-                <p class="m-0" *ngFor="let ingrediente of receta.ingredientes">{{ingrediente}},&nbsp;</p>
-            </div>
-            <p><b>Precio: </b>{{receta.precio}} €</p>
-        </section>
+            <p class="m-0 mb-1 p-0">Sentimiento medio: {{receta.sentimiento?.toFixed(2)}} %</p>
+        </div>
     </div>
     <h2>Instrucciones</h2>
     <div>
