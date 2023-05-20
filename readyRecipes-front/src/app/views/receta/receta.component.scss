@@ -24,11 +24,25 @@
     }
 }
 
-iframe {
-    aspect-ratio: 16/9;
-    position: relative;
-    height: 100%;
-    width: 100%;
+.seccionIframe {
+    background: url("/assets/imagenes/pensando.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    /* p {
+        position: relative;
+        width: 100%;
+        margin: auto;
+        padding: 20px 10px;
+        background-color: rgba(255, 255, 255, 0.5);
+        text-align: center;
+        z-index: 0;
+    } */
+    iframe {
+        aspect-ratio: 16/9;
+        position: relative;
+        height: 100%;
+        width: 100%;
+    }
 }
 
 section {

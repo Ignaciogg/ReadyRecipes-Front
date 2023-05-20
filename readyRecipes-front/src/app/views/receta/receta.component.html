@@ -1,4 +1,8 @@
-<div *ngIf="receta.titulo != null" class="pagina">
+<div *ngIf="cargando < 3" class="cargandoGeneral d-flex flex-column justify-content-center align-items-center">
+    <cargando class="d-flex justify-content-center align-items-center"/>
+    <p class="text-center mt-4">Estamos trabajando para ofrecerle toda la información que necesita</p> 
+</div>
+<div *ngIf="cargando == 3" class="pagina">
     <div class="d-flex my-3 mr-3 align-items-center">
         <a href="/biblioteca">
             <img class="iconoSuperior flechaVolver" src="assets/imagenes/iconos/flechaIzquierda.png">
@@ -10,9 +14,13 @@
         <img class="iconoSuperior favoritoNo" (click)="cambiarFavorito()" *ngIf="esFavorito==false" src="assets/imagenes/iconos/favoritoNo.png">
     </div>
     <div class="d-flex flex-wrap ms-0">
-        <!-- <section class="col-lg-6 col-md-4 col-12">
-            <iframe [src]="sanitizer.bypassSecurityTrustResourceUrl(receta.url!)" allowfullscreen="true"></iframe>
-        </section> -->
+        <section class="col-lg-6 col-md-4 col-12 seccionIframe">
+            <!-- <p *ngIf="cargandoIframe">Estamos negociando con YouTube los secretos de la receta. Denos unos segundos más</p> -->
+            <iframe
+                [src]="sanitizer.bypassSecurityTrustResourceUrl(receta.url!)"
+                allowfullscreen="true"
+            ></iframe>
+        </section>
         <section class="col-lg-3 col-md-4 col-6">
             <h3>Comentarios ({{receta.comentarios}})</h3>
             <div class="d-flex mb-2">
@@ -57,8 +65,4 @@
         autor="{{comentario.usuario[0].nombre + ' ' + comentario.usuario[0].apellidos}}"
         mensaje="{{comentario.contenido}}"
     />
-</div>
-<div *ngIf="this.cargando == true" class="cargandoGeneral d-flex flex-column justify-content-center align-items-center">
-    <cargando class="d-flex justify-content-center align-items-center"/>
-    <p class="text-center mt-4">Estamos trabajando para ofrecerle toda la información que necesita</p>
 </div>

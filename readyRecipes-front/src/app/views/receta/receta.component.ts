@@ -19,7 +19,7 @@ export class RecetaComponent {
   public receta: Receta = {id: 1, titulo: ""};
   public minMostrarPulgares: number = 850;
   public isViewportLarge: boolean = window.innerWidth > this.minMostrarPulgares;
-  public cargando: boolean = false;
+  public cargando: number = 0;
   public letraNutriscore = "";
   comentarioInput: string = "";
   esFavorito: boolean = false;
@@ -34,17 +34,16 @@ export class RecetaComponent {
     private route: ActivatedRoute,
     ) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.cargando = 0;
     this.id = Number(this.route.snapshot.paramMap.get("id") || "");
-    this.cargando = true;
-    this.getEsFavorito();
     try {
       this.cargarReceta();
+      this.getEsFavorito();
       this.cargarComentarios();
     } catch(e) {
       console.log("Error cargando la receta: ", e);
     }
-    this.cargando = false;
   }
   
   private cargarReceta() {
@@ -52,6 +51,7 @@ export class RecetaComponent {
       this.receta = data;
       this.receta.precio ? this.receta.precio = Number(this.receta.precio?.toFixed(2)) : 0;
       this.letraNutriscore = this.nutriscoreEnLetra(this.receta.nutriscore!);
+      this.cargando++;
     });
   }
 
@@ -73,6 +73,7 @@ export class RecetaComponent {
     this.comentarioService.getComentariosReceta(this.id).subscribe(data => {
       this.comentarios = data;
       this.comentarios = this.comentarios.reverse();
+      this.cargando++;
     });
   }
 
@@ -102,6 +103,7 @@ export class RecetaComponent {
   getEsFavorito() {
     this.favoritoService.esFavorito(this.id, Number(this.autenticacionService.getId())).subscribe(data => {
       this.esFavorito = (data == 1);
+      this.cargando++;
     });
   }
 
