@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Receta } from 'src/app/models/receta';
 import { IngredienteService } from 'src/app/services/ingrediente.service';
 import { RecetaService } from 'src/app/services/receta.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
 import { AutenticacionService } from 'src/app/services/autenticacion.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { Usuario } from 'src/app/models/usuario';
+import { Ingrediente } from 'src/app/models/ingrediente';
 
 @Component({
   selector: 'app-biblioteca',
@@ -13,8 +13,11 @@ import { Usuario } from 'src/app/models/usuario';
   styleUrls: ['./biblioteca.component.scss'],
 })
 
-export class BibliotecaComponent {
+export class BibliotecaComponent implements OnInit {
+
+  public esAdministrador: boolean = true;
   public respuestaBuscador: number = 0;
+
   filtros = [
     { nombre: "Verdura", categoria: "Tipo", activo: false, id: -1, visible: true },
     { nombre: "Carne", categoria: "Tipo", activo: false, id: null, visible: true },
@@ -33,30 +36,25 @@ export class BibliotecaComponent {
     { nombre: "No favoritos", categoria: "Favoritos", activo: false, id: null, visible: true },
   ];
   resultados: Receta[] = [];
-  usuarioLogeado: Usuario = new Usuario();
+  usuarioLogeado: Usuario = new Usuario("", "", "", "", false);
+  finalIngredientes : Ingrediente[] = [];
 
   constructor(
     private ingredienteService: IngredienteService,
     private recetaService: RecetaService,
-    private fb:FormBuilder,
     private autenticacionService: AutenticacionService,
     private usuarioService: UsuarioService,
   ) {}
 
+  selectedIngredient!: number;
   isSubmitted=false;
-  
   onPost= ()=>this.isSubmitted=true;
 
-  frm!:FormGroup;
 
   ngOnInit(): void {
     this.obtenerIngredientes();
     this.resultados = [];
     this.buscador();
-
-    this.frm = this.fb.group({
-      'selectedIngredient':[]
-   })
     this.recuperarUsuario();
   }
 
@@ -72,18 +70,12 @@ export class BibliotecaComponent {
     });
   }
 
-  async filtrarIngredientes(event: any) {
-    const valorBuscado = event.target.value.toLowerCase();
-    this.filtros.forEach(ingrediente => {
-      if(ingrediente.categoria=="Ingredientes"){
-        if(ingrediente.nombre.includes(valorBuscado)) {
-          ingrediente.visible = true;
-        } else{
-          ingrediente.visible = false;
-        }
-      }
-    });
+  filtrarIngredientes(valorBuscado: any) {
+    console.log("Esto es valorBuscado:", valorBuscado);
+    this.finalIngredientes = valorBuscado;
+    this.buscador();
   }
+  
 
   numFiltrosActivos(): number {
     let activos = 0;
@@ -114,7 +106,6 @@ export class BibliotecaComponent {
     this.resultados = [];
     let id_receta: number = 0;
     let precioElegido: number = 1000;
-    let ingredientesElegidos: number[] = [];
     let categoriaElegida: string = "";
     let nutriscoreElegido: number = -1;
     let favoritoElegido: boolean = false;
@@ -122,24 +113,23 @@ export class BibliotecaComponent {
       if(filtro.activo == true) {
         switch(filtro.categoria) {
           case "Precio": precioElegido = Number(filtro.nombre); break;
-          case "Ingredientes": ingredientesElegidos.push(filtro.id!); break;
           case "Tipo": categoriaElegida = filtro.nombre; break;
           case "Nutriscore":
             switch(filtro.nombre) {
-              case "Nutriscore A": nutriscoreElegido = 4.51; break;
-              case "Nutriscore B": nutriscoreElegido = 3.51; break;
-              case "Nutriscore C": nutriscoreElegido = 2.51; break;
-              case "Nutriscore D": nutriscoreElegido = 1.51; break;
+              case "A": nutriscoreElegido = 4.51; break;
+              case "B": nutriscoreElegido = 3.51; break;
+              case "C": nutriscoreElegido = 2.51; break;
+              case "D": nutriscoreElegido = 1.51; break;
             }
-          break;
-          case "Favoritos": favoritoElegido = true; break;
+            break;
+            case "Favoritos": favoritoElegido = true; break;
+          }
         }
-      }
     });
     this.recetaService.buscador(
       id_receta,
       precioElegido,
-      ingredientesElegidos,
+      this.finalIngredientes.map(ingr => ingr.id),
       categoriaElegida,
       nutriscoreElegido,
       favoritoElegido,
@@ -191,15 +181,6 @@ export class BibliotecaComponent {
           break;
         }
         this.filtros[i].activo = true;
-      }
-    }
-    this.buscador();
-  }
-
-  eliminarFiltro(elegido: string) {
-    for(let i=0; i<this.filtros.length; i++) {
-      if(this.filtros[i].nombre == elegido) {
-        this.filtros[i].activo = false;
       }
     }
     this.buscador();

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule , FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { MatSliderModule } from '@angular/material/slider';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -20,6 +21,8 @@ import { CargandoComponent } from './components/cargando/cargando.component';
 import { SafePipeModule } from 'safe-pipe';
 import { EstadisticasComponent } from './views/estadisticas/estadisticas.component';
 import { InterceptorInterceptor } from './interceptor.interceptor';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PriceRangeSelectorComponent } from './components/price-range-selector/price-range-selector.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +39,7 @@ import { InterceptorInterceptor } from './interceptor.interceptor';
     RecuperarComponent,
     CargandoComponent,
     EstadisticasComponent,
+    PriceRangeSelectorComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,6 +49,8 @@ import { InterceptorInterceptor } from './interceptor.interceptor';
     SafePipeModule,
     ReactiveFormsModule,
     NgSelectModule,
+    BrowserAnimationsModule,
+    MatSliderModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorInterceptor, multi: true },
