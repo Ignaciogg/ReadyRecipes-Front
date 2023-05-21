@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Receta } from 'src/app/models/receta';
 import { IngredienteService } from 'src/app/services/ingrediente.service';
 import { RecetaService } from 'src/app/services/receta.service';
-import { FormBuilder, FormGroup, FormArray, FormControl, FormControlName } from '@angular/forms';
 import { AutenticacionService } from 'src/app/services/autenticacion.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { Usuario } from 'src/app/models/usuario';
@@ -15,9 +14,9 @@ import { Ingrediente } from 'src/app/models/ingrediente';
 })
 
 export class BibliotecaComponent implements OnInit {
+
   public esAdministrador: boolean = true;
   public respuestaBuscador: number = 0;
-  
 
   filtros = [
     { nombre: "Verdura", categoria: "Tipo", activo: false, id: -1, visible: true },
@@ -48,9 +47,7 @@ export class BibliotecaComponent implements OnInit {
   ) {}
 
   selectedIngredient!: number;
-
   isSubmitted=false;
-  
   onPost= ()=>this.isSubmitted=true;
 
 
@@ -59,12 +56,6 @@ export class BibliotecaComponent implements OnInit {
     this.resultados = [];
     this.buscador();
     this.recuperarUsuario();
-  }
-
-  createForm(): FormGroup {
-    return new FormGroup({
-        roles: new FormControl([])
-    });
   }
 
   async obtenerIngredientes() {
