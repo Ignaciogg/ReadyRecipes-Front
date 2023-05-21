@@ -77,7 +77,7 @@
                     <p class="inputBuscador">Encuentre ingredientes rápidamente</p>
                     
                     <form [formGroup]="frm" (ngSubmit)="onPost()">
-                        <ng-select *ngIf="frm instanceof FormGroup" formControlName="selectedIngredient" [multiple]="true" (ngModelChange)="filtrarIngredientes($event)">
+                        <ng-select formControlName="selectedIngredient" [multiple]="true" (ngModelChange)="filtrarIngredientes($event)">
                           <ng-container *ngFor="let filtro of filtros">
                             <ng-option *ngIf="filtro.categoria=='Ingredientes' && !filtro.activo && filtro.visible" [value]="filtro">{{filtro.nombre}}</ng-option>
                           </ng-container>

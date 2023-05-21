@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Receta } from 'src/app/models/receta';
 import { IngredienteService } from 'src/app/services/ingrediente.service';
 import { RecetaService } from 'src/app/services/receta.service';
-import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, FormControl, FormControlName } from '@angular/forms';
 import { AutenticacionService } from 'src/app/services/autenticacion.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { Usuario } from 'src/app/models/usuario';
@@ -13,7 +13,7 @@ import { Usuario } from 'src/app/models/usuario';
   styleUrls: ['./biblioteca.component.scss'],
 })
 
-export class BibliotecaComponent {
+export class BibliotecaComponent implements OnInit {
   public esAdministrador: boolean = true;
   public respuestaBuscador: number = 0;
 
@@ -55,12 +55,17 @@ export class BibliotecaComponent {
   ngOnInit(): void {
     this.obtenerIngredientes();
     this.resultados = [];
-    this.buscador();
-
     this.frm = this.fb.group({
       'selectedIngredient': this.fb.array([])
     });
+    this.buscador();
     this.recuperarUsuario();
+  }
+
+  createForm(): FormGroup {
+    return new FormGroup({
+        roles: new FormControl([])
+    });
   }
 
   async obtenerIngredientes() {
@@ -77,18 +82,14 @@ export class BibliotecaComponent {
 
   filtrarIngredientes(valorBuscado: any) {
     const selectedIngredients = this.frm.get('selectedIngredient') as FormArray;
-  
-    // Reiniciar el FormArray para volver a agregar los ingredientes seleccionados
     selectedIngredients.clear();
   
-    // Agregar los ingredientes seleccionados al FormArray
     if (valorBuscado && valorBuscado.length) {
       valorBuscado.forEach((filtro: any) => {
         selectedIngredients.push(this.fb.control(filtro));
       });
     }
   
-    // Restringir los ingredientes visibles según la selección
     this.ingredientes.forEach(ingrediente => {
       if (ingrediente.nombre.includes(valorBuscado)) {
         ingrediente.visible = true;
@@ -96,7 +97,10 @@ export class BibliotecaComponent {
         ingrediente.visible = false;
       }
     });
+  
+    this.buscador();
   }
+  
 
   numFiltrosActivos(): number {
     let activos = 0;
