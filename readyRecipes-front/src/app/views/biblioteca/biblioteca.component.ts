@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup, FormArray, FormControl, FormControlName } from 
 import { AutenticacionService } from 'src/app/services/autenticacion.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { Usuario } from 'src/app/models/usuario';
+import { Ingrediente } from 'src/app/models/ingrediente';
 
 @Component({
   selector: 'app-biblioteca',
@@ -16,6 +17,7 @@ import { Usuario } from 'src/app/models/usuario';
 export class BibliotecaComponent implements OnInit {
   public esAdministrador: boolean = true;
   public respuestaBuscador: number = 0;
+  
 
   filtros = [
     { nombre: "Verdura", categoria: "Tipo", activo: false, id: -1, visible: true },
@@ -41,23 +43,20 @@ export class BibliotecaComponent implements OnInit {
   constructor(
     private ingredienteService: IngredienteService,
     private recetaService: RecetaService,
-    private fb:FormBuilder,
     private autenticacionService: AutenticacionService,
     private usuarioService: UsuarioService,
   ) {}
+
+  selectedIngredient!: number;
 
   isSubmitted=false;
   
   onPost= ()=>this.isSubmitted=true;
 
-  frm!:FormGroup;
 
   ngOnInit(): void {
     this.obtenerIngredientes();
     this.resultados = [];
-    this.frm = this.fb.group({
-      'selectedIngredient': this.fb.array([])
-    });
     this.buscador();
     this.recuperarUsuario();
   }
@@ -80,7 +79,12 @@ export class BibliotecaComponent implements OnInit {
     });
   }
 
+  finalIngredientes : Ingrediente[] = [];
+
+
   filtrarIngredientes(valorBuscado: any) {
+    console.log("Esto es" + valorBuscado);
+    /*
     const selectedIngredients = this.frm.get('selectedIngredient') as FormArray;
     selectedIngredients.clear();
   
@@ -91,14 +95,16 @@ export class BibliotecaComponent implements OnInit {
     }
   
     this.ingredientes.forEach(ingrediente => {
+
       if (ingrediente.nombre.includes(valorBuscado)) {
         ingrediente.visible = true;
       } else {
         ingrediente.visible = false;
       }
     });
-  
+
     this.buscador();
+    */
   }
   
 
