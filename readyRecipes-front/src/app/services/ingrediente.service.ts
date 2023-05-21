@@ -13,9 +13,8 @@ export class IngredienteService {
   constructor(private httpClient: HttpClient) { }
 
   public getAll(): Observable<Ingrediente[]> {
-    return this.httpClient.post<Ingrediente[]>(
+    return this.httpClient.get<Ingrediente[]>(
       environment.apiUrl + "ingredientes",
-      null,
       { responseType:'json' }
     );
   }
