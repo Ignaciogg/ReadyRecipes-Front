@@ -36,7 +36,7 @@ export class BibliotecaComponent implements OnInit {
     { nombre: "No favoritos", categoria: "Favoritos", activo: false, id: null, visible: true },
   ];
   resultados: Receta[] = [];
-  usuarioLogeado: Usuario = new Usuario("", "", "", "", false);
+  usuarioLogeado: Usuario = new Usuario();
   finalIngredientes : Ingrediente[] = [];
 
   constructor(
