@@ -31,9 +31,8 @@ export class ComentarioService {
   }
   
   public numeroComentarios(): Observable<any[]> {
-    return this.httpClient.post<any>(
+    return this.httpClient.get<any>(
       environment.apiUrl + "numeroComentarios",
-      {},
     );
   }
 }
