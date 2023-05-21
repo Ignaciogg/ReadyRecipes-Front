@@ -38,7 +38,7 @@ export class BibliotecaComponent implements OnInit {
   ];
   resultados: Receta[] = [];
   usuarioLogeado: Usuario = new Usuario("", "", "", "", false);
-  public ingredientes = this.filtros.filter(filtro => filtro.categoria == "Ingredientes"); 
+  finalIngredientes : Ingrediente[] = [];
 
   constructor(
     private ingredienteService: IngredienteService,
@@ -79,32 +79,10 @@ export class BibliotecaComponent implements OnInit {
     });
   }
 
-  finalIngredientes : Ingrediente[] = [];
-
-
   filtrarIngredientes(valorBuscado: any) {
-    console.log("Esto es" + valorBuscado);
-    /*
-    const selectedIngredients = this.frm.get('selectedIngredient') as FormArray;
-    selectedIngredients.clear();
-  
-    if (valorBuscado && valorBuscado.length) {
-      valorBuscado.forEach((filtro: any) => {
-        selectedIngredients.push(this.fb.control(filtro));
-      });
-    }
-  
-    this.ingredientes.forEach(ingrediente => {
-
-      if (ingrediente.nombre.includes(valorBuscado)) {
-        ingrediente.visible = true;
-      } else {
-        ingrediente.visible = false;
-      }
-    });
-
+    console.log("Esto es valorBuscado:", valorBuscado);
+    this.finalIngredientes = valorBuscado;
     this.buscador();
-    */
   }
   
 
@@ -137,7 +115,6 @@ export class BibliotecaComponent implements OnInit {
     this.resultados = [];
     let id_receta: number = 0;
     let precioElegido: number = 1000;
-    let ingredientesElegidos: number[] = [];
     let categoriaElegida: string = "";
     let nutriscoreElegido: number = -1;
     let favoritoElegido: boolean = false;
@@ -145,7 +122,6 @@ export class BibliotecaComponent implements OnInit {
       if(filtro.activo == true) {
         switch(filtro.categoria) {
           case "Precio": precioElegido = Number(filtro.nombre); break;
-          case "Ingredientes": ingredientesElegidos.push(filtro.id!); break;
           case "Tipo": categoriaElegida = filtro.nombre; break;
           case "Nutriscore":
             switch(filtro.nombre) {
@@ -154,15 +130,15 @@ export class BibliotecaComponent implements OnInit {
               case "C": nutriscoreElegido = 2.51; break;
               case "D": nutriscoreElegido = 1.51; break;
             }
-          break;
-          case "Favoritos": favoritoElegido = true; break;
+            break;
+            case "Favoritos": favoritoElegido = true; break;
+          }
         }
-      }
     });
     this.recetaService.buscador(
       id_receta,
       precioElegido,
-      ingredientesElegidos,
+      this.finalIngredientes.map(ingr => ingr.id),
       categoriaElegida,
       nutriscoreElegido,
       favoritoElegido,
