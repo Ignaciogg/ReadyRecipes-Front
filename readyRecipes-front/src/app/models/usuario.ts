@@ -1,15 +1,22 @@
 export class Usuario {
-    nombre: string;
-    apellidos: string;
-    email: string;
-    pass: string;
-    administrador: boolean;
+    id?: number;
+    nombre?: string;
+    apellidos?: string;
+    email?: string;
+    administrador?: boolean;
 
-    constructor(_nombre: string, _apellidos: string, _email: string, _pass: string, _administrador: boolean) {
-        this.nombre = _nombre;
-        this.apellidos = _apellidos;
-        this.email = _email;
-        this.pass = _pass;
-        this.administrador = _administrador;
+    constructor();
+    constructor(
+        _id?: number,
+        _nombre?: string,
+        _apellidos?: string,
+        _email?: string,
+        _administrador?: boolean
+    ) {
+        this.id = _id ?? 0;
+        this.nombre = _nombre ?? "";
+        this.apellidos = _apellidos ?? "";
+        this.email = _email ?? "";
+        this.administrador = _administrador ?? false;
     }
 }

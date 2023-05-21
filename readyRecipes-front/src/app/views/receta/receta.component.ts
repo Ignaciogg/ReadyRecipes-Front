@@ -2,6 +2,7 @@ import { Component, Input, HostListener } from '@angular/core';
 import { RecetaService } from '../../services/receta.service';
 import { AutenticacionService } from '../../services/autenticacion.service';
 import { ComentarioService } from '../../services/comentario.service';
+import { FavoritoService } from 'src/app/services/favorito.service';
 import { Receta } from '../../models/receta';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
@@ -15,34 +16,33 @@ import { Comentario } from 'src/app/models/comentario';
 export class RecetaComponent {
 
   public id: number = -1;
-
   public receta: Receta = {id: 1, titulo: ""};
   public minMostrarPulgares: number = 850;
-  public isViewportLarge: boolean = window.innerWidth > this.minMostrarPulgares;
-  public cargando: boolean = false;
+  public cargando: number = 0;
   public letraNutriscore = "";
   comentarioInput: string = "";
-  @Input() esFavorito: boolean = false;
+  esFavorito: boolean = false;
   comentarios: Comentario[] = [];
 
   constructor(
     private comentarioService: ComentarioService,
     private recetaService: RecetaService,
     private autenticacionService: AutenticacionService,
+    private favoritoService: FavoritoService,
     public sanitizer: DomSanitizer,
     private route: ActivatedRoute,
     ) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.cargando = 0;
     this.id = Number(this.route.snapshot.paramMap.get("id") || "");
-    this.cargando = true;
     try {
       this.cargarReceta();
+      this.getEsFavorito();
       this.cargarComentarios();
     } catch(e) {
       console.log("Error cargando la receta: ", e);
     }
-    this.cargando = false;
   }
   
   private cargarReceta() {
@@ -50,6 +50,7 @@ export class RecetaComponent {
       this.receta = data;
       this.receta.precio ? this.receta.precio = Number(this.receta.precio?.toFixed(2)) : 0;
       this.letraNutriscore = this.nutriscoreEnLetra(this.receta.nutriscore!);
+      this.cargando++;
     });
   }
 
@@ -71,24 +72,33 @@ export class RecetaComponent {
     this.comentarioService.getComentariosReceta(this.id).subscribe(data => {
       this.comentarios = data;
       this.comentarios = this.comentarios.reverse();
-      console.log(this.comentarios);
+      this.cargando++;
     });
   }
 
-  nuevoComentario(/*_nombre: string, _apellidos: string,*/ _contenido: string) {
-    this.comentarioService.nuevoComentario(_contenido).subscribe(data=> {
+  nuevoComentario(_contenido: string) {
+    const idReceta = this.id;
+    const idUsuario = Number(this.autenticacionService.getId());
+    this.comentarioService.nuevoComentario(idReceta, idUsuario, _contenido).subscribe(data => {
       this.cargarComentarios();
       this.comentarioInput = "";
     });
   }
-  
-  @HostListener('window:resize', ['$event'])
-  onResize() {
-    this.isViewportLarge = window.innerWidth > this.minMostrarPulgares;
-  }
 
   cambiarFavorito() {
+    if(this.esFavorito) {
+      this.favoritoService.removeFavoritos(this.id, Number(this.autenticacionService.getId())).subscribe();
+    } else {
+      this.favoritoService.addFavoritos(this.id, Number(this.autenticacionService.getId())).subscribe();
+    }
     this.esFavorito = !this.esFavorito;
+  }
+
+  getEsFavorito() {
+    this.favoritoService.esFavorito(this.id, Number(this.autenticacionService.getId())).subscribe(data => {
+      this.esFavorito = (data == 1);
+      this.cargando++;
+    });
   }
 
   estaLogeado(): boolean {

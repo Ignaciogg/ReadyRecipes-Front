@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AutenticacionService } from 'src/app/services/autenticacion.service';
 
 @Component({
   selector: 'app-home',
@@ -12,8 +13,13 @@ export class HomeComponent implements OnInit {
     { nombre: "Pera", color: "Verde" },
     { nombre: "Manzana", color: "Roja" },
   ];
+
+  constructor(
+    private autenticacionService: AutenticacionService,
+  ) { }
+
   ngOnInit(): void {
-    
+    this.autenticacionService.logout().subscribe();
   }
   alternarTexto(): void {
     this.textoVisible = !this.textoVisible;

@@ -17,11 +17,11 @@ export class AppComponent {
   ) { }
 
   getNombre(): string {
-    return localStorage.getItem("nombre") ?? "";
+    return this.autenticacionService.getNombre() ?? "";
   }
 
   getEmail(): string {
-    return localStorage.getItem("email") ?? "";
+    return this.autenticacionService.getEmail() ?? "";
   }
 
   estaLogeado(): boolean {

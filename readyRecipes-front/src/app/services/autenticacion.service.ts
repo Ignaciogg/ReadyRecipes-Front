@@ -13,22 +13,23 @@ export class AutenticacionService {
     private httpClient: HttpClient,
   ) { }
 
-  public login(usuario: Usuario): Observable<any> {
+  public login(_email: string, _pass: string): Observable<any> {
     const body = {
-      email: usuario.email,
-      pass: usuario.pass,
+      email: _email,
+      pass: _pass,
     }
     // setTimeout() => despues de x tiempo, llamar al back refresh() para cambiar el token por uno nuevo
-    return this.httpClient.post<Usuario>(
+    return this.httpClient.post<any>(
       environment.apiUrl + "login",
       body,
     );
   }
 
   public logout(): Observable<any> {
-    localStorage.setItem("token", "");
-    localStorage.setItem("nombre", "");
-    localStorage.setItem("email", "");
+    this.setId("");
+    this.setToken("");
+    this.setNombre("");
+    this.setEmail("");
     return this.httpClient.get<void>(
       environment.apiUrl + "logout",
     );
@@ -39,20 +40,40 @@ export class AutenticacionService {
     return token != "" && token != undefined && token != null;
   }
 
+  public setId(nuevoId: string){
+    localStorage.setItem("id", nuevoId);   
+  }
+
   public setToken(nuevoToken: string){
     localStorage.setItem("token", nuevoToken);   
   }
-
+  
   public setNombre(nuevoNombre: string){
     localStorage.setItem("nombre", nuevoNombre);   
   }
 
+  public setApellidos(nuevosApellidos: string){
+    localStorage.setItem("apellidos", nuevosApellidos);   
+  }
+  
   public setEmail(nuevoEmail: string){
     localStorage.setItem("email", nuevoEmail);   
   }
+  
+  public getId(): string {
+    return localStorage.getItem("id") || "";
+  }
 
-  public getEmail(){
-    return localStorage.getItem("email");   
+  public getToken(): string {
+    return localStorage.getItem("token") || "";
+  }
+
+  public getNombre(): string {
+    return localStorage.getItem("nombre") || "";
+  }
+  
+  public getEmail(): string {
+    return localStorage.getItem("email") || "";   
   }
   
   public refrescarToken() {

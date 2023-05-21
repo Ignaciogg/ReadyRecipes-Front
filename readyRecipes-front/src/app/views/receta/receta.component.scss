@@ -24,24 +24,32 @@
     }
 }
 
-iframe {
+.seccionIframe {
+    background: url("/assets/imagenes/pensando.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-top: 20px;
     aspect-ratio: 16/9;
-    position: relative;
-    height: 100%;
-    width: 100%;
+    iframe {
+        height: 100%;
+        width: 100%;
+        border-radius: 10px;
+    }
 }
 
-section {
-    padding-left: 10px;
-    padding-right: 10px;
-    margin-top: 5px;
+.ficha {
+    margin-top: 15px;
+    margin-left: 2vw;
+}
+.filaCara {
+    display: flex;
     margin-bottom: 10px;
-}
-
-.cara {
-    align-self: center;
-    height: 20px;
-    margin-right: 10px;
+    margin-right: 14px;
+    .cara {
+        align-self: center;
+        height: 20px;
+        margin-right: 6px;
+    }
 }
 
 .numComentarios {

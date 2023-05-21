@@ -48,7 +48,11 @@ export class RegistroComponent {
     } else if(password != repetirPassword) {
       this.respuesta = -13;
     } else {
-      let usuario: Usuario = new Usuario(nombre, apellidos, email, password, false);
+      const usuario: Usuario = new Usuario();
+      usuario.nombre = nombre;
+      usuario.apellidos = apellidos;
+      usuario.email = email;
+      usuario.administrador = false;
       this.usuarioService.registrar(usuario).subscribe(data => {
         if(typeof data == "number") {
           this.respuesta = data;

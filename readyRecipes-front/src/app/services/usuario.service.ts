@@ -55,9 +55,8 @@ export class UsuarioService {
   }
 
   public numeroUsuarios(): Observable<any> {
-    return this.httpClient.post<any>(
+    return this.httpClient.get<any>(
       environment.apiUrl + "numeroUsuarios",
-      {},
     );
   }
 }

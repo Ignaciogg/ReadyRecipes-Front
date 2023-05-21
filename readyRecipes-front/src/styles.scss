@@ -28,9 +28,9 @@
         var(--colorPrincipal-b)
     );
     --colorPrincipalSobreNegro: rgb(
-        var(--colorPrincipal-r),
-        calc(var(--colorPrincipal-g) + 60),
-        calc(var(--colorPrincipal-b) + 60)
+        calc(var(--colorPrincipal-r) + 150),
+        calc(var(--colorPrincipal-g) + 105),
+        calc(var(--colorPrincipal-b) + 105)
     );
 
     --colorSecundario-r: 190;

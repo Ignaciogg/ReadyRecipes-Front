@@ -18,22 +18,21 @@ export class ComentarioService {
     );
   }
 
-  public nuevoComentario(_contenido: string): Observable<Comentario[]> {
+  public nuevoComentario(_id_receta: number, _id_usuario: number, _contenido: string): Observable<void> {
     const body = {
-      id_receta: 1,
-      id_usuario: 1,
+      id_receta: _id_receta,
+      id_usuario: _id_usuario,
       contenido: _contenido,
     }
-    return this.httpClient.post<Comentario[]>(
+    return this.httpClient.post<void>(
       environment.apiUrl + "nuevoComentario",
       body,
     );
   }
-
+  
   public numeroComentarios(): Observable<any[]> {
-    return this.httpClient.post<any>(
+    return this.httpClient.get<any>(
       environment.apiUrl + "numeroComentarios",
-      {},
     );
   }
 }
