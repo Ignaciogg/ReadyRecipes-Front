@@ -36,35 +36,37 @@
             (click)="buscarTipo('Aperitivos')"
         />
     </div>
+
+    <h1 class="text-center">También puede usar estos filtros:</h1>
     
     <div class="row justify-content-center">
 
-        <div>
-            <div class="tab-pane container" id="nu">
+        <div class="filtrosContainer">
+            <div class="filtroRow" id="nu">
                     <div class="d-flex flex-wrap ms-0">
                         <p>Nutriscore: </p>
-                        <ng-container *ngFor="let filtro of filtros">
+                        <div *ngFor="let filtro of filtros">
                             <aplicadorFiltro
                                 *ngIf="filtro.categoria=='Nutriscore' && filtro.activo==false"
                                 titulo={{filtro.nombre}}
                                 (click)="activarFiltro(filtro.nombre)"
                             />
-                        </ng-container>
+                        </div>
                     </div>
             </div>
-            <div class="tab-pane container" id="fa">
+            <div class="filtroRow" id="fa">
                 <div class="d-flex flex-wrap ms-0">
                     <p>Favoritos: </p>
-                    <ng-container *ngFor="let filtro of filtros">
+                    <div *ngFor="let filtro of filtros">
                         <aplicadorFiltro 
                             *ngIf="filtro.categoria=='Favoritos' && filtro.activo==false"
                             titulo={{filtro.nombre}}
                             (click)="activarFiltro(filtro.nombre)"
                         />
-                    </ng-container>
+                    </div>
                 </div>
             </div>
-            <div class="tab-pane container" id="pr">
+            <div class="filtroRow" id="pr">
                 <div class="d-flex flex-wrap ms-0">
                     <p>Precio (en €): </p>
                     <div class="pricerangeDiv">
@@ -72,7 +74,7 @@
                     </div>
                 </div>
             </div>
-            <div class="tab-pane container" id="in">
+            <div class="filtroRow" id="in">
                 <div class="d-flex flex-wrap ms-0 align-items-center buscadorIngredientes">
                     <p class="inputBuscador">Encuentre ingredientes rápidamente</p>
                     <ng-select [(ngModel)]="selectedIngredient" [multiple]="true" (ngModelChange)="filtrarIngredientes($event)">

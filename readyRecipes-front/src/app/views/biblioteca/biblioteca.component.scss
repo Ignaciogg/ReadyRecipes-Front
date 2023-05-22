@@ -98,17 +98,35 @@ hr {
     margin-right: 40px;
 }
 
-.buscadorIngredientes{
+.filtrosContainer{
 
-    .input{
-        padding: 5px 8px;
-        font-size: 16px;
-        border: 1px solid #c4c4c4;
-       border-radius: 5px;
+    display: flex !important;
+    align-items: center;
+    background-image: linear-gradient(90deg, var(--colorPrincipal), var(--colorPrincipalDegradado));
+    width: 80vw;
+    height: 53vh;
+    border-radius: 20px;
+    color: white;
+    font-size: 18px;
+    font-weight: 500;
+
+    .filtroRow{
+        display: flex !important;
+        flex-direction: row;
     }
 
-    ng-select{
-        width: 300px;
-    }
+    .buscadorIngredientes{
+
+        .input{
+            padding: 5px 8px;
+            font-size: 16px;
+            border: 1px solid #c4c4c4;
+           border-radius: 5px;
+        }
     
+        ng-select{
+            width: 300px;
+        }
+        
+    }
 }
