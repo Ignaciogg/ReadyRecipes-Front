@@ -52,8 +52,10 @@
                     </div>
                 </div>
                 <div>
-                    <p class="m-0 p-0 mt-3">Precio (en €): </p>
-                    <priceRangeSelector/>
+                    <p class="m-0 p-0 mt-3">Entre 0 y {{precioElegido}} €:</p>
+                    <mat-slider min="0" max="50" step="1" value="50">
+                        <input matSliderThumb [(ngModel)]=precioElegido>
+                    </mat-slider>
                 </div>
             </div>
             <div class="d-flex justify-content-center">

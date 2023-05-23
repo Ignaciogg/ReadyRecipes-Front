@@ -22,7 +22,6 @@ import { SafePipeModule } from 'safe-pipe';
 import { EstadisticasComponent } from './views/estadisticas/estadisticas.component';
 import { InterceptorInterceptor } from './interceptor.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { PriceRangeSelectorComponent } from './components/price-range-selector/price-range-selector.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +38,6 @@ import { PriceRangeSelectorComponent } from './components/price-range-selector/p
     RecuperarComponent,
     CargandoComponent,
     EstadisticasComponent,
-    PriceRangeSelectorComponent,
   ],
   imports: [
     BrowserModule,

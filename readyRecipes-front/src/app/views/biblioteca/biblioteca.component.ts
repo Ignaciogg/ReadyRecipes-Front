@@ -14,11 +14,11 @@ import { Ingrediente } from 'src/app/models/ingrediente';
 })
 
 export class BibliotecaComponent implements OnInit {
-
   public esAdministrador: boolean = false;
   public respuestaBuscador: number = 0;
   public buscandoEnFavoritos: boolean = false;
   public buscandoNutriscore: string = "E";
+  public precioElegido: number = 50;
   filtros = [
     { nombre: "Verdura", categoria: "Tipo", activo: false, id: -1, visible: true },
     { nombre: "Carne", categoria: "Tipo", activo: false, id: null, visible: true },
@@ -95,44 +95,26 @@ export class BibliotecaComponent implements OnInit {
   buscador() {
     this.respuestaBuscador = -1;
     this.resultados = [];
-    let precioElegido: number = 1000;
     let categoriaElegida: string = "";
     this.filtros.forEach(filtro => {
-      if(filtro.activo == true) {
-        switch(filtro.categoria) {
-          case "Precio": precioElegido = Number(filtro.nombre); break;
-          case "Tipo": categoriaElegida = filtro.nombre; break;
-          case "Nutriscore":
-            break;
-          }
-        }
+      if(filtro.activo == true && filtro.categoria == "Tipo") {
+        categoriaElegida = filtro.nombre;
+      }
     });
+    console.log("Buscando recetas con: precio = " + this.precioElegido + ", categoria = " + categoriaElegida + ", nutriscore = " + this.buscandoNutriscore + ", favorito = " + this.buscandoEnFavoritos + ", ingredientes = " + this.finalIngredientes.map(ingr => ingr.id));
     this.recetaService.buscador(
-      0,
-      precioElegido,
+      this.precioElegido,
       this.finalIngredientes.map(ingr => ingr.id),
       categoriaElegida,
       this.nutriscoreToNumber(this.buscandoNutriscore),
-      this.buscandoEnFavoritos,
-      1
-    ).subscribe((data: Receta[]) => { 
+      this.buscandoEnFavoritos
+    ).subscribe((data: Receta[]) => {
+      console.log("Recetas encontradas: ", data);
       data.forEach(receta => {
-        let esUnico = true;
-        for (let i = 0; i < this.resultados.length; i++) {
-          if (receta.id === this.resultados[i].id) {
-            esUnico = false;
-            break;
-          }
-        }
-        if (esUnico) {
-          this.resultados.push(receta);
-        }
-        
+        this.resultados.push(receta);
       });
       this.respuestaBuscador = 0;
-    }, error => {
-      this.respuestaBuscador = 0;
-    });
+    }, error => this.respuestaBuscador = 0);
   }
 
   elegirNutriscore(nutriscore: string) {
