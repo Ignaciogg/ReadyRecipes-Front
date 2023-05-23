@@ -6,15 +6,20 @@ button {
     padding-left: 15px;
     padding-right: 15px;
     border: 0.5px solid #BBB;
-    background-color: var(--colorPrincipalClaro);
+    background-color: white;
+    
     &.activado{
-        background-color: var(--colorSecundarioClaro);
+        background-color: black;
     }
     p {
         margin-top: 0px;
         margin-bottom: 0px;
         padding: 0px;
     }
+}
+
+button::hover{
+    background-color: var(--colorPrincipal);
 }
 
 .mas {

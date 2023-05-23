@@ -33,7 +33,6 @@ export class BibliotecaComponent implements OnInit {
     { nombre: "10", categoria: "Precio", activo: false, id: null, visible: true },
     { nombre: "15", categoria: "Precio", activo: false, id: null, visible: true},
     { nombre: "Mis favoritos", categoria: "Favoritos", activo: false, id: null, visible: true },
-    { nombre: "No favoritos", categoria: "Favoritos", activo: false, id: null, visible: true },
   ];
   resultados: Receta[] = [];
   usuarioLogeado: Usuario = new Usuario();
@@ -154,36 +153,44 @@ export class BibliotecaComponent implements OnInit {
     });
   }
 
-  activarFiltro(elegido: string) {
-    for(let i=0; i<this.filtros.length; i++) {
-      if(this.filtros[i].nombre == elegido) {
-        switch(this.filtros[i].categoria) {
-          case "Nutriscore":
-            for(let i=0; i<this.filtros.length; i++) {
-              if(this.filtros[i].categoria == "Nutriscore") {
-                this.filtros[i].activo = false;
+  activarFiltro(elegido: string, filtro: any) {
+
+    if(filtro.activo == false) {
+      filtro.activo = true;
+
+      for(let i=0; i<this.filtros.length; i++) {
+        if(this.filtros[i].nombre == elegido) {
+          switch(this.filtros[i].categoria) {
+            case "Nutriscore":
+              for(let i=0; i<this.filtros.length; i++) {
+                if(this.filtros[i].categoria == "Nutriscore") {
+                  this.filtros[i].activo = false;
+                }
               }
-            }
-          break;
-          case "Precio":
-            for(let i=0; i<this.filtros.length; i++) {
-              if(this.filtros[i].categoria == "Precio") {
-                this.filtros[i].activo = false;
+            break;
+            case "Precio":
+              for(let i=0; i<this.filtros.length; i++) {
+                if(this.filtros[i].categoria == "Precio") {
+                  this.filtros[i].activo = false;
+                }
               }
-            }
-          break;
-          case "Tipo":
-            for(let i=0; i<this.filtros.length; i++) {
-              if(this.filtros[i].categoria == "Tipo") {
-                this.filtros[i].activo = false;
+            break;
+            case "Tipo":
+              for(let i=0; i<this.filtros.length; i++) {
+                if(this.filtros[i].categoria == "Tipo") {
+                  this.filtros[i].activo = false;
+                }
               }
-            }
-          break;
+            break;
+          }
+          this.filtros[i].activo = true;
         }
-        this.filtros[i].activo = true;
       }
+      this.buscador();
+    } else {
+      filtro.activo = false;
+      this.buscador();
     }
-    this.buscador();
   }
 
   recuperarUsuario(): void {
