@@ -59,6 +59,10 @@ export class AutenticacionService {
   public setEmail(nuevoEmail: string){
     localStorage.setItem("email", nuevoEmail);   
   }
+
+  public setAdmin(nuevoAdmin: boolean){
+    localStorage.setItem("admin", nuevoAdmin.toString());
+  }
   
   public getId(): string {
     return localStorage.getItem("id") || "";
@@ -74,6 +78,11 @@ export class AutenticacionService {
   
   public getEmail(): string {
     return localStorage.getItem("email") || "";   
+  }
+
+  public getAdmin(): boolean {
+    console.log(localStorage.getItem("admin"));
+    return localStorage.getItem("admin") == "true" || localStorage.getItem("admin") == "1";
   }
   
   public refrescarToken() {

@@ -35,6 +35,7 @@ export class LoginComponent {
           this.autenticacionService.setNombre(dataMe.nombre!);
           this.autenticacionService.setApellidos(dataMe.apellidos!);
           this.autenticacionService.setEmail(dataMe.email!);
+          this.autenticacionService.setAdmin(dataMe.administrador!);
           this.router.navigate(['/biblioteca']);
         });
       });

@@ -36,16 +36,8 @@ export class RecetaService {
     _favorito: boolean,
     _id_usuario: number,
   ): Observable<Receta[]> {
-    type Parametros = {
-      id_receta: number,
-      precio?: number,
-      ingredientes?: number[],
-      categoria: string,
-      nutriscore: number,
-      favorito: boolean,
-      id_usuario: number,
-    }
-    const body: Parametros = {
+   
+    const body: any = {
       id_receta: _id_receta,
       categoria: _categoria,
       nutriscore: _nutriscore,

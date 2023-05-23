@@ -15,7 +15,7 @@ import { Ingrediente } from 'src/app/models/ingrediente';
 
 export class BibliotecaComponent implements OnInit {
 
-  public esAdministrador: boolean = true;
+  public esAdministrador: boolean = false;
   public respuestaBuscador: number = 0;
   public buscandoEnFavoritos: boolean = false;
   public buscandoNutriscore: string = "E";
@@ -47,6 +47,7 @@ export class BibliotecaComponent implements OnInit {
     this.resultados = [];
     this.buscador();
     this.recuperarUsuario();
+    this.esAdmin();
   }
 
   async obtenerIngredientes() {
@@ -89,7 +90,6 @@ export class BibliotecaComponent implements OnInit {
       }
     }
     this.buscador();
-    window.scrollTo(0, document.body.scrollHeight);
   }
   
   buscador() {
@@ -162,20 +162,6 @@ export class BibliotecaComponent implements OnInit {
       for(let i=0; i<this.filtros.length; i++) {
         if(this.filtros[i].nombre == elegido) {
           switch(this.filtros[i].categoria) {
-            case "Nutriscore":
-              for(let i=0; i<this.filtros.length; i++) {
-                if(this.filtros[i].categoria == "Nutriscore") {
-                  this.filtros[i].activo = false;
-                }
-              }
-            break;
-            case "Precio":
-              for(let i=0; i<this.filtros.length; i++) {
-                if(this.filtros[i].categoria == "Precio") {
-                  this.filtros[i].activo = false;
-                }
-              }
-            break;
             case "Tipo":
               for(let i=0; i<this.filtros.length; i++) {
                 if(this.filtros[i].categoria == "Tipo") {
@@ -202,6 +188,10 @@ export class BibliotecaComponent implements OnInit {
 
   estaLogeado() {
     return this.autenticacionService.estaLogeado();
+  }
+
+  esAdmin() {
+    this.esAdministrador = this.autenticacionService.getAdmin();
   }
 
   toggleFavoritos() {
