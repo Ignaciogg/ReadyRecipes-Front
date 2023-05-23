@@ -104,13 +104,32 @@ hr {
     align-items: center;
     background-image: linear-gradient(90deg, var(--colorPrincipal), var(--colorPrincipalDegradado));
     width: 80vw;
-    height: 53vh;
+    height: 50vh;
     border-radius: 20px;
     color: white;
     font-size: 18px;
     font-weight: 500;
+    margin: 25px 0;
+    justify-content: space-around;
 
-    .filtroRow{
+    div{
+        display: flex !important;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .filtroCol1{
+        flex-direction: column;
+        gap: 5vw;
+        .filtroCol2{
+            flex-direction: column;
+            .filtroRow{
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+        }
+    }
+    .flex-row{
         display: flex !important;
         flex-direction: row;
     }
@@ -121,7 +140,7 @@ hr {
             padding: 5px 8px;
             font-size: 16px;
             border: 1px solid #c4c4c4;
-           border-radius: 5px;
+            border-radius: 5px;
         }
     
         ng-select{

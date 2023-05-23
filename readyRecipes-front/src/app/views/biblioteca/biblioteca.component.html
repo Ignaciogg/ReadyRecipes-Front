@@ -36,52 +36,56 @@
             (click)="buscarTipo('Aperitivos')"
         />
     </div>
-
-    <h1 class="text-center">También puede usar estos filtros:</h1>
     
     <div class="row justify-content-center">
 
-        <div class="filtrosContainer">
-            <div class="filtroRow" id="nu">
-                    <div class="d-flex flex-wrap ms-0">
-                        <p>Nutriscore: </p>
-                        <div *ngFor="let filtro of filtros">
+        <div class="filtrosContainer container">
+            <div class="filtroCol1">
+                <div class="filtroCol2" id="nu">
+                    <p>Nutriscore: </p>
+                    <div class="filtroRow">
+
+                        <div *ngFor="let filtro of filtros" class="flex-row">
                             <aplicadorFiltro
-                                *ngIf="filtro.categoria=='Nutriscore' && filtro.activo==false"
+                                *ngIf="filtro.categoria=='Nutriscore'"
                                 titulo={{filtro.nombre}}
                                 (click)="activarFiltro(filtro.nombre)"
                             />
                         </div>
                     </div>
-            </div>
-            <div class="filtroRow" id="fa">
-                <div class="d-flex flex-wrap ms-0">
-                    <p>Favoritos: </p>
-                    <div *ngFor="let filtro of filtros">
-                        <aplicadorFiltro 
-                            *ngIf="filtro.categoria=='Favoritos' && filtro.activo==false"
-                            titulo={{filtro.nombre}}
-                            (click)="activarFiltro(filtro.nombre)"
-                        />
-                    </div>
                 </div>
-            </div>
-            <div class="filtroRow" id="pr">
-                <div class="d-flex flex-wrap ms-0">
+                <div class="filtroCol2" id="pr">
                     <p>Precio (en €): </p>
-                    <div class="pricerangeDiv">
-                        <priceRangeSelector></priceRangeSelector>
+                    <div class="filtroRow">
+                        <div class="pricerangeDiv">
+                            <priceRangeSelector></priceRangeSelector>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="filtroRow" id="in">
-                <div class="d-flex flex-wrap ms-0 align-items-center buscadorIngredientes">
+
+            <div class="filtroCol1">
+                <div class="filtroCol2" id="fa">
+                    <p>Favoritos: </p>
+                    <div class="filtroRow">
+                        <div *ngFor="let filtro of filtros">
+                            <aplicadorFiltro 
+                                *ngIf="filtro.categoria=='Favoritos'"
+                                titulo={{filtro.nombre}}
+                                (click)="activarFiltro(filtro.nombre)"
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div class="filtroCol2 buscadorIngredientes" id="in">
                     <p class="inputBuscador">Encuentre ingredientes rápidamente</p>
-                    <ng-select [(ngModel)]="selectedIngredient" [multiple]="true" (ngModelChange)="filtrarIngredientes($event)">
-                        <ng-container *ngFor="let filtro of filtros">
-                            <ng-option *ngIf="filtro.categoria=='Ingredientes' && !filtro.activo && filtro.visible" [value]="filtro">{{filtro.nombre}}</ng-option>
-                        </ng-container>
-                    </ng-select>
+                    <div class="filtroRow">
+                        <ng-select [(ngModel)]="selectedIngredient" [multiple]="true" (ngModelChange)="filtrarIngredientes($event)">
+                            <ng-container *ngFor="let filtro of filtros">
+                                <ng-option *ngIf="filtro.categoria=='Ingredientes' && !filtro.activo && filtro.visible" [value]="filtro">{{filtro.nombre}}</ng-option>
+                            </ng-container>
+                        </ng-select>
+                    </div>
                 </div>
             </div>
             
