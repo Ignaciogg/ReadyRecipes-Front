@@ -6,93 +6,74 @@
     <h1 class="text-center">Elija el tipo de plato que desea encontrar</h1>
     <div class="row justify-content-center">
         <categoria
-            class="col-lg-2 col-md-4 col-sm-4 col-6"
+            class="col-lg-2 col-md-2 col-sm-4 col-4"
             nombre="VERDURAS"
             imagen="assets/imagenes/verduras.png"
             (click)="buscarTipo('Verdura')" 
         />
         <categoria
-            class="col-lg-2 col-md-4 col-sm-4 col-6"
+            class="col-lg-2 col-md-2 col-sm-4 col-4"
             nombre="CARNES"
             imagen="assets/imagenes/carnes.png"
             (click)="buscarTipo('Carne')"
         />
         <categoria
-            class="col-lg-2 col-md-4 col-sm-4 col-6"
+            class="col-lg-2 col-md-2 col-sm-4 col-4"
             nombre="PESCADOS"
             imagen="assets/imagenes/pescados.png"
             (click)="buscarTipo('Pescado')"
         />
         <categoria
-            class="col-lg-2 col-md-4 col-sm-4 col-6"
+            class="col-lg-2 col-md-2 col-sm-4 col-4"
             nombre="PASTA"
             imagen="assets/imagenes/pasta.png"
             (click)="buscarTipo('Pasta')"
         />
         <categoria
-            class="col-lg-2 col-md-4 col-sm-4 col-6"
+            class="col-lg-2 col-md-2 col-sm-4 col-4"
             nombre="APERITIVOS"
             imagen="assets/imagenes/aperitivos.png"
             (click)="buscarTipo('Aperitivos')"
         />
-    </div>
-    
+    </div> 
     <div class="row justify-content-center">
-
-        <div class="filtrosContainer container">
-            <div class="filtroCol1">
-                <div class="filtroCol2" id="nu">
+        <div class="filtrosContainer">
+            <div>
+                <div>
                     <p>Nutriscore: </p>
-                    <div class="filtroRow">
-
-                        <div *ngFor="let filtro of filtros" class="flex-row">
+                    <div class="d-flex flex-row">
+                        <div *ngFor="let nutri of ['A', 'B', 'C', 'D']">
                             <aplicadorFiltro
-                                *ngIf="filtro.categoria=='Nutriscore'"
-                                titulo={{filtro.nombre}}
-                                [activo]=false
-                                (click)="activarFiltro(filtro.nombre, filtro)"
+                                titulo={{nutri}}
+                                [activo]="buscandoNutriscore == nutri"
+                                (click)="elegirNutriscore(nutri)"
                             />
                         </div>
                     </div>
                 </div>
-                <div class="filtroCol2" id="pr">
-                    <p>Precio (en €): </p>
-                    <div class="filtroRow">
-                        <div class="pricerangeDiv">
-                            <priceRangeSelector></priceRangeSelector>
-                        </div>
+                <div>
+                    <p class="m-0 p-0 mt-3">Precio (en €): </p>
+                    <priceRangeSelector/>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center">
+                <div class="buscadorIngredientes">
+                    <p class="inputBuscador m-0 p-0">Busque ingredientes</p>
+                    <ng-select [(ngModel)]="selectedIngredient" [multiple]="true" (ngModelChange)="filtrarIngredientes($event)">
+                        <ng-container *ngFor="let filtro of filtros">
+                            <ng-option *ngIf="filtro.categoria=='Ingredientes' && !filtro.activo && filtro.visible" [value]="filtro">{{filtro.nombre}}</ng-option>
+                        </ng-container>
+                    </ng-select>
+                    <div *ngIf="estaLogeado()" class="mt-4">
+                        <aplicadorFiltro 
+                            titulo="Mostrar sólo mis favoritos"
+                            [activo]=buscandoEnFavoritos
+                            (click)="toggleFavoritos()"
+                        />
                     </div>
                 </div>
             </div>
-
-            <div class="filtroCol1">
-                <div class="filtroCol2" id="fa" *ngIf="estaLogeado()">
-                    <p>Favoritos: </p>
-                    <div class="filtroRow">
-                        <div *ngFor="let filtro of filtros">
-                            <aplicadorFiltro 
-                                *ngIf="filtro.categoria=='Favoritos'"
-                                titulo={{filtro.nombre}}
-                                [activo]=false
-                                (click)="activarFiltro(filtro.nombre, filtro)"
-                            />
-                        </div>
-                    </div>
-                </div>
-                <div class="filtroCol2 buscadorIngredientes" id="in">
-                    <p class="inputBuscador">Encuentre ingredientes rápidamente</p>
-                    <div class="filtroRow">
-                        <ng-select [(ngModel)]="selectedIngredient" [multiple]="true" (ngModelChange)="filtrarIngredientes($event)">
-                            <ng-container *ngFor="let filtro of filtros">
-                                <ng-option *ngIf="filtro.categoria=='Ingredientes' && !filtro.activo && filtro.visible" [value]="filtro">{{filtro.nombre}}</ng-option>
-                            </ng-container>
-                        </ng-select>
-                    </div>
-                </div>
-            </div>
-            
         </div>
-
         <div *ngIf="respuestaBuscador == -1" class="col-lg-8 col-md-10 col-sm-12 col-12 d-flex flex-column justify-content-center align-items-center">
             <cargando/>
             <p class="mt-3">Estamos preguntando a nuestros chefs por sus mejores recetas. Denos un segundo...</p>

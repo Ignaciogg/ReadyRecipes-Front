@@ -17,22 +17,14 @@ export class BibliotecaComponent implements OnInit {
 
   public esAdministrador: boolean = true;
   public respuestaBuscador: number = 0;
-
+  public buscandoEnFavoritos: boolean = false;
+  public buscandoNutriscore: string = "E";
   filtros = [
     { nombre: "Verdura", categoria: "Tipo", activo: false, id: -1, visible: true },
     { nombre: "Carne", categoria: "Tipo", activo: false, id: null, visible: true },
     { nombre: "Pescado", categoria: "Tipo", activo: false, id: null, visible: true },
     { nombre: "Pasta", categoria: "Tipo", activo: false, id: null, visible: true },
     { nombre: "Aperitivos", categoria: "Tipo", activo: false, id: null, visible: true },
-    { nombre: "A", categoria: "Nutriscore", activo: false, id: null, visible: true },
-    { nombre: "B", categoria: "Nutriscore", activo: false, id: null, visible: true },
-    { nombre: "C", categoria: "Nutriscore", activo: false, id: null, visible: true },
-    { nombre: "D", categoria: "Nutriscore", activo: false, id: null, visible: true },
-    { nombre: "2", categoria: "Precio", activo: false, id: null, visible: true },
-    { nombre: "5", categoria: "Precio", activo: false, id: null, visible: true },
-    { nombre: "10", categoria: "Precio", activo: false, id: null, visible: true },
-    { nombre: "15", categoria: "Precio", activo: false, id: null, visible: true},
-    { nombre: "Mis favoritos", categoria: "Favoritos", activo: false, id: null, visible: true },
   ];
   resultados: Receta[] = [];
   usuarioLogeado: Usuario = new Usuario();
@@ -103,35 +95,25 @@ export class BibliotecaComponent implements OnInit {
   buscador() {
     this.respuestaBuscador = -1;
     this.resultados = [];
-    let id_receta: number = 0;
     let precioElegido: number = 1000;
     let categoriaElegida: string = "";
-    let nutriscoreElegido: number = -1;
-    let favoritoElegido: boolean = false;
     this.filtros.forEach(filtro => {
       if(filtro.activo == true) {
         switch(filtro.categoria) {
           case "Precio": precioElegido = Number(filtro.nombre); break;
           case "Tipo": categoriaElegida = filtro.nombre; break;
           case "Nutriscore":
-            switch(filtro.nombre) {
-              case "A": nutriscoreElegido = 4.51; break;
-              case "B": nutriscoreElegido = 3.51; break;
-              case "C": nutriscoreElegido = 2.51; break;
-              case "D": nutriscoreElegido = 1.51; break;
-            }
             break;
-            case "Favoritos": favoritoElegido = true; break;
           }
         }
     });
     this.recetaService.buscador(
-      id_receta,
+      0,
       precioElegido,
       this.finalIngredientes.map(ingr => ingr.id),
       categoriaElegida,
-      nutriscoreElegido,
-      favoritoElegido,
+      this.nutriscoreToNumber(this.buscandoNutriscore),
+      this.buscandoEnFavoritos,
       1
     ).subscribe((data: Receta[]) => { 
       data.forEach(receta => {
@@ -153,11 +135,30 @@ export class BibliotecaComponent implements OnInit {
     });
   }
 
-  activarFiltro(elegido: string, filtro: any) {
+  elegirNutriscore(nutriscore: string) {
+    if(this.buscandoNutriscore == nutriscore) {
+      this.buscandoNutriscore = "E";
+      this.buscador();
+    } else {
+      this.buscandoNutriscore = nutriscore;
+      this.buscador();
+    }
+  }
 
+  nutriscoreToNumber(letra: string): number {
+    let resultado: number = 0;
+    switch(letra) {
+      case "A": resultado = 4.51; break;
+      case "B": resultado = 3.51; break;
+      case "C": resultado = 2.51; break;
+      case "D": resultado = 1.51; break;
+    }
+    return resultado;
+  }
+
+  activarFiltro(elegido: string, filtro: any) {
     if(filtro.activo == false) {
       filtro.activo = true;
-
       for(let i=0; i<this.filtros.length; i++) {
         if(this.filtros[i].nombre == elegido) {
           switch(this.filtros[i].categoria) {
@@ -201,5 +202,10 @@ export class BibliotecaComponent implements OnInit {
 
   estaLogeado() {
     return this.autenticacionService.estaLogeado();
+  }
+
+  toggleFavoritos() {
+    this.buscandoEnFavoritos = !this.buscandoEnFavoritos;
+    this.buscador();  
   }
 }
