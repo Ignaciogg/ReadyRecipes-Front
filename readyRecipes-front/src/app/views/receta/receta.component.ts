@@ -14,7 +14,6 @@ import { Comentario } from 'src/app/models/comentario';
   styleUrls: ['./receta.component.scss'],
 })
 export class RecetaComponent {
-
   public id: number = -1;
   public receta: Receta = {id: 1, titulo: ""};
   public minMostrarPulgares: number = 850;
@@ -77,9 +76,9 @@ export class RecetaComponent {
   }
 
   nuevoComentario(_contenido: string) {
-    const idReceta = this.id;
+    this.cargando--;
     const idUsuario = Number(this.autenticacionService.getId());
-    this.comentarioService.nuevoComentario(idReceta, idUsuario, _contenido).subscribe(data => {
+    this.comentarioService.nuevoComentario(this.id, idUsuario, _contenido).subscribe(data => {
       this.cargarComentarios();
       this.comentarioInput = "";
     });
