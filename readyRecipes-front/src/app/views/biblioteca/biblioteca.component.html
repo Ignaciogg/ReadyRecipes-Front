@@ -58,7 +58,7 @@
             </div>
             <div class="d-flex justify-content-center">
                 <div class="buscadorIngredientes">
-                    <p class="inputBuscador m-0 p-0">Busque ingredientes</p>
+                    <p class="inputBuscador m-0 p-0 mb-1">Busque ingredientes</p>
                     <ng-select [(ngModel)]="selectedIngredient" [multiple]="true" (ngModelChange)="filtrarIngredientes($event)">
                         <ng-container *ngFor="let filtro of filtros">
                             <ng-option *ngIf="filtro.categoria=='Ingredientes' && !filtro.activo && filtro.visible" [value]="filtro">{{filtro.nombre}}</ng-option>

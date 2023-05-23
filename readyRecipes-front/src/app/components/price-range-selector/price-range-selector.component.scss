@@ -1,3 +1,11 @@
 mat-slider {
     width: 300px;
 }
+
+::ng-deep .mat-slider-horizontal .mat-slider-background {
+    background-color: blue;
+}
+  
+::ng-deep .mat-slider-thumb {
+    background-color: blue;
+}
