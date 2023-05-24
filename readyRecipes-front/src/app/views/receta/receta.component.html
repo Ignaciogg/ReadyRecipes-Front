@@ -15,7 +15,11 @@
     </div>
     <div class="d-flex flex-wrap ms-0">
         <section class="seccionIframe col-xl-5 col-md-6 col-12">
-            <iframe [src]="sanitizer.bypassSecurityTrustResourceUrl(receta.url!)" allowfullscreen="true"></iframe>
+            <iframe
+                [src]="sanitizer.bypassSecurityTrustResourceUrl(receta.url!)"
+                allowfullscreen="true"
+                sandbox="allow-same-origin allow-scripts"
+            ></iframe>
         </section>
         <div class="col-md-5 col-12 ficha">
             <h3>Ficha de la receta</h3>

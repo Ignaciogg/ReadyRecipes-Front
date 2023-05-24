@@ -1,4 +1,4 @@
-import { Component, Input, HostListener } from '@angular/core';
+import { Component } from '@angular/core';
 import { RecetaService } from '../../services/receta.service';
 import { AutenticacionService } from '../../services/autenticacion.service';
 import { ComentarioService } from '../../services/comentario.service';
@@ -22,7 +22,7 @@ export class RecetaComponent {
   comentarioInput: string = "";
   esFavorito: boolean = false;
   comentarios: Comentario[] = [];
-
+  
   constructor(
     private comentarioService: ComentarioService,
     private recetaService: RecetaService,
@@ -43,7 +43,7 @@ export class RecetaComponent {
       console.log("Error cargando la receta: ", e);
     }
   }
-  
+
   private cargarReceta() {
     this.recetaService.get(this.id).subscribe(data=> {
       this.receta = data;
@@ -84,7 +84,7 @@ export class RecetaComponent {
     });
   }
 
-  cambiarFavorito() {
+  cambiarFavorito() { 
     if(this.esFavorito) {
       this.favoritoService.removeFavoritos(this.id, Number(this.autenticacionService.getId())).subscribe();
     } else {
