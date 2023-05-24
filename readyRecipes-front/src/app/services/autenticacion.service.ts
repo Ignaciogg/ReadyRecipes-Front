@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { Usuario } from '../models/usuario';
-import { Observable } from 'rxjs';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({ 
   providedIn: 'root'
@@ -18,21 +17,25 @@ export class AutenticacionService {
       email: _email,
       pass: _pass,
     }
-    // setTimeout() => despues de x tiempo, llamar al back refresh() para cambiar el token por uno nuevo
     return this.httpClient.post<any>(
       environment.apiUrl + "login",
       body,
     );
   }
 
-  public logout(): Observable<any> {
+  public logout(): Observable<void> {
+    const estaLogeado = this.estaLogeado();
     this.setId("");
     this.setToken("");
     this.setNombre("");
     this.setEmail("");
-    return this.httpClient.get<void>(
-      environment.apiUrl + "logout",
-    );
+    if(estaLogeado) {
+      return this.httpClient.get<void>(
+        environment.apiUrl + "logout",
+      );
+    } else {
+      return of();
+    }
   }
 
   public estaLogeado() {

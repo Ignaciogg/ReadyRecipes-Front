@@ -108,7 +108,7 @@ export class EstadisticasComponent {
 
   eliminarUsuario(): void {
     this.esperandoEliminar = true;
-    this.usuarioService.eliminarUsuario(this.usuario!.email!).subscribe(data => {
+    this.usuarioService.eliminarUsuario(this.usuario!.email!).subscribe(() => {
       this.esperandoEliminar = false;
       this.receta = { id: -1 };
       this.usuarioBorrarInput = "";
@@ -142,7 +142,7 @@ export class EstadisticasComponent {
 
   async modificarReceta(): Promise<void> {
     this.enviandoReceta = true;
-    this.recetaService.modificarReceta(this.receta!).subscribe(data => {
+    this.recetaService.modificarReceta(this.receta!).subscribe(() => {
       this.receta = { id: -1 };
       this.recetaModificarInput = "";
       this.enviandoReceta = false;

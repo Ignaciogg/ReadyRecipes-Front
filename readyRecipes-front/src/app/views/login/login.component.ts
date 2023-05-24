@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Usuario } from 'src/app/models/usuario';
 import { AutenticacionService } from 'src/app/services/autenticacion.service';
 import { Router } from '@angular/router';
 import { UsuarioService } from 'src/app/services/usuario.service';
@@ -27,8 +26,7 @@ export class LoginComponent {
     } else if(password == "") {
       this.respuesta = -3;
     } else {
-      this.autenticacionService.login(email, password).subscribe(async dataLogin => {
-        this.respuesta = 200;
+      this.autenticacionService.login(email, password).subscribe(dataLogin => {
         this.autenticacionService.setToken(dataLogin.access_token);
         this.usuarioService.me().subscribe(dataMe => {
           this.autenticacionService.setId(dataMe.id!.toString());
@@ -37,7 +35,10 @@ export class LoginComponent {
           this.autenticacionService.setEmail(dataMe.email!);
           this.autenticacionService.setAdmin(dataMe.administrador!);
           this.router.navigate(['/biblioteca']);
+          this.respuesta = 200;
         });
+      }, error => {
+        this.respuesta = error.status;
       });
     }
   }

@@ -104,7 +104,7 @@ $readyRecipes-front-theme: mat.define-light-theme((
 ////////////////////// PANTALLAS DE GESTION DE CUENTA //////////////////////
 
 .pageLog {
-    margin: 0px 10%;
+    margin: 20px 10%;
     color: var(--colorPrincipal);
 }
 
@@ -131,8 +131,8 @@ $readyRecipes-front-theme: mat.define-light-theme((
 }
 
 .textoError {
-    color: red;
-    font-size: x-large;
+    margin: 100px 0px;
+    color: var(--colorSecundario);
     font-weight: bold;
 }
 

@@ -78,7 +78,7 @@ export class RecetaComponent {
   nuevoComentario(_contenido: string) {
     this.cargando--;
     const idUsuario = Number(this.autenticacionService.getId());
-    this.comentarioService.nuevoComentario(this.id, idUsuario, _contenido).subscribe(data => {
+    this.comentarioService.nuevoComentario(this.id, idUsuario, _contenido).subscribe(() => {
       this.cargarComentarios();
       this.comentarioInput = "";
     });

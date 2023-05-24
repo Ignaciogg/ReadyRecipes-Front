@@ -12,11 +12,14 @@
         </div>
     </form>
     <div class="d-flex justify-content-center">
-        <cargando *ngIf="respuesta == -1"/>
+        <cargando *ngIf="respuesta == -1" class="mb-2"/>
     </div>
-    <div *ngIf="respuesta != -1" class="text-center">
-        <p *ngIf="respuesta == 401" class="textoError">Usuario o contraseña incorrectos</p>
+    <div class="errorDiv" *ngIf="respuesta == 401">
+        <img src="assets/imagenes/iconos/error.png">
+        <p class="textoError">Usuario o contraseña incorrectos.<br/>Por favor, inténtelo de nuevo<br/><br/></p>
+    </div>
+    <div class="text-center">
         <a routerLink="/recuperar" class="aLog">¿Ha olvidado su contraseña?</a>
-        <p *ngIf="respuesta != -1" class="registrarse">¿No tiene cuenta? <a routerLink="/registro" class="aLog">Regístrese ahora</a></p>
+        <p class="registrarse">¿No tiene cuenta? <a routerLink="/registro" class="aLog">Regístrese ahora</a></p>
     </div>
 </div>
