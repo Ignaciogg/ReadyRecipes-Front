@@ -46,9 +46,6 @@ h1 {
 }
 
 .filtro {
-    /*border-top: 1px solid black;
-    border-right: 1px solid black;
-    border-left: 1px solid black;*/
     background-color: var(--colorSecundarioClaro);
     color: black;
     margin-right: 0.25vw;
@@ -70,7 +67,6 @@ h1 {
 
 .resultadoBuscador {
     background-color: #F5F5F5;
-    // border: 1px solid #AAA;
     padding: 10px;
     margin-bottom: 20px;
     border-bottom-left-radius: 20px;
@@ -98,54 +94,19 @@ hr {
     margin-right: 40px;
 }
 
-.filtrosContainer{
-
-    display: flex !important;
-    align-items: center;
-    background-image: linear-gradient(90deg, var(--colorPrincipal), var(--colorPrincipalDegradado));
-    width: 80vw;
-    height: 50vh;
-    border-radius: 20px;
-    color: white;
-    font-size: 18px;
-    font-weight: 500;
-    margin: 25px 0;
+.filtrosContainer {
+    display: flex;
+    flex-wrap: wrap;
     justify-content: space-around;
-
-    div{
-        display: flex !important;
-        justify-content: center;
-        align-items: center;
-    }
-    
-    .filtroCol1{
-        flex-direction: column;
-        gap: 5vw;
-        .filtroCol2{
-            flex-direction: column;
-            .filtroRow{
-                flex-direction: row;
-                flex-wrap: wrap;
-            }
-        }
-    }
-    .flex-row{
-        display: flex !important;
-        flex-direction: row;
-    }
-
-    .buscadorIngredientes{
-
-        .input{
-            padding: 5px 8px;
-            font-size: 16px;
-            border: 1px solid #c4c4c4;
-            border-radius: 5px;
-        }
-    
-        ng-select{
-            width: 300px;
-        }
-        
+    align-items: center;
+    background-color: #EEE;
+    font-size: medium;
+    width: 75vw;
+    border-radius: 20px;
+    border: 1px solid #BBB;
+    margin: 30px 0px;
+    padding: 30px 30px;
+    .priceRangeSelector {
+        margin-left: 20px;
     }
 }

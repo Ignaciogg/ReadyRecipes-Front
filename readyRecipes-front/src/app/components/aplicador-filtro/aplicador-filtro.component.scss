@@ -9,7 +9,9 @@ button {
     background-color: white;
     
     &.activado{
-        background-color: black;
+        background-color: var(--colorPrincipal);
+        color: white;
+        font-weight: bold;
     }
     p {
         margin-top: 0px;

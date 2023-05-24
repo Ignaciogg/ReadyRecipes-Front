@@ -14,25 +14,17 @@ import { Ingrediente } from 'src/app/models/ingrediente';
 })
 
 export class BibliotecaComponent implements OnInit {
-
-  public esAdministrador: boolean = true;
+  public esAdministrador: boolean = false;
   public respuestaBuscador: number = 0;
-
+  public buscandoEnFavoritos: boolean = false;
+  public buscandoNutriscore: string = "E";
+  public precioElegido: number = 50;
   filtros = [
     { nombre: "Verdura", categoria: "Tipo", activo: false, id: -1, visible: true },
     { nombre: "Carne", categoria: "Tipo", activo: false, id: null, visible: true },
     { nombre: "Pescado", categoria: "Tipo", activo: false, id: null, visible: true },
     { nombre: "Pasta", categoria: "Tipo", activo: false, id: null, visible: true },
     { nombre: "Aperitivos", categoria: "Tipo", activo: false, id: null, visible: true },
-    { nombre: "A", categoria: "Nutriscore", activo: false, id: null, visible: true },
-    { nombre: "B", categoria: "Nutriscore", activo: false, id: null, visible: true },
-    { nombre: "C", categoria: "Nutriscore", activo: false, id: null, visible: true },
-    { nombre: "D", categoria: "Nutriscore", activo: false, id: null, visible: true },
-    { nombre: "2", categoria: "Precio", activo: false, id: null, visible: true },
-    { nombre: "5", categoria: "Precio", activo: false, id: null, visible: true },
-    { nombre: "10", categoria: "Precio", activo: false, id: null, visible: true },
-    { nombre: "15", categoria: "Precio", activo: false, id: null, visible: true},
-    { nombre: "Mis favoritos", categoria: "Favoritos", activo: false, id: null, visible: true },
   ];
   resultados: Receta[] = [];
   usuarioLogeado: Usuario = new Usuario();
@@ -55,6 +47,7 @@ export class BibliotecaComponent implements OnInit {
     this.resultados = [];
     this.buscador();
     this.recuperarUsuario();
+    this.esAdmin();
   }
 
   async obtenerIngredientes() {
@@ -97,84 +90,60 @@ export class BibliotecaComponent implements OnInit {
       }
     }
     this.buscador();
-    window.scrollTo(0, document.body.scrollHeight);
   }
   
   buscador() {
     this.respuestaBuscador = -1;
     this.resultados = [];
-    let id_receta: number = 0;
-    let precioElegido: number = 1000;
     let categoriaElegida: string = "";
-    let nutriscoreElegido: number = -1;
-    let favoritoElegido: boolean = false;
     this.filtros.forEach(filtro => {
-      if(filtro.activo == true) {
-        switch(filtro.categoria) {
-          case "Precio": precioElegido = Number(filtro.nombre); break;
-          case "Tipo": categoriaElegida = filtro.nombre; break;
-          case "Nutriscore":
-            switch(filtro.nombre) {
-              case "A": nutriscoreElegido = 4.51; break;
-              case "B": nutriscoreElegido = 3.51; break;
-              case "C": nutriscoreElegido = 2.51; break;
-              case "D": nutriscoreElegido = 1.51; break;
-            }
-            break;
-            case "Favoritos": favoritoElegido = true; break;
-          }
-        }
+      if(filtro.activo == true && filtro.categoria == "Tipo") {
+        categoriaElegida = filtro.nombre;
+      }
     });
+    console.log("Buscando recetas con: precio = " + this.precioElegido + ", categoria = " + categoriaElegida + ", nutriscore = " + this.buscandoNutriscore + ", favorito = " + this.buscandoEnFavoritos + ", ingredientes = " + this.finalIngredientes.map(ingr => ingr.id));
     this.recetaService.buscador(
-      id_receta,
-      precioElegido,
+      this.precioElegido,
       this.finalIngredientes.map(ingr => ingr.id),
       categoriaElegida,
-      nutriscoreElegido,
-      favoritoElegido,
-      1
-    ).subscribe((data: Receta[]) => { 
+      this.nutriscoreToNumber(this.buscandoNutriscore),
+      this.buscandoEnFavoritos
+    ).subscribe((data: Receta[]) => {
+      console.log("Recetas encontradas: ", data);
       data.forEach(receta => {
-        let esUnico = true;
-        for (let i = 0; i < this.resultados.length; i++) {
-          if (receta.id === this.resultados[i].id) {
-            esUnico = false;
-            break;
-          }
-        }
-        if (esUnico) {
-          this.resultados.push(receta);
-        }
-        
+        this.resultados.push(receta);
       });
       this.respuestaBuscador = 0;
-    }, error => {
-      this.respuestaBuscador = 0;
-    });
+    }, error => this.respuestaBuscador = 0);
+  }
+
+  elegirNutriscore(nutriscore: string) {
+    if(this.buscandoNutriscore == nutriscore) {
+      this.buscandoNutriscore = "E";
+      this.buscador();
+    } else {
+      this.buscandoNutriscore = nutriscore;
+      this.buscador();
+    }
+  }
+
+  nutriscoreToNumber(letra: string): number {
+    let resultado: number = 0;
+    switch(letra) {
+      case "A": resultado = 4.51; break;
+      case "B": resultado = 3.51; break;
+      case "C": resultado = 2.51; break;
+      case "D": resultado = 1.51; break;
+    }
+    return resultado;
   }
 
   activarFiltro(elegido: string, filtro: any) {
-
     if(filtro.activo == false) {
       filtro.activo = true;
-
       for(let i=0; i<this.filtros.length; i++) {
         if(this.filtros[i].nombre == elegido) {
           switch(this.filtros[i].categoria) {
-            case "Nutriscore":
-              for(let i=0; i<this.filtros.length; i++) {
-                if(this.filtros[i].categoria == "Nutriscore") {
-                  this.filtros[i].activo = false;
-                }
-              }
-            break;
-            case "Precio":
-              for(let i=0; i<this.filtros.length; i++) {
-                if(this.filtros[i].categoria == "Precio") {
-                  this.filtros[i].activo = false;
-                }
-              }
-            break;
             case "Tipo":
               for(let i=0; i<this.filtros.length; i++) {
                 if(this.filtros[i].categoria == "Tipo") {
@@ -201,5 +170,14 @@ export class BibliotecaComponent implements OnInit {
 
   estaLogeado() {
     return this.autenticacionService.estaLogeado();
+  }
+
+  esAdmin() {
+    this.esAdministrador = this.autenticacionService.getAdmin();
+  }
+
+  toggleFavoritos() {
+    this.buscandoEnFavoritos = !this.buscandoEnFavoritos;
+    this.buscador();  
   }
 }
