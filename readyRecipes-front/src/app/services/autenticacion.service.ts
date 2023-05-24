@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({ 
-  providedIn: 'root'
+  providedIn: 'root' 
 })
 export class AutenticacionService {
 
@@ -20,6 +20,12 @@ export class AutenticacionService {
     return this.httpClient.post<any>(
       environment.apiUrl + "login",
       body,
+    );
+  }
+  
+  public refreshToken(): Observable<any> {
+    return this.httpClient.get<any>(
+      environment.apiUrl + "refresh",
     );
   }
 
@@ -46,7 +52,7 @@ export class AutenticacionService {
   public setId(nuevoId: string){
     localStorage.setItem("id", nuevoId);   
   }
-
+  
   public setToken(nuevoToken: string){
     localStorage.setItem("token", nuevoToken);   
   }
@@ -86,9 +92,5 @@ export class AutenticacionService {
   public getAdmin(): boolean {
     console.log(localStorage.getItem("admin"));
     return localStorage.getItem("admin") == "true" || localStorage.getItem("admin") == "1";
-  }
-  
-  public refrescarToken() {
-    // 
   }
 }
