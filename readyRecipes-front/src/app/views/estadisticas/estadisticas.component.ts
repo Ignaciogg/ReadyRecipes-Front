@@ -245,4 +245,11 @@ export class EstadisticasComponent {
       }
     });
   }
+
+  selectedColor: string = 'blue';
+  colors: string[] = ['blue', 'red', 'green', 'yellow'];
+
+  selectColor(color: string) {
+    this.selectedColor = color;
+  }
 }

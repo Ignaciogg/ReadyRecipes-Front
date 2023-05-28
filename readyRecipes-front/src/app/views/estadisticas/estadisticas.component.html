@@ -79,6 +79,17 @@
     <div *ngIf=" enviandoReceta == true" class="d-flex justify-content-center p-5">
         <cargando/>
     </div>
+
+    <div class="carousel-container">
+        <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item" *ngFor="let color of colors" [ngClass]="{ 'selected': selectedColor === color }">
+                    <div class="color-rectangle" [ngStyle]="{ 'background-color': color }" (click)="selectColor(color)"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <h2>Estadísticas de la web</h2>
     <div class="contenedorGraficas">
         <div class="d-flex flex-row justify-content-around mb-5">
