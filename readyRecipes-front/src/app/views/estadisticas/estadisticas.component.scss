@@ -39,6 +39,12 @@ h3 {
     margin-left: 20px;
 }
 
+.botonCambiar {
+    width: 150px;
+    height: 40px;
+    margin-left: 20px;
+}
+
 .inputLog {
     margin: 0px;
 }
@@ -160,22 +166,4 @@ canvas {
 
 .infoGraficaIzquierda {
     margin-right: 5vw;
-}
-
-.carousel-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 300px;
-}
-  
-.color-rectangle {
-    width: 200px;
-    height: 200px;
-    border-radius: 10px;
-    margin: 0 auto;
-}
-  
-.selected {
-    border: 2px solid white;
 }

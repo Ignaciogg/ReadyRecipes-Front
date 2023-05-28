@@ -246,10 +246,30 @@ export class EstadisticasComponent {
     });
   }
 
-  selectedColor: string = 'blue';
-  colors: string[] = ['blue', 'red', 'green', 'yellow'];
+  inputColorPrincipal: string = "";
+  inputColorPrincipalClaro: string = "";
+  inputColorSecundario: string = "";
 
-  selectColor(color: string) {
-    this.selectedColor = color;
+  colorValido(inputColorPrincipal: string): boolean {
+    const colorRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
+    return colorRegex.test(inputColorPrincipal);
+  }
+
+  cambiarColor(inputColorPrincipal: string): void {
+    if (this.colorValido(inputColorPrincipal)) {
+      document.documentElement.style.setProperty('--colorPrincipal', inputColorPrincipal);
+    }
+  }
+
+  cambiarColorS(inputColorSecundario: string): void {
+    if (this.colorValido(inputColorSecundario)) {
+      document.documentElement.style.setProperty('--colorSecundario', inputColorSecundario);
+    }
+  }
+
+  cambiarColorC(inputColorPrincipalClaro: string): void {
+    if (this.colorValido(inputColorPrincipalClaro)) {
+      document.documentElement.style.setProperty('--colorPrincipalClaro', inputColorPrincipalClaro);
+    }
   }
 }
