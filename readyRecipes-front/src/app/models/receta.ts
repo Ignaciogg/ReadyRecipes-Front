@@ -16,7 +16,6 @@ export class Receta {
     precio?: number;
 
     constructor(_id: number);
-    constructor(_id: number);
     constructor(_id: number, _titulo: string);
     constructor(
         _id: number,

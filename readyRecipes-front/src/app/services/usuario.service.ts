@@ -35,12 +35,8 @@ export class UsuarioService {
   }
 
   public infoUsuario(_id: number): Observable<Usuario> {
-    const body = {
-      id: _id,
-    }
-    return this.httpClient.post<Usuario>(
-      environment.apiUrl + "infoUsuario",
-      body,
+    return this.httpClient.get<Usuario>(
+      environment.apiUrl + "infoUsuario/" + _id,
     );
   }
 
@@ -48,7 +44,7 @@ export class UsuarioService {
     const body = {
       email: _correo,
     }
-    return this.httpClient.post<void>(
+    return this.httpClient.post<void>( 
       environment.apiUrl + "eliminarUsuario",
       body,
     );

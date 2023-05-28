@@ -27,7 +27,7 @@ export class RecetaService {
     );
   }
 
-  public buscador(
+  public buscador( 
     _precio: number,
     _ingredientes: number[],
     _categoria: string,

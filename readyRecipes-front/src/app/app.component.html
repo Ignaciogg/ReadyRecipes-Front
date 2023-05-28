@@ -20,7 +20,13 @@
         </header>
         <router-outlet/>
     </div>
-    <footer *ngIf="router.url !== '/'">
-        <p>ReadyRecipes - 2023</p>
+    <footer *ngIf="router.url !== '/'" class="py-4">
+        <p>ReadyRecipes - 2023<br>Con la colaboración de Universidad Europea de Madrid</p>
+        <div class="d-flex justify-content-center align-items-center">
+            <img src="assets/imagenes/logoBlanco.png">
+            <p class="mx-4 my-0 py-0">X</p>
+            <img src="assets/imagenes/uem.png">
+        </div>
+        <p><br>Todos los derechos reservados</p>
     </footer>
 </div>

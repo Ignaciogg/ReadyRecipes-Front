@@ -101,6 +101,12 @@ $readyRecipes-front-theme: mat.define-light-theme((
     border-radius: 8px;
 }
 
+footer {
+    img {
+        height: 50px;
+    }
+}
+
 ////////////////////// PANTALLAS DE GESTION DE CUENTA //////////////////////
 
 .pageLog {

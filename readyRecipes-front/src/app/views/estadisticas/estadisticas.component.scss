@@ -134,15 +134,18 @@ p {
 
 canvas {
     margin: auto;
-    width: min(40vw, 450px) !important;
-    height: min(40vw, 450px) !important;
+    width: min(50vw, 450px) !important;
     margin-top: 20px;
     margin-bottom: 50px;
 }
 
+.myPieChart {
+    height: min(50vw, 450px) !important;
+}
+
 .myLinechart {
-    width: min(40vw, 600px) !important;
-    height: min(30vw, 450px) !important;
+    width: min(50vw, 600px) !important;
+    height: min(30vw, 300px) !important;
 }
 
 .infoGraficaIzquierda, .infoGraficaDerecha {

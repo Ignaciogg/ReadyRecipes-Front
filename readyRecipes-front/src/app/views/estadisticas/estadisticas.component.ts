@@ -35,6 +35,7 @@ export class EstadisticasComponent {
   ratingsNutriscore: number[] = [];
   cantidadesNutriscore: number[] = [];
   numRecetas: number = 0;
+  errorEliminar: boolean = false;
 
   constructor(
     private recetaService: RecetaService,
@@ -99,25 +100,36 @@ export class EstadisticasComponent {
   }
 
   recibirUsuario(_id: string): void {
+    this.esperandoEliminar = true;
     this.usuario = undefined;
     this.usuarioService.infoUsuario(Number(this.usuarioBorrarInput)).subscribe(data => {
-      this.usuario = data;
-      this.alerta = true;
+      if(data == null) {
+        this.errorEliminar = true;
+        this.usuario = new Usuario();
+      } else {
+        this.esperandoEliminar = false;
+        this.usuario = data;
+        this.alerta = true;
+      }
+    }, () => {
+      this.errorEliminar = true;
     });
   }
 
   eliminarUsuario(): void {
-    this.esperandoEliminar = true;
     this.usuarioService.eliminarUsuario(this.usuario!.email!).subscribe(() => {
       this.esperandoEliminar = false;
       this.receta = { id: -1 };
       this.usuarioBorrarInput = "";
       this.alerta = false;
+    }, () => {
+      this.errorEliminar = true;
     });
   }
 
   cerrarAlerta() {
     this.alerta = false;
+    this.errorEliminar = false;
   }
 
   async recibirReceta(_id: string): Promise<void> {
@@ -153,24 +165,36 @@ export class EstadisticasComponent {
     this.receta!.categoria = _categoria;
   }
 
+  getColorPrincipal(): string {
+    const rootStyles = getComputedStyle(document.documentElement);
+    return rootStyles.getPropertyValue("--colorPrincipal").trim();
+  }
+
+  getColorSecundario(): string {
+    const rootStyles = getComputedStyle(document.documentElement);
+    return rootStyles.getPropertyValue("--colorSecundario").trim();
+  }
+
   ngAfterViewInit() {
     this.chartCategorias = new Chart("chartCategorias", {
-      type: 'pie',
+      type: "pie",
       data: {
         labels: this.nombresCategorias,
         datasets: [{
           data: this.cantidadesCategorias,
-          backgroundColor: [ "#E7E", "#EA7", "#EE7", "#7AE", "#7EA" ],
+          backgroundColor: [ "#962296", this.getColorSecundario(), "#CCCC22", "#2255CC", this.getColorPrincipal() ],
           hoverOffset: 30,
         }],
       },
     });
     this.chartNutriscore = new Chart("chartNutriscore", {
-      type: 'bar',
+      type: "bar",
       data: {
         labels: this.ratingsNutriscore as unknown as Date[],
         datasets: [{
-          label: "",
+          label: "Recetas por nutriscore",
+          borderColor: this.getColorPrincipal(),
+          backgroundColor: this.getColorPrincipal(),
           data: this.cantidadesNutriscore,
         }],
       },
@@ -183,11 +207,13 @@ export class EstadisticasComponent {
       }
     });
     this.chartUsuarios = new Chart("chartUsuarios", {
-      type: 'line',
+      type: "line",
       data: {
         labels: this.fechasUsuarios as unknown as Date[],
         datasets: [{
-          label: "",
+          label: "Usuarios registrados",
+          borderColor: this.getColorPrincipal(),
+          backgroundColor: this.getColorPrincipal(),
           data: this.cantidadesUsuarios,
         }],
       },
@@ -200,11 +226,13 @@ export class EstadisticasComponent {
       }
     });
     this.chartComentarios = new Chart("chartComentarios", {
-      type: 'line',
+      type: "line",
       data: {
         labels: this.fechasComentarios as unknown as Date[],
         datasets: [{
-          label: "",
+          label: "Comentarios",
+          borderColor: this.getColorPrincipal(),
+          backgroundColor: this.getColorPrincipal(),
           data: this.cantidadesComentarios,
         }],
       },
