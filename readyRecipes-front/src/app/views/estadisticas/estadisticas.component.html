@@ -9,18 +9,21 @@
     <h2 class="mt-3">Cambiar el Color Principal</h2>
     <div class="d-flex align-items-center">
         <input [(ngModel)]="inputColorPrincipal" class="form-control inputLog" placeholder="#Color Principal">
+        <div *ngIf="colorValido(inputColorPrincipal) == true" class="colorPrincipal"></div>
         <button *ngIf="colorValido(inputColorPrincipal) == true" (click)="cambiarColor(inputColorPrincipal)" class="botonEnviar">Cambiar</button>
     </div>
 
     <h2 class="mt-3">Cambiar el Color Principal Claro</h2>
     <div class="d-flex align-items-center">
         <input [(ngModel)]="inputColorPrincipalClaro" class="form-control inputLog" placeholder="#Color Principal Claro">
+        <div *ngIf="colorValido(inputColorPrincipalClaro) == true" class="colorPrincipalClaro"></div>
         <button *ngIf="colorValido(inputColorPrincipalClaro) == true" (click)="cambiarColorC(inputColorPrincipalClaro)" class="botonEnviar">Cambiar</button>
     </div>
 
     <h2 class="mt-3">Cambiar el Color Secundario</h2>
     <div class="d-flex align-items-center">
         <input [(ngModel)]="inputColorSecundario" class="form-control inputLog" placeholder="#Color Secundario">
+        <div *ngIf="colorValido(inputColorSecundario) == true" class="colorSecundario"></div>
         <button *ngIf="colorValido(inputColorSecundario) == true" (click)="cambiarColorS(inputColorSecundario)" class="botonEnviar">Cambiar</button>
     </div>
 
