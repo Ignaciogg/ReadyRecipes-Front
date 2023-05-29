@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AutenticacionService } from 'src/app/services/autenticacion.service';
 import { JwtHelperService } from "@auth0/angular-jwt";
+import { AdministradorService } from 'src/app/services/administrador.service';
 
 @Component({
   selector: 'app-root',
@@ -15,9 +16,17 @@ export class AppComponent {
   constructor(
     public router: Router,
     private autenticacionService: AutenticacionService,
+    private adminService: AdministradorService,
   ) { }
 
   ngOnInit(): void {
+    
+    this.adminService.recibirColores().subscribe(data => {
+      document.documentElement.style.setProperty('--colorPrincipal', data[0].colorPrincipal);
+      document.documentElement.style.setProperty('--colorPrincipalClaro', data[0].colorPrincipalClaro);
+      document.documentElement.style.setProperty('--colorSecundario', data[0].colorSecundario);
+    });
+
     setInterval(() => {
       try {
         const helper = new JwtHelperService();
