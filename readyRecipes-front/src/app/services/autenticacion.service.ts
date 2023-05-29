@@ -35,6 +35,7 @@ export class AutenticacionService {
     this.setToken("");
     this.setNombre("");
     this.setEmail("");
+    this.setAdmin(false);
     if(estaLogeado) {
       return this.httpClient.get<void>(
         environment.apiUrl + "logout",
