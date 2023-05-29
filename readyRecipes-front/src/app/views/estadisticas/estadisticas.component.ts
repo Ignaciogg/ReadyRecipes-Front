@@ -5,6 +5,7 @@ import { Usuario } from 'src/app/models/usuario';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { ComentarioService } from 'src/app/services/comentario.service';
 import { Chart } from 'chart.js/auto';
+import { AdministradorService } from 'src/app/services/administrador.service';
 
 @Component({
   selector: 'estadisticas',
@@ -41,6 +42,7 @@ export class EstadisticasComponent {
     private recetaService: RecetaService,
     private usuarioService: UsuarioService,
     private comentarioService: ComentarioService,
+    private adminService: AdministradorService,
   ) {}
 
   ngOnInit(): void {
@@ -244,5 +246,35 @@ export class EstadisticasComponent {
         }
       }
     });
+  }
+
+  inputColorPrincipal: string = "";
+  inputColorPrincipalClaro: string = "";
+  inputColorSecundario: string = "";
+
+  colorValido(inputColorPrincipal: string): boolean {
+    const colorRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
+    return colorRegex.test(inputColorPrincipal);
+  }
+
+  cambiarColor(inputColorPrincipal: string): void {
+    if (this.colorValido(inputColorPrincipal)) {
+      document.documentElement.style.setProperty('--colorPrincipal', inputColorPrincipal);
+      this.adminService.cambiarPrincipal(inputColorPrincipal).subscribe();
+    }
+  }
+
+  cambiarColorS(inputColorSecundario: string): void {
+    if (this.colorValido(inputColorSecundario)) {
+      document.documentElement.style.setProperty('--colorSecundario', inputColorSecundario);
+      this.adminService.cambiarSecundario(inputColorSecundario).subscribe();
+    }
+  }
+
+  cambiarColorC(inputColorPrincipalClaro: string): void {
+    if (this.colorValido(inputColorPrincipalClaro)) {
+      document.documentElement.style.setProperty('--colorPrincipalClaro', inputColorPrincipalClaro);
+      this.adminService.cambiarClaro(inputColorPrincipalClaro).subscribe();
+    }
   }
 }

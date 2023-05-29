@@ -39,6 +39,12 @@ h3 {
     margin-left: 20px;
 }
 
+.botonCambiar {
+    width: 150px;
+    height: 40px;
+    margin-left: 20px;
+}
+
 .inputLog {
     margin: 0px;
 }
@@ -160,4 +166,25 @@ canvas {
 
 .infoGraficaIzquierda {
     margin-right: 5vw;
+}
+
+.colorPrincipal{
+    background-color: var(--colorPrincipal);
+    width: 150px;
+    height: 40px;
+    margin-left: 20px;
+}
+
+.colorPrincipalClaro{
+    background-color: var(--colorPrincipalClaro);
+    width: 150px;
+    height: 40px;
+    margin-left: 20px;
+}
+
+.colorSecundario{
+    background-color: var(--colorSecundario);
+    width: 150px;
+    height: 40px;
+    margin-left: 20px;
 }
