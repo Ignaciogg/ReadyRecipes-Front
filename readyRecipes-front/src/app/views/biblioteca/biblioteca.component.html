@@ -53,8 +53,8 @@
                 </div>
                 <div>
                     <p class="m-0 p-0 mt-3">Precio máximo: {{precioElegido}} €:</p>
-                    <mat-slider min="0" max="50" step="1" value="50">
-                        <input matSliderThumb [(ngModel)]=precioElegido>
+                    <mat-slider min="0" max="100" step="1" value="50">
+                        <input matSliderThumb [(ngModel)]=precioElegido (change)="buscador()">
                     </mat-slider>
                 </div>
             </div>

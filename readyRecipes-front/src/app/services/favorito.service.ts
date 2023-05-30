@@ -11,24 +11,20 @@ export class FavoritoService {
   constructor(private httpClient: HttpClient) { }
 
   public addFavoritos(_id_receta: number): Observable<void> {
-    const body = {
-      id_receta: _id_receta,
-    }
-    return this.httpClient.post<void>(
-      environment.apiUrl + "addFavoritos",
-      body,
+    return this.httpClient.get<void>(
+      environment.apiUrl + "addFavoritos/" + _id_receta,
     );
   }
 
-  public removeFavoritos(_id_receta: number, _id_usuario: number): Observable<void> {
+  public removeFavoritos(_id_receta: number): Observable<void> {
     return this.httpClient.delete<void>(
-      environment.apiUrl + "removeFavoritos/" + _id_receta + "/" + _id_usuario,
+      environment.apiUrl + "removeFavoritos/" + _id_receta,
     );
   }
 
-  public esFavorito(_id_receta: number, _id_usuario: number): Observable<number> {
+  public esFavorito(_id_receta: number): Observable<number> {
     return this.httpClient.get<number>(
-      environment.apiUrl + "esFavorito/" + _id_receta + "/" + _id_usuario,
+      environment.apiUrl + "esFavorito/" + _id_receta,
     );
   }
 }

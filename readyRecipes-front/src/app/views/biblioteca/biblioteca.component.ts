@@ -18,7 +18,7 @@ export class BibliotecaComponent implements OnInit {
   public respuestaBuscador: number = 0;
   public buscandoEnFavoritos: boolean = false;
   public buscandoNutriscore: string = "E";
-  public precioElegido: number = 50;
+  public precioElegido: number = 100;
   filtros = [
     { nombre: "Verdura", categoria: "Tipo", activo: false, id: -1, visible: true },
     { nombre: "Carne", categoria: "Tipo", activo: false, id: null, visible: true },

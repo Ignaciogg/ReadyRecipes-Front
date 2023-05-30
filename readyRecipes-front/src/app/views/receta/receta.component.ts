@@ -86,7 +86,7 @@ export class RecetaComponent {
 
   cambiarFavorito() { 
     if(this.esFavorito) {
-      this.favoritoService.removeFavoritos(this.id, Number(this.autenticacionService.getId())).subscribe();
+      this.favoritoService.removeFavoritos(this.id).subscribe();
     } else {
       this.favoritoService.addFavoritos(this.id).subscribe();
     }
@@ -94,7 +94,7 @@ export class RecetaComponent {
   }
 
   getEsFavorito() {
-    this.favoritoService.esFavorito(this.id, Number(this.autenticacionService.getId())).subscribe(data => {
+    this.favoritoService.esFavorito(this.id).subscribe(data => {
       this.esFavorito = (data == 1);
       this.cargando++;
     });
