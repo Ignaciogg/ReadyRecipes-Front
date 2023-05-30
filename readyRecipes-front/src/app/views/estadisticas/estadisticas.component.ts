@@ -37,6 +37,9 @@ export class EstadisticasComponent {
   cantidadesNutriscore: number[] = [];
   numRecetas: number = 0;
   errorEliminar: boolean = false;
+  inputColorPrincipal: string = "";
+  inputColorPrincipalClaro: string = "";
+  inputColorSecundario: string = "";
 
   constructor(
     private recetaService: RecetaService,
@@ -134,7 +137,7 @@ export class EstadisticasComponent {
     this.errorEliminar = false;
   }
 
-  async recibirReceta(_id: string): Promise<void> {
+  recibirReceta(_id: string): void {
     this.receta = undefined;
     this.recetaService.get(Number(this.recetaModificarInput)).subscribe(data => {
       this.receta = data;
@@ -184,7 +187,7 @@ export class EstadisticasComponent {
         labels: this.nombresCategorias,
         datasets: [{
           data: this.cantidadesCategorias,
-          backgroundColor: [ "#962296", this.getColorSecundario(), "#CCCC22", "#2255CC", this.getColorPrincipal() ],
+          backgroundColor: [ "#962296", "#CC5522", "#CCCC22", "#225596", "#229655" ],
           hoverOffset: 30,
         }],
       },
@@ -248,33 +251,35 @@ export class EstadisticasComponent {
     });
   }
 
-  inputColorPrincipal: string = "";
-  inputColorPrincipalClaro: string = "";
-  inputColorSecundario: string = "";
-
   colorValido(inputColorPrincipal: string): boolean {
     const colorRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
     return colorRegex.test(inputColorPrincipal);
   }
 
   cambiarColor(inputColorPrincipal: string): void {
-    if (this.colorValido(inputColorPrincipal)) {
+    if(this.colorValido(inputColorPrincipal)) {
       document.documentElement.style.setProperty('--colorPrincipal', inputColorPrincipal);
-      this.adminService.cambiarPrincipal(inputColorPrincipal).subscribe();
+      this.adminService.cambiarPrincipal(inputColorPrincipal).subscribe(() => {
+        window.location.reload();
+      });
     }
   }
 
   cambiarColorS(inputColorSecundario: string): void {
-    if (this.colorValido(inputColorSecundario)) {
+    if(this.colorValido(inputColorSecundario)) {
       document.documentElement.style.setProperty('--colorSecundario', inputColorSecundario);
-      this.adminService.cambiarSecundario(inputColorSecundario).subscribe();
+      this.adminService.cambiarSecundario(inputColorSecundario).subscribe(() => {
+        window.location.reload();
+      });
     }
   }
-
+  
   cambiarColorC(inputColorPrincipalClaro: string): void {
-    if (this.colorValido(inputColorPrincipalClaro)) {
+    if(this.colorValido(inputColorPrincipalClaro)) {
       document.documentElement.style.setProperty('--colorPrincipalClaro', inputColorPrincipalClaro);
-      this.adminService.cambiarClaro(inputColorPrincipalClaro).subscribe();
+      this.adminService.cambiarClaro(inputColorPrincipalClaro).subscribe(() => {
+        window.location.reload();
+      });
     }
   }
 }

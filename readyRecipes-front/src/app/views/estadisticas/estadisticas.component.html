@@ -4,40 +4,36 @@
             <img class="flechaVolver" src="assets/imagenes/iconos/flechaIzquierda.png">
         </a>
         <h1>Acciones de administrador</h1>
-    </div>
+    </div> 
 
-    <h2 class="mt-3">Cambiar el Color Principal</h2>
+    <h2 class="mt-4 mb-2">Cambiar el Color Principal</h2>
     <div class="d-flex align-items-center">
         <input [(ngModel)]="inputColorPrincipal" class="form-control inputLog" placeholder="#Color Principal">
-        <div class="colorPrincipal"></div>
-        <button *ngIf="colorValido(inputColorPrincipal) == true" (click)="cambiarColor(inputColorPrincipal)" class="botonEnviar">Cambiar</button>
+        <div *ngIf="colorValido(inputColorPrincipal)" [style.background-color]="inputColorPrincipal" class="colorPrincipal"></div>
+        <button *ngIf="colorValido(inputColorPrincipal)" (click)="cambiarColor(inputColorPrincipal)" class="botonEnviar">Cambiar</button>
     </div>
-
-    <h2 class="mt-3">Cambiar el Color Principal Claro</h2>
+    <h2 class="mt-4 mb-2">Cambiar el Color Principal Claro</h2>
     <div class="d-flex align-items-center">
         <input [(ngModel)]="inputColorPrincipalClaro" class="form-control inputLog" placeholder="#Color Principal Claro">
-        <div class="colorPrincipalClaro"></div>
-        <button *ngIf="colorValido(inputColorPrincipalClaro) == true" (click)="cambiarColorC(inputColorPrincipalClaro)" class="botonEnviar">Cambiar</button>
+        <div *ngIf="colorValido(inputColorPrincipalClaro)" [style.background-color]="inputColorPrincipalClaro" class="colorPrincipalClaro"></div>
+        <button *ngIf="colorValido(inputColorPrincipalClaro)" (click)="cambiarColorC(inputColorPrincipalClaro)" class="botonEnviar">Cambiar</button>
     </div>
-
-    <h2 class="mt-3">Cambiar el Color Secundario</h2>
+    <h2 class="mt-4 mb-2">Cambiar el Color Secundario</h2>
     <div class="d-flex align-items-center">
         <input [(ngModel)]="inputColorSecundario" class="form-control inputLog" placeholder="#Color Secundario">
-        <div class="colorSecundario"></div>
-        <button *ngIf="colorValido(inputColorSecundario) == true" (click)="cambiarColorS(inputColorSecundario)" class="botonEnviar">Cambiar</button>
+        <div *ngIf="colorValido(inputColorSecundario)" [style.background-color]="inputColorSecundario"class="colorSecundario"></div>
+        <button *ngIf="colorValido(inputColorSecundario)" (click)="cambiarColorS(inputColorSecundario)" class="botonEnviar">Cambiar</button>
     </div>
-
-    <h2 class="mt-3">Eliminar usuario</h2>
-    <label for="email">Id del usuario a eliminar:</label>
+    <h2 class="mt-4 mb-2">Eliminar usuario</h2>
+    <label>Id del usuario a eliminar:</label>
     <div class="d-flex align-items-center">
         <input [(ngModel)]="usuarioBorrarInput" class="form-control inputLog" placeholder="Id del usuario">
         <button *ngIf="idValido(usuarioBorrarInput) == true && usuario != undefined" (click)="recibirUsuario(usuarioBorrarInput)" class="botonEnviar">Eliminar</button>
         <cargando *ngIf="usuario == undefined"/>
     </div>
     <p *ngIf="idValido(usuarioBorrarInput) == false && usuarioBorrarInput != ''" class="text-danger">El id tiene que ser un número!</p>
-
-    <h2>Modificar receta generada</h2>
-    <label for="email">Id de la receta a modificar:</label>
+    <h2 class="mt-4 mb-2">Modificar receta generada</h2>
+    <label>Id de la receta a modificar:</label>
     <div class="d-flex align-items-center">
         <input [(ngModel)]="recetaModificarInput" class="form-control inputLog" placeholder="Id de la receta">
         <button *ngIf="idValido(recetaModificarInput) == true && receta != undefined" (click)="recibirReceta(recetaModificarInput)" class="botonEnviar">Buscar</button>
