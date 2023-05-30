@@ -40,7 +40,7 @@
         <div class="filtrosContainer">
             <div>
                 <div>
-                    <p>Nutriscore: </p>
+                    <p>Nutriscore mínimo: </p>
                     <div class="d-flex flex-row">
                         <div *ngFor="let nutri of ['A', 'B', 'C', 'D']">
                             <aplicadorFiltro
@@ -52,7 +52,7 @@
                     </div>
                 </div>
                 <div>
-                    <p class="m-0 p-0 mt-3">Entre 0 y {{precioElegido}} €:</p>
+                    <p class="m-0 p-0 mt-3">Precio máximo: {{precioElegido}} €:</p>
                     <mat-slider min="0" max="50" step="1" value="50">
                         <input matSliderThumb [(ngModel)]=precioElegido>
                     </mat-slider>
@@ -60,7 +60,7 @@
             </div>
             <div class="d-flex justify-content-center">
                 <div class="buscadorIngredientes">
-                    <p class="inputBuscador m-0 p-0 mb-1">Busque ingredientes</p>
+                    <p class="inputBuscador m-0 p-0 mb-1">Ingredientes</p>
                     <ng-select [(ngModel)]="selectedIngredient" [multiple]="true" (ngModelChange)="filtrarIngredientes($event)">
                         <ng-container *ngFor="let filtro of filtros">
                             <ng-option *ngIf="filtro.categoria=='Ingredientes' && !filtro.activo && filtro.visible" [value]="filtro">{{filtro.nombre}}</ng-option>

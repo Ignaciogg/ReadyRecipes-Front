@@ -78,7 +78,7 @@ export class RecetaComponent {
   nuevoComentario(_contenido: string) {
     this.cargando--;
     const idUsuario = Number(this.autenticacionService.getId());
-    this.comentarioService.nuevoComentario(this.id, idUsuario, _contenido).subscribe(() => {
+    this.comentarioService.nuevoComentario(this.id, _contenido).subscribe(() => {
       this.cargarComentarios();
       this.comentarioInput = "";
     });
@@ -88,7 +88,7 @@ export class RecetaComponent {
     if(this.esFavorito) {
       this.favoritoService.removeFavoritos(this.id, Number(this.autenticacionService.getId())).subscribe();
     } else {
-      this.favoritoService.addFavoritos(this.id, Number(this.autenticacionService.getId())).subscribe();
+      this.favoritoService.addFavoritos(this.id).subscribe();
     }
     this.esFavorito = !this.esFavorito;
   }

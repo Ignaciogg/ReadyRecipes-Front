@@ -10,10 +10,9 @@ export class FavoritoService {
 
   constructor(private httpClient: HttpClient) { }
 
-  public addFavoritos(_id_receta: number, _id_usuario: number): Observable<void> {
+  public addFavoritos(_id_receta: number): Observable<void> {
     const body = {
       id_receta: _id_receta,
-      id_usuario: _id_usuario,
     }
     return this.httpClient.post<void>(
       environment.apiUrl + "addFavoritos",

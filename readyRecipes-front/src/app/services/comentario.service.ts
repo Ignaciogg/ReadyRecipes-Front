@@ -18,10 +18,9 @@ export class ComentarioService {
     );
   }
 
-  public nuevoComentario(_id_receta: number, _id_usuario: number, _contenido: string): Observable<void> {
+  public nuevoComentario(_id_receta: number, _contenido: string): Observable<void> {
     const body = {
       id_receta: _id_receta,
-      id_usuario: _id_usuario,
       contenido: _contenido,
     }
     return this.httpClient.post<void>(

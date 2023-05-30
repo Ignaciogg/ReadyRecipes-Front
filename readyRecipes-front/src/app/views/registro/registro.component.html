@@ -27,9 +27,6 @@
             <input (click)="registrar(nombreInput, apellidosInput, emailInput, passwordInput, repetirPasswordInput)" class="botonEnviar mb-3 mt-4" type="submit" value="Enviar">
         </div>
     </form>
-    <div *ngIf="respuesta != -1 && respuesta != 200" class="text-center">
-        <a routerLink="/recuperar" class="aLog">¿Ha olvidado su contraseña?</a>
-    </div>
     <div class="d-flex flex-column align-items-center justify-content-center m-5">
         <cargando *ngIf="respuesta == -1"/>
         <div *ngIf="200 <= respuesta && respuesta < 300" class="infoError d-flex flex-column align-items-center">

@@ -16,7 +16,6 @@ import { RecetaComponent } from './views/receta/receta.component';
 import { ComentarioComponent } from './components/comentario/comentario.component';
 import { LoginComponent } from './views/login/login.component';
 import { RegistroComponent } from './views/registro/registro.component';
-import { RecuperarComponent } from './views/recuperar/recuperar.component';
 import { CargandoComponent } from './components/cargando/cargando.component';
 import { SafePipeModule } from 'safe-pipe';
 import { EstadisticasComponent } from './views/estadisticas/estadisticas.component';
@@ -35,7 +34,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ComentarioComponent,
     LoginComponent,
     RegistroComponent,
-    RecuperarComponent,
     CargandoComponent,
     EstadisticasComponent,
   ],
