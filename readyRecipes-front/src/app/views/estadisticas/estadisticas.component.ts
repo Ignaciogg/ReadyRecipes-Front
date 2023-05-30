@@ -144,6 +144,9 @@ export class EstadisticasComponent {
       this.tituloOriginal = this.receta.titulo!;
       this.textoOriginal = this.receta.texto!;
       this.categoriaOriginal = this.receta.categoria!;
+    }, () => {
+      this.recetaModificarInput = "¡Id no válido!";
+      this.receta = { id: -1 };
     });
   }
 
