@@ -22,6 +22,7 @@ export class RecetaComponent {
   comentarioInput: string = "";
   esFavorito: boolean = false;
   comentarios: Comentario[] = [];
+  public usuarioLogeado: boolean = false;
   
   constructor(
     private comentarioService: ComentarioService,
@@ -35,13 +36,10 @@ export class RecetaComponent {
   ngOnInit() {
     this.cargando = 0;
     this.id = Number(this.route.snapshot.paramMap.get("id") || "");
-    try {
-      this.cargarReceta();
-      this.getEsFavorito();
-      this.cargarComentarios();
-    } catch(e) {
-      console.log("Error cargando la receta: ", e);
-    }
+    this.usuarioLogeado = this.autenticacionService.estaLogeado();
+    this.cargarReceta();
+    this.getEsFavorito();
+    this.cargarComentarios();
   }
 
   private cargarReceta() {
@@ -49,6 +47,8 @@ export class RecetaComponent {
       this.receta = data;
       this.receta.precio ? this.receta.precio = Number(this.receta.precio?.toFixed(2)) : 0;
       this.letraNutriscore = this.nutriscoreEnLetra(this.receta.nutriscore!);
+      this.cargando++;
+    }, error => {
       this.cargando++;
     });
   }
@@ -71,6 +71,8 @@ export class RecetaComponent {
     this.comentarioService.getComentariosReceta(this.id).subscribe(data => {
       this.comentarios = data;
       this.comentarios = this.comentarios.reverse();
+      this.cargando++;
+    }, error => {
       this.cargando++;
     });
   }
@@ -96,6 +98,8 @@ export class RecetaComponent {
   getEsFavorito() {
     this.favoritoService.esFavorito(this.id).subscribe(data => {
       this.esFavorito = (data == 1);
+      this.cargando++;
+    }, error => {
       this.cargando++;
     });
   }
