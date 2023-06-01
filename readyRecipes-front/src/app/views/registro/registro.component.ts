@@ -14,7 +14,7 @@ export class RegistroComponent {
   emailInput: string = "";
   passwordInput: string = "";
   repetirPasswordInput: string = "";
-  
+
   constructor(private usuarioService: UsuarioService) { }
 
   public async registrar(nombre: string, apellidos: string, email: string, password: string, repetirPassword: string) {
@@ -53,6 +53,7 @@ export class RegistroComponent {
       usuario.apellidos = apellidos;
       usuario.email = email;
       usuario.administrador = false;
+      usuario.pass = password;
       this.usuarioService.registrar(usuario).subscribe(data => {
         if(typeof data == "number") {
           this.respuesta = data;
